@@ -9,7 +9,7 @@
             "cwd": "finding_clothes",
             "request": "launch",
             "type": "dart",
-            "program": "lib/src/main.dart"
+            "program": "lib/main.dart"
         },
         {
             "name": "finding_clothes (profile mode)",
