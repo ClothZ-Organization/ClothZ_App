@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "620469384350",
+    "project_id": "findingclothes-3b19b",
+    "storage_bucket": "findingclothes-3b19b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:620469384350:android:d96e01bfbce806f223b78f",
+        "android_client_info": {
+          "package_name": "com.example.finding_clothes"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBCFOFnmeHO1ZH008tFbYvQJAyd3VJT6AQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
