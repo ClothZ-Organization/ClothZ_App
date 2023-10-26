@@ -111,6 +111,7 @@ class RegisterPage extends ConsumerWidget {
                             debugPrint('---${emailController.text}');
                             debugPrint('---${passwordController.text}');
                             debugPrint('---${confirmPasswordController.text}');
+                            viewModel.register(email: emailController.text, password: passwordController.text, passwordConfirm: confirmPasswordController.text);
                           },
                           text: "Register Now",
                         ),

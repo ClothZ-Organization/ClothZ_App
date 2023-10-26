@@ -17,7 +17,8 @@ class DashboardPage extends ConsumerWidget {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios),
           onPressed: () {
-            viewModel.goBack();
+            // viewModel.goBack();
+            viewModel.logOut();
           },
         ),
       ),
