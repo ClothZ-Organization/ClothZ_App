@@ -12,6 +12,7 @@ class DashboardPage extends ConsumerWidget {
     final viewModel = ref.watch(dashboardViewModelProvider);
 
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
         title: const Text('Dashboard'),
         leading: IconButton(
@@ -22,19 +23,54 @@ class DashboardPage extends ConsumerWidget {
           },
         ),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Spacer(),
-            const Text("Welcome to Goodleap's dashboard!"),
-            const Spacer(),
-            Container(
-              height: 100.0,
-              color: Colors.amber,
+      body: Stack(
+        children: [
+          Row(
+            children: [
+              SizedBox(
+                height: double.infinity,
+                width: MediaQuery.sizeOf(context).width / 2,
+                child: ClipRRect(
+                  child: Image.asset(
+                    'assets/images/womenD.png',
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: double.infinity,
+                width: MediaQuery.sizeOf(context).width / 2,
+                child: ClipRRect(
+                  child: Image.asset(
+                    'assets/images/manD.png',
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Spacer(),
+                Text("Welcome to Goodleap's dashboard!", style: TextStyle(
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w400,
+                        fontSize: 14.0,
+                        height: 1.64,
+                        color: Colors.white,
+                        decoration: TextDecoration.none,
+                      ),),
+                Spacer(),
+                // Container(
+                //   height: 100.0,
+                //   color: Colors.amber,
+                // ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
