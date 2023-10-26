@@ -98,6 +98,7 @@ class LoginPage extends ConsumerWidget {
                         onTap: () {
                           debugPrint('---${emailController.text}');
                           debugPrint('---${passwordController.text}');
+                          viewModel.login(email: emailController.text, password: passwordController.text);
                         },
                         text: "Log In",
                       ),
