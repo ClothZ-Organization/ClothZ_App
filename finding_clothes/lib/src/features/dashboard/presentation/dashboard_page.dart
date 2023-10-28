@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:finding_clothes/src/features/dashboard/application/dashboard_view_model.dart';
+import 'package:finding_clothes/src/shared/presentation/widgets/finding_clothes/fc_bottom_tab_bar_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -21,6 +22,50 @@ class DashboardPage extends ConsumerWidget {
             // viewModel.goBack();
             viewModel.logOut();
           },
+        ),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        color: Colors.black,
+        shape: const CircularNotchedRectangle(),
+        notchMargin: 40,
+        // child: Container(
+        //   color: Colors.red,
+        // ),
+
+        child: Container(
+          height: 60,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              FCBottomTabBarButton(
+                isSelected: viewModel.isThis(0),
+                iconButton: Icons.home,
+                onTap: () {
+                  viewModel.setTab(0);
+                  viewModel.setText("Welcome to Goodleap's dashboard!");
+                  debugPrint("--- dashboard");
+                },
+              ),
+              FCBottomTabBarButton(
+                isSelected: viewModel.isThis(1),
+                iconButton: Icons.fit_screen_sharp,
+                onTap: () {
+                  viewModel.setTab(1);
+                  viewModel.setText("Scan!");
+                  debugPrint("--- d2");
+                },
+              ),
+              FCBottomTabBarButton(
+                isSelected: viewModel.isThis(2),
+                iconButton: Icons.bookmark_border,
+                onTap: () {
+                  viewModel.setTab(2);
+                  viewModel.setText("Bookmark border");
+                  debugPrint("--- d3");
+                },
+              ),
+            ],
+          ),
         ),
       ),
       body: Stack(
@@ -49,20 +94,23 @@ class DashboardPage extends ConsumerWidget {
               ),
             ],
           ),
-          const Center(
+          Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Spacer(),
-                Text("Welcome to Goodleap's dashboard!", style: TextStyle(
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w400,
-                        fontSize: 14.0,
-                        height: 1.64,
-                        color: Colors.white,
-                        decoration: TextDecoration.none,
-                      ),),
-                Spacer(),
+                const Spacer(),
+                Text(
+                  viewModel.textView,
+                  style: const TextStyle(
+                    fontFamily: 'Inter',
+                    fontWeight: FontWeight.w400,
+                    fontSize: 14.0,
+                    height: 1.64,
+                    color: Colors.white,
+                    decoration: TextDecoration.none,
+                  ),
+                ),
+                const Spacer(),
                 // Container(
                 //   height: 100.0,
                 //   color: Colors.amber,

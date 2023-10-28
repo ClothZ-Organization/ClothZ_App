@@ -9,6 +9,8 @@ import '../../../shared/services/presentation_service.dart';
 
 class DashboardViewModel extends ViewModel {
   late final PresentationService _presentationService;
+  int currentTab = 0;
+  String textView = "Welcome to Goodleap's dashboard!";
 
   DashboardViewModel(Ref ref) {
     _presentationService = ref.read(presentationServiceProvider);
@@ -25,6 +27,20 @@ class DashboardViewModel extends ViewModel {
       await _presentationService.push(
           route: Routes.login, clearBackStack: true);
     });
+  }
+
+  bool isThis(int index) {
+    return currentTab == index;
+  }
+
+  Future setTab(int index) async {
+    currentTab = index;
+    notifyListeners();
+  }
+
+  Future setText(String text) async {
+    textView = text;
+    notifyListeners();
   }
 
   @override
