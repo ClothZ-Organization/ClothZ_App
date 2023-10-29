@@ -8,21 +8,23 @@ import '../../../shared/utils/constants/routes.dart';
 
 class LoginViewModel extends ViewModel {
   late final PresentationService _presentationService;
+  bool isLoading = false;
 
   LoginViewModel(Ref ref) {
     _presentationService = ref.read(presentationServiceProvider);
   }
 
   void login({email = '', password = ''}) async {
-    debugPrint('--- Log In');
-    // await _presentationService.push(
-    //     route: Routes.dashboard);
+    isLoading = true;
+    notifyListeners();
     FirebaseAuth.instance
         .signInWithEmailAndPassword(email: email, password: password)
         .then((value) async {
       await _presentationService.push(
           route: Routes.dashboard, clearBackStack: true);
     }).onError((error, stackTrace) {
+      isLoading = false;
+      notifyListeners();
       debugPrint("Error ${error.toString()}");
     });
   }

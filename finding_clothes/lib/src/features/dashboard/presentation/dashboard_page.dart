@@ -14,24 +14,20 @@ class DashboardPage extends ConsumerWidget {
 
     return Scaffold(
       backgroundColor: Colors.black,
-      appBar: AppBar(
-        title: const Text('Dashboard'),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios),
-          onPressed: () {
-            // viewModel.goBack();
-            viewModel.logOut();
-          },
-        ),
-      ),
+      // appBar: AppBar(
+      //   title: const Text('Dashboard'),
+      //   leading: IconButton(
+      //     icon: const Icon(Icons.arrow_back_ios),
+      //     onPressed: () {
+      //       // viewModel.goBack();
+      //       viewModel.logOut();
+      //     },
+      //   ),
+      // ),
       bottomNavigationBar: BottomAppBar(
         color: Colors.black,
         shape: const CircularNotchedRectangle(),
         notchMargin: 40,
-        // child: Container(
-        //   color: Colors.red,
-        // ),
-
         child: Container(
           height: 60,
           child: Row(
@@ -46,6 +42,9 @@ class DashboardPage extends ConsumerWidget {
                   debugPrint("--- dashboard");
                 },
               ),
+              const SizedBox(
+                width: 20,
+              ),
               FCBottomTabBarButton(
                 isSelected: viewModel.isThis(1),
                 iconButton: Icons.fit_screen_sharp,
@@ -54,6 +53,9 @@ class DashboardPage extends ConsumerWidget {
                   viewModel.setText("Scan!");
                   debugPrint("--- d2");
                 },
+              ),
+              const SizedBox(
+                width: 20,
               ),
               FCBottomTabBarButton(
                 isSelected: viewModel.isThis(2),
@@ -68,57 +70,9 @@ class DashboardPage extends ConsumerWidget {
           ),
         ),
       ),
-      body: Stack(
-        children: [
-          Row(
-            children: [
-              SizedBox(
-                height: double.infinity,
-                width: MediaQuery.sizeOf(context).width / 2,
-                child: ClipRRect(
-                  child: Image.asset(
-                    'assets/images/womenD.png',
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: double.infinity,
-                width: MediaQuery.sizeOf(context).width / 2,
-                child: ClipRRect(
-                  child: Image.asset(
-                    'assets/images/manD.png',
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Spacer(),
-                Text(
-                  viewModel.textView,
-                  style: const TextStyle(
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w400,
-                    fontSize: 14.0,
-                    height: 1.64,
-                    color: Colors.white,
-                    decoration: TextDecoration.none,
-                  ),
-                ),
-                const Spacer(),
-                // Container(
-                //   height: 100.0,
-                //   color: Colors.amber,
-                // ),
-              ],
-            ),
-          ),
-        ],
+      body: PageStorage(
+        bucket: viewModel.bucket,
+        child: viewModel.currentScreen,
       ),
     );
   }

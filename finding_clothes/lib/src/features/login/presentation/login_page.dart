@@ -22,107 +22,115 @@ class LoginPage extends ConsumerWidget {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
     return Scaffold(
       backgroundColor: Colors.black,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(
-                height: MediaQuery.sizeOf(context).height / 4,
-                width: double.infinity,
-                child: ClipRRect(
-                  child: Image.asset(
-                    'assets/images/register_img.png',
-                    fit: BoxFit.cover,
-                  ),
-                ),
+      body: viewModel.isLoading
+          ? const Center(
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF7C00FF)),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 36),
+            )
+          : SafeArea(
+              child: SingleChildScrollView(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(
-                      height: 40,
-                    ),
-                    const Text(
-                      'WELCOME BACK',
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 2,
-                      style: TextStyle(
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w600,
-                        fontSize: 40.0,
-                        height: 1.12,
-                        color: Colors.white,
-                        decoration: TextDecoration.none,
+                    SizedBox(
+                      height: MediaQuery.sizeOf(context).height / 4,
+                      width: double.infinity,
+                      child: ClipRRect(
+                        child: Image.asset(
+                          'assets/images/register_img.png',
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 22,
-                    ),
-                    const Text(
-                      'Join clothesx community today and find all the products you need',
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 2,
-                      style: TextStyle(
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w400,
-                        fontSize: 14.0,
-                        height: 1.64,
-                        color: Colors.white,
-                        decoration: TextDecoration.none,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    FCTextField(
-                      controller: emailController,
-                      onChanged: viewModel.changeText,
-                      hintText: 'Email',
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    FCTextField(
-                      controller: passwordController,
-                      onChanged: viewModel.changeText,
-                      hintText: 'Password',
-                      isObscureText: true,
-                    ),
-                    const SizedBox(
-                      height: 75,
-                    ),
-                    Center(
-                      child: FCButton(
-                        onTap: () {
-                          debugPrint('---${emailController.text}');
-                          debugPrint('---${passwordController.text}');
-                          viewModel.login(email: emailController.text, password: passwordController.text);
-                        },
-                        text: "Log In",
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Center(
-                      child: FCTextAction(
-                        text: 'Don’t have any account? ',
-                        textAction: 'Register',
-                        onTap: () {
-                          debugPrint('---- go Register');
-                          viewModel.goRegister();
-                        },
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 36),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(
+                            height: 40,
+                          ),
+                          const Text(
+                            'WELCOME BACK',
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                            style: TextStyle(
+                              fontFamily: 'WorkSans',
+                              fontWeight: FontWeight.w600,
+                              fontSize: 40.0,
+                              height: 1.12,
+                              color: Colors.white,
+                              decoration: TextDecoration.none,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 22,
+                          ),
+                          const Text(
+                            'Join clothesx community today and find all the products you need',
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                            style: TextStyle(
+                              fontFamily: 'WorkSans',
+                              fontWeight: FontWeight.w400,
+                              fontSize: 14.0,
+                              height: 1.64,
+                              color: Colors.white,
+                              decoration: TextDecoration.none,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          FCTextField(
+                            controller: emailController,
+                            onChanged: viewModel.changeText,
+                            hintText: 'Email',
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          FCTextField(
+                            controller: passwordController,
+                            onChanged: viewModel.changeText,
+                            hintText: 'Password',
+                            isObscureText: true,
+                          ),
+                          const SizedBox(
+                            height: 75,
+                          ),
+                          Center(
+                            child: FCButton(
+                              onTap: () {
+                                debugPrint('---${emailController.text}');
+                                debugPrint('---${passwordController.text}');
+                                viewModel.login(
+                                    email: emailController.text,
+                                    password: passwordController.text);
+                              },
+                              text: "Log In",
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          Center(
+                            child: FCTextAction(
+                              text: 'Don’t have any account? ',
+                              textAction: 'Register',
+                              onTap: () {
+                                debugPrint('---- go Register');
+                                viewModel.goRegister();
+                              },
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
                 ),
               ),
-            ],
-          ),
-        ),
-      ),
+            ),
     );
   }
 }

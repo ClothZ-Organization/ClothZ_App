@@ -8,29 +8,32 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class RegisterViewModel extends ViewModel {
   late final PresentationService _presentationService;
+  bool isLoading = false;
 
   RegisterViewModel(Ref ref) {
     _presentationService = ref.read(presentationServiceProvider);
   }
 
   void register({email = '', password = '', passwordConfirm = ''}) async {
-    debugPrint('Register Action');
+    isLoading = true;
+    notifyListeners();
     if (password == passwordConfirm) {
       FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password)
           .then((value) async {
         debugPrint("Created New Account");
         await _presentationService.push(
-         route: Routes.dashboard, clearBackStack: true);
+            route: Routes.dashboard, clearBackStack: true);
       }).onError((error, stackTrace) {
+        isLoading = false;
+        notifyListeners();
         debugPrint("Error ${error.toString()}");
       });
     } else {
+      isLoading = false;
+      notifyListeners();
       debugPrint('Passwords do not match');
     }
-
-    // await _presentationService.push(
-    //     route: Routes.dashboard);
   }
 
   void goLogIn() async {
