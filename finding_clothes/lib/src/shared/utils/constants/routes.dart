@@ -6,6 +6,8 @@ class Routes {
   static const register = "/register";
 
   static const dashboard = "/dashboard";
+
+  static const result = "/result";
 }
 
 class RouteParameters {

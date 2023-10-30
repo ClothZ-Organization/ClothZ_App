@@ -3,7 +3,6 @@ import 'package:finding_clothes/src/features/dashboard/presentation/home_page.da
 import 'package:finding_clothes/src/features/dashboard/presentation/scan_page.dart';
 import 'package:finding_clothes/src/shared/utils/constants/routes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -13,8 +12,6 @@ import '../../../shared/services/presentation_service.dart';
 class DashboardViewModel extends ViewModel {
   late final PresentationService _presentationService;
   int currentTab = 0;
-
-  String textView = "Welcome to Goodleap's dashboard!";
 
   final List<Widget> screens = [
     const HomePage(),
@@ -49,11 +46,6 @@ class DashboardViewModel extends ViewModel {
   Future setTab(int index) async {
     currentTab = index;
     currentScreen = screens[currentTab];
-    notifyListeners();
-  }
-
-  Future setText(String text) async {
-    textView = text;
     notifyListeners();
   }
 

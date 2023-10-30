@@ -28,7 +28,7 @@ class DashboardPage extends ConsumerWidget {
         color: Colors.black,
         shape: const CircularNotchedRectangle(),
         notchMargin: 40,
-        child: Container(
+        child: SizedBox(
           height: 60,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -38,8 +38,6 @@ class DashboardPage extends ConsumerWidget {
                 iconButton: Icons.home,
                 onTap: () {
                   viewModel.setTab(0);
-                  viewModel.setText("Welcome to Goodleap's dashboard!");
-                  debugPrint("--- dashboard");
                 },
               ),
               const SizedBox(
@@ -50,8 +48,6 @@ class DashboardPage extends ConsumerWidget {
                 iconButton: Icons.fit_screen_sharp,
                 onTap: () {
                   viewModel.setTab(1);
-                  viewModel.setText("Scan!");
-                  debugPrint("--- d2");
                 },
               ),
               const SizedBox(
@@ -62,8 +58,6 @@ class DashboardPage extends ConsumerWidget {
                 iconButton: Icons.bookmark_border,
                 onTap: () {
                   viewModel.setTab(2);
-                  viewModel.setText("Bookmark border");
-                  debugPrint("--- d3");
                 },
               ),
             ],
