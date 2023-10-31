@@ -82,6 +82,8 @@ class HomePage extends ConsumerWidget {
                     onTap: () {
                       // viewModel.changeScreen();
                       debugPrint('-- add Photo');
+                      viewModel.logOut();
+                      //
                     },
                     splashColor: Colors.transparent,
                     child: Container(

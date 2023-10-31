@@ -43,6 +43,19 @@ class StorageService {
     await _secureStorage.setString(StorageConstants.refreshTokenKey, token);
   }
 
+  ///
+  Future setUserAccessToken(String token) async {
+    await _secureStorage.setString(StorageConstants.accessTokenKey, token);
+  }
+
+  Future setTokenExpirationDate(DateTime dateTimeExpirationDate) async {
+    int value = dateTimeExpirationDate.millisecondsSinceEpoch;
+    await _secureStorage.setInt(
+        StorageConstants.accessTokenExpirationDateKey, value);
+  }
+
+  ///
+
   Future removeUserData() async {
     await _secureStorage.removeKey(StorageConstants.accessTokenKey);
     await _secureStorage.removeKey(StorageConstants.refreshTokenKey);
@@ -55,11 +68,10 @@ class StorageService {
     log("[StorageService] All stored data has been removed.");
   }
 
-    Future<int> getAccessTokenExpirationDate() async {
-    return 
-      await _secureStorage.getInt(StorageConstants.accessTokenExpirationDateKey);
-    }
-  
+  Future<int> getAccessTokenExpirationDate() async {
+    return await _secureStorage
+        .getInt(StorageConstants.accessTokenExpirationDateKey);
+  }
 }
 
 var storageServiceProvider = Provider((ref) {

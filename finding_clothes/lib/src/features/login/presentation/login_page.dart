@@ -96,8 +96,11 @@ class LoginPage extends ConsumerWidget {
                             hintText: 'Password',
                             isObscureText: true,
                           ),
+                          viewModel.isErrorLogIn
+                              ? const SizedBox.shrink()
+                              : textMessage(viewModel),
                           const SizedBox(
-                            height: 75,
+                            height: 28,
                           ),
                           Center(
                             child: FCButton(
@@ -131,6 +134,26 @@ class LoginPage extends ConsumerWidget {
                 ),
               ),
             ),
+    );
+  }
+
+  Widget textMessage(final viewModel) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(
+          height: 10,
+        ),
+        Text(
+          viewModel.errorText,
+          style: const TextStyle(
+            fontWeight: FontWeight.w400,
+            fontSize: 14,
+            height: 1.14,
+            color: Colors.red,
+          ),
+        ),
+      ],
     );
   }
 }

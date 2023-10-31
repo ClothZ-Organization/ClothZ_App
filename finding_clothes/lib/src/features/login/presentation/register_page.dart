@@ -109,7 +109,7 @@ class RegisterPage extends ConsumerWidget {
                               isObscureText: true,
                             ),
                             const SizedBox(
-                              height: 33,
+                              height: 28,
                             ),
                             Center(
                               child: FCButton(

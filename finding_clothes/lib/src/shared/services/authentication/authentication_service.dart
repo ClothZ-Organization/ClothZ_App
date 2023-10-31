@@ -1,33 +1,62 @@
 import 'dart:developer';
 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../storage/storage_service.dart';
-
 
 class AuthenticationService {
   late final StorageService _storageService;
 
   AuthenticationService(ProviderRef providerRef) {
-
     _storageService = providerRef.read(storageServiceProvider);
+  }
+  Future register(email, password) async {
+    log("[Register] Register operation started!");
 
+    try {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+    } catch (error) {
+      rethrow;
+    }
+
+    log("Registered in successfuly!");
   }
 
-  Future login() async {
+  Future login(email, password) async {
     log("[Login] Login operation started!");
-   
+
+    try {
+      UserCredential result =
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      String token = await result.user?.getIdToken() ?? '';
+      IdTokenResult? tokenResult = await result.user?.getIdTokenResult();
+      DateTime? expirationTime = tokenResult?.expirationTime;
+
+      if (token != '' && expirationTime != null) {
+        await _storageService.setUserAccessToken(token);
+        await _storageService.setTokenExpirationDate(expirationTime);
+      }
+    } catch (error) {
+      rethrow;
+    }
 
     log("Logged in successfuly!");
   }
 
   Future refreshSession() async {
-
     log("Tokens successfuly refreshed!");
   }
 
   Future logOut() async {
-   
     await _storageService.removeUserData();
     log("Successfuly logged out!");
   }

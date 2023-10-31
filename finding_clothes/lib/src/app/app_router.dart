@@ -10,9 +10,7 @@ import 'app_router.gr.dart';
 class AppRouter extends $AppRouter {
   late final String homeRoute;
   AppRouter(bool isAuthenticated) {
-    homeRoute = isAuthenticated ?
-Routes.dashboard
-        : Routes.login;
+    homeRoute = isAuthenticated ? Routes.dashboard : Routes.login;
   }
   @override
   List<AutoRoute> get routes => [

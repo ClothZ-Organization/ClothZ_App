@@ -62,7 +62,8 @@ class Setup {
   static Future _initializePresentationService(ProviderContainer container) async {
     final tokenAuthService = container.read(accessTokenServiceProvider);
     final storageService = container.read(storageServiceProvider);
-    final router = AppRouter(false);
+    final isAuthenticated = await tokenAuthService.checkAuthentificationAndTryToRefreshToken();
+    final router = AppRouter(isAuthenticated);
     container.read(presentationServiceProvider).intialize(router);
   }
 
