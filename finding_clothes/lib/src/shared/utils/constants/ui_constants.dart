@@ -26,4 +26,8 @@ class UIConstants {
   static const double onePoint = 1;
 
   static const Size iconDefaultSize = Size(24, 24);
+
+
+  //card Clothes
+  static const double heightCardClothes = 204;
 }

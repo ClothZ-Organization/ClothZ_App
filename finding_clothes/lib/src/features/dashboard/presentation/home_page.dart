@@ -1,6 +1,6 @@
 import 'package:finding_clothes/src/features/dashboard/application/home_view_model.dart';
-import 'package:finding_clothes/src/features/dashboard/presentation/result_page.dart';
 import 'package:finding_clothes/src/shared/presentation/widgets/finding_clothes/fc_clothes_component.dart';
+import 'package:finding_clothes/src/shared/utils/constants/ui_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -131,7 +131,7 @@ class HomePage extends ConsumerWidget {
                   height: 16,
                 ),
 
-                // const Spacer(),
+                const Spacer(),
 
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 28),
@@ -174,7 +174,8 @@ class HomePage extends ConsumerWidget {
                 const SizedBox(
                   height: 26,
                 ),
-                Expanded(
+                SizedBox(
+                  height: UIConstants.heightCardClothes,
                   child: ListView.builder(
                     padding: EdgeInsets.zero,
                     scrollDirection: Axis.horizontal,
@@ -188,7 +189,12 @@ class HomePage extends ConsumerWidget {
                             title: 'title $index',
                             price: '\$$index',
                             nameBrand: 'H&M',
+                            isBookMark: viewModel.isBookMark,
                             image: 'assets/images/imgClst.jpeg',
+                            onTapBookMark: () {
+                              debugPrint("Click on bookMark");
+                              viewModel.change();
+                            },
                           ),
                           const SizedBox(
                             width: 14,

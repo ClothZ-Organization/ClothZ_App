@@ -1,3 +1,4 @@
+import 'package:finding_clothes/src/shared/utils/constants/ui_constants.dart';
 import 'package:flutter/material.dart';
 
 class FCClothesCard extends StatelessWidget {
@@ -6,6 +7,7 @@ class FCClothesCard extends StatelessWidget {
   final String nameBrand;
   final bool isBookMark;
   final String image;
+  final VoidCallback onTapBookMark;
   const FCClothesCard(
       {super.key,
       this.title = '',
@@ -13,7 +15,8 @@ class FCClothesCard extends StatelessWidget {
       this.nameBrand = '',
       this.isBookMark = false,
       this.image =
-          'https://cdn.pixabay.com/photo/2019/06/09/06/02/black-4261521_1280.jpg'});
+          'https://cdn.pixabay.com/photo/2019/06/09/06/02/black-4261521_1280.jpg',
+      required this.onTapBookMark});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +29,7 @@ class FCClothesCard extends StatelessWidget {
           color: Colors.transparent,
         ),
         width: 159,
-        height: 204,
+        height: UIConstants.heightCardClothes,
         child: Stack(
           children: [
             Padding(
@@ -39,12 +42,12 @@ class FCClothesCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   SizedBox(
-                    height: 140,
-                    width: 109,
+                    height: UIConstants.heightCardClothes * 0.68,
+                    width: 159 * 0.68, //
                     child: ClipRRect(
                       child: Image.asset(
                         image,
-                        fit: BoxFit.cover,
+                        // fit: BoxFit.cover,
                       ),
                       // child: CachedNetworkImage(
                       //   imageUrl: image,
@@ -59,36 +62,45 @@ class FCClothesCard extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.only(
-                right: 12,
                 top: 6,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      debugPrint("Click on bookMark");
-                    },
-                    child: const Icon(
-                      Icons.bookmark_border,
-                      size: 16,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
                 bottom: 12,
-                right: 12,
                 left: 12,
+                right: 12,
               ),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
                 mainAxisSize: MainAxisSize.max,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      GestureDetector(
+                        onTap: onTapBookMark,
+                        child: ShaderMask(
+                          shaderCallback: (Rect bounds) {
+                            return const LinearGradient(
+                              colors: [
+                                Color(0xFF7C00FF),
+                                Colors.black,
+                              ],
+                              tileMode: TileMode.clamp,
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                            ).createShader(bounds);
+                          },
+                          child: Icon(
+                            isBookMark ? Icons.bookmark : Icons.bookmark_border,
+                            size: 16,
+                            color: isBookMark
+                                ? const Color(0xFFFFFFFF)
+                                : Colors.black,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const Spacer(),
                   Text(
                     title,
                     style: const TextStyle(
