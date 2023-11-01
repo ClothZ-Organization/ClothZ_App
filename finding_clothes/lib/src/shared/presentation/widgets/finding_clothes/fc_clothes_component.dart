@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:finding_clothes/src/shared/utils/constants/ui_constants.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +16,7 @@ class FCClothesCard extends StatelessWidget {
       this.nameBrand = '',
       this.isBookMark = false,
       this.image =
-          'https://cdn.pixabay.com/photo/2019/06/09/06/02/black-4261521_1280.jpg',
+          'https://images.pexels.com/photos/4100420/pexels-photo-4100420.jpeg?auto=compress&cs=tinysrgb&w=800',
       required this.onTapBookMark});
 
   @override
@@ -45,16 +46,17 @@ class FCClothesCard extends StatelessWidget {
                     height: UIConstants.heightCardClothes * 0.68,
                     width: 159 * 0.68, //
                     child: ClipRRect(
-                      child: Image.asset(
-                        image,
-                        // fit: BoxFit.cover,
-                      ),
-                      // child: CachedNetworkImage(
-                      //   imageUrl: image,
-                      //   placeholder: (context, url) =>
-                      //       const CircularProgressIndicator(),
-                      //   errorWidget: (context, url, error) => Icon(Icons.error),
+                      // child: Image.asset(
+                      //   image,
+                      //   // fit: BoxFit.cover,
                       // ),
+                      child: CachedNetworkImage(
+                        imageUrl: image,
+                        placeholder: (context, url) =>
+                            const CircularProgressIndicator(),
+                        errorWidget: (context, url, error) => const Icon(Icons.error),
+                        
+                      ),
                     ),
                   ),
                 ],

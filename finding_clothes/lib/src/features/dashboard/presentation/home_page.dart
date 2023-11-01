@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:finding_clothes/src/features/dashboard/application/home_view_model.dart';
 import 'package:finding_clothes/src/shared/presentation/widgets/finding_clothes/fc_clothes_component.dart';
 import 'package:finding_clothes/src/shared/utils/constants/ui_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
@@ -82,8 +85,8 @@ class HomePage extends ConsumerWidget {
                     onTap: () {
                       // viewModel.changeScreen();
                       debugPrint('-- add Photo');
-                      viewModel.logOut();
-                      //
+                      // 
+                      viewModel.getImage(false);
                     },
                     splashColor: Colors.transparent,
                     child: Container(
@@ -156,6 +159,9 @@ class HomePage extends ConsumerWidget {
                       InkWell(
                         onTap: () {
                           debugPrint('Action See all.');
+                          // 
+                          viewModel.logOut(); // must be deleted
+                          //
                         },
                         splashColor: Colors.transparent,
                         borderRadius: BorderRadius.circular(8.0),
@@ -192,7 +198,7 @@ class HomePage extends ConsumerWidget {
                             price: '\$$index',
                             nameBrand: 'H&M',
                             isBookMark: viewModel.isBookMark,
-                            image: 'assets/images/imgClst.jpeg',
+                            // image: 'assets/images/imgClst.jpeg',
                             onTapBookMark: () {
                               debugPrint("Click on bookMark");
                               viewModel.change();
