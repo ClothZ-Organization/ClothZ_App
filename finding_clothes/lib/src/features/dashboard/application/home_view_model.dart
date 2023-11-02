@@ -1,10 +1,14 @@
+import 'dart:async';
+
 import 'package:finding_clothes/src/app/app_router.gr.dart';
 import 'package:finding_clothes/src/shared/application/view_model.dart';
 import 'package:finding_clothes/src/shared/services/authentication/authentication_service.dart';
 import 'package:finding_clothes/src/shared/services/presentation_service.dart';
 import 'package:finding_clothes/src/shared/utils/constants/routes.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class HomeViewModel extends ViewModel {
   late final PresentationService _presentationService;
@@ -17,14 +21,25 @@ class HomeViewModel extends ViewModel {
     _authenticationService = ref.read(authenticationServiceProvider);
   }
 
-  Future getImage(bool isCamera) async {
+  Future<bool> getImage(bool isCamera) async {
     final ImagePicker picker = ImagePicker();
-    if (isCamera) {
-      image = await picker.pickImage(source: ImageSource.camera);
-    } else {
-      image = await picker.pickImage(source: ImageSource.gallery);
+
+    try {
+      if (isCamera) {
+        image = await picker.pickImage(source: ImageSource.camera);
+      } else {
+        image = await picker.pickImage(source: ImageSource.gallery);
+      }
+    } catch (exception) {
+      var statusGalery = await Permission.photos.status;
+      var statusCamera = await Permission.camera.status;
+      if (statusGalery.isDenied || statusCamera.isDenied) {
+        return true;
+      } 
     }
+
     notifyListeners();
+    return false;
   }
 
   void changeScreen() {

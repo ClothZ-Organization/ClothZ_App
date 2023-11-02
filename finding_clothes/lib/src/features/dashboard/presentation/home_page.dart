@@ -3,9 +3,11 @@ import 'dart:io';
 import 'package:finding_clothes/src/features/dashboard/application/home_view_model.dart';
 import 'package:finding_clothes/src/shared/presentation/widgets/finding_clothes/fc_clothes_component.dart';
 import 'package:finding_clothes/src/shared/utils/constants/ui_constants.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
@@ -82,11 +84,14 @@ class HomePage extends ConsumerWidget {
                   color: const Color(0xFF222222),
                   child: InkWell(
                     borderRadius: BorderRadius.circular(16.0),
-                    onTap: () {
+                    onTap: () async {
                       // viewModel.changeScreen();
                       debugPrint('-- add Photo');
-                      // 
-                      viewModel.getImage(false);
+                      //
+                      if(await viewModel.getImage(false)) {
+                          // ignore: use_build_context_synchronously
+                          showAlertDialog(context);
+                      }
                     },
                     splashColor: Colors.transparent,
                     child: Container(
@@ -159,7 +164,7 @@ class HomePage extends ConsumerWidget {
                       InkWell(
                         onTap: () {
                           debugPrint('Action See all.');
-                          // 
+                          //
                           viewModel.logOut(); // must be deleted
                           //
                         },
@@ -199,6 +204,7 @@ class HomePage extends ConsumerWidget {
                             nameBrand: 'H&M',
                             isBookMark: viewModel.isBookMark,
                             // image: 'assets/images/imgClst.jpeg',
+                            // image: viewModel.image?.path ?? 'assets/images/imgClst.jpeg',
                             onTapBookMark: () {
                               debugPrint("Click on bookMark");
                               viewModel.change();
@@ -219,4 +225,24 @@ class HomePage extends ConsumerWidget {
       ),
     );
   }
+
+  showAlertDialog(context) => showCupertinoDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) => CupertinoAlertDialog(
+          title: const Text('Permission Denied'),
+          content: const Text('Allow access to gallery and photos'),
+          actions: <CupertinoDialogAction>[
+            CupertinoDialogAction(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Cancel'),
+            ),
+            CupertinoDialogAction(
+              isDefaultAction: true,
+              onPressed: () => openAppSettings(),
+              child: const Text('Settings'),
+            ),
+          ],
+        ),
+      );
 }
