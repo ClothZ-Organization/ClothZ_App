@@ -1,4 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:finding_clothes/src/shared/domain/loading_indicator_size.dart';
+import 'package:finding_clothes/src/shared/presentation/widgets/finding_clothes/fc_loading_indicator.dart';
 import 'package:finding_clothes/src/shared/utils/constants/ui_constants.dart';
 import 'package:flutter/material.dart';
 
@@ -52,10 +54,10 @@ class FCClothesCard extends StatelessWidget {
                       // ),
                       child: CachedNetworkImage(
                         imageUrl: image,
-                        placeholder: (context, url) =>
-                            const CircularProgressIndicator(),
-                        errorWidget: (context, url, error) => const Icon(Icons.error),
-                        
+                        placeholder: (context, url) => const FCLoadingIndicator(),
+                        // const CircularProgressIndicator(),
+                        errorWidget: (context, url, error) =>
+                            const Icon(Icons.error),
                       ),
                     ),
                   ),

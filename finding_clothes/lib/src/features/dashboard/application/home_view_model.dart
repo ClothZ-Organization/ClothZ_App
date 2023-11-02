@@ -5,7 +5,6 @@ import 'package:finding_clothes/src/shared/application/view_model.dart';
 import 'package:finding_clothes/src/shared/services/authentication/authentication_service.dart';
 import 'package:finding_clothes/src/shared/services/presentation_service.dart';
 import 'package:finding_clothes/src/shared/utils/constants/routes.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';

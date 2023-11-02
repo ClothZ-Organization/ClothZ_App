@@ -1,7 +1,9 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:auto_route/auto_route.dart';
+import 'package:finding_clothes/src/shared/domain/loading_indicator_size.dart';
 import 'package:finding_clothes/src/shared/presentation/widgets/finding_clothes/fc_button.dart';
+import 'package:finding_clothes/src/shared/presentation/widgets/finding_clothes/fc_loading_indicator.dart';
 import 'package:finding_clothes/src/shared/presentation/widgets/finding_clothes/fc_text_action.dart';
 import 'package:finding_clothes/src/shared/presentation/widgets/finding_clothes/fc_text_field.dart';
 import 'package:flutter/material.dart';
@@ -24,9 +26,7 @@ class LoginPage extends ConsumerWidget {
       backgroundColor: Colors.black,
       body: viewModel.isLoading
           ? const Center(
-              child: CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF7C00FF)),
-              ),
+            child: FCLoadingIndicator(size: LoadingIndicatorSize.large,),
             )
           : SafeArea(
               child: SingleChildScrollView(
