@@ -54,7 +54,7 @@ class FCClothesCard extends StatelessWidget {
                       // ),
                       child: CachedNetworkImage(
                         imageUrl: image,
-                        placeholder: (context, url) => const FCLoadingIndicator(),
+                        placeholder: (context, url) => const Center(child: FCLoadingIndicator()),
                         // const CircularProgressIndicator(),
                         errorWidget: (context, url, error) =>
                             const Icon(Icons.error),
