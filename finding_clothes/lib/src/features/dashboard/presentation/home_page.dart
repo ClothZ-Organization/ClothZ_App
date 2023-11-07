@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+// ignore: must_be_immutable
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
 

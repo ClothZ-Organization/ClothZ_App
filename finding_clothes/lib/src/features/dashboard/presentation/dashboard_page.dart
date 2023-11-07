@@ -14,16 +14,6 @@ class DashboardPage extends ConsumerWidget {
 
     return Scaffold(
       backgroundColor: Colors.black,
-      // appBar: AppBar(
-      //   title: const Text('Dashboard'),
-      //   leading: IconButton(
-      //     icon: const Icon(Icons.arrow_back_ios),
-      //     onPressed: () {
-      //       // viewModel.goBack();
-      //       viewModel.logOut();
-      //     },
-      //   ),
-      // ),
       bottomNavigationBar: BottomAppBar(
         color: Colors.black,
         shape: const CircularNotchedRectangle(),
