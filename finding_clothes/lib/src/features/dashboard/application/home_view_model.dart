@@ -23,7 +23,6 @@ class HomeViewModel extends ViewModel {
 
   Future<bool> getImage(bool isCamera) async {
     final ImagePicker picker = ImagePicker();
-
     try {
       if (isCamera) {
         image = await picker.pickImage(source: ImageSource.camera);
@@ -41,7 +40,6 @@ class HomeViewModel extends ViewModel {
       _dashboardViewModel.setImage(image);
       _dashboardViewModel.setTab(1);
     }
-    // notifyListeners();
     return false;
   }
 
