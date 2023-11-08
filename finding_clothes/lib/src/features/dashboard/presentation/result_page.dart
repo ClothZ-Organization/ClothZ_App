@@ -1,9 +1,8 @@
 import 'package:finding_clothes/src/features/dashboard/application/result_page_view_model.dart';
+import 'package:finding_clothes/src/features/dashboard/presentation/result_tab_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:image_picker/image_picker.dart';
 
-// ignore: must_be_immutable
 class ResultPage extends ConsumerWidget {
   const ResultPage({super.key});
 
@@ -15,6 +14,7 @@ class ResultPage extends ConsumerWidget {
       appBar: AppBar(
         backgroundColor: Colors.black,
         title: const Text('ResultPage'),
+        centerTitle: true,
       ),
       body: SafeArea(
         child: Padding(
@@ -36,6 +36,9 @@ class ResultPage extends ConsumerWidget {
               ),
               const SizedBox(
                 height: 33,
+              ),
+              const Expanded(
+                child: ResultTabPage(),
               ),
             ],
           ),
