@@ -1,6 +1,6 @@
-import 'package:finding_clothes/src/features/dashboard/presentation/bookmark_page.dart';
+import 'package:finding_clothes/src/features/dashboard/presentation/bookmark_presentation/bookmark_page.dart';
 import 'package:finding_clothes/src/features/dashboard/presentation/home_page.dart';
-import 'package:finding_clothes/src/features/dashboard/presentation/result_page.dart';
+import 'package:finding_clothes/src/features/dashboard/presentation/result_presentation/result_page.dart';
 import 'package:finding_clothes/src/shared/utils/constants/routes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

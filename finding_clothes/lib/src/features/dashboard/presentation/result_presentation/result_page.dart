@@ -1,5 +1,5 @@
 import 'package:finding_clothes/src/features/dashboard/application/result_page_view_model.dart';
-import 'package:finding_clothes/src/features/dashboard/presentation/result_tab_page.dart';
+import 'package:finding_clothes/src/features/dashboard/presentation/result_presentation/result_tab_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -17,13 +17,13 @@ class ResultPage extends ConsumerWidget {
         centerTitle: true,
       ),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 20,
-          ),
-          child: Column(
-            children: [
-              SizedBox(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 20,
+              ),
+              child: SizedBox(
                 height: MediaQuery.sizeOf(context).height * 0.21,
                 width: double.infinity,
                 child: ClipRRect(
@@ -34,14 +34,14 @@ class ResultPage extends ConsumerWidget {
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 33,
-              ),
-              const Expanded(
-                child: ResultTabPage(),
-              ),
-            ],
-          ),
+            ),
+            const SizedBox(
+              height: 33,
+            ),
+            const Expanded(
+              child: ResultTabPage(),
+            ),
+          ],
         ),
       ),
     );
