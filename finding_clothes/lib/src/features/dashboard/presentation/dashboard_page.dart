@@ -15,11 +15,12 @@ class DashboardPage extends ConsumerWidget {
     return Scaffold(
       backgroundColor: Colors.black,
       bottomNavigationBar: BottomAppBar(
+        height: 60,
+        padding: const EdgeInsets.all(0),
         color: Colors.black,
         shape: const CircularNotchedRectangle(),
         notchMargin: 40,
         child: SizedBox(
-          height: 60,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

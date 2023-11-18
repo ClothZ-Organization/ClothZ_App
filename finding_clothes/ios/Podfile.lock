@@ -2,27 +2,27 @@ PODS:
   - connectivity_plus (0.0.1):
     - Flutter
     - ReachabilitySwift
-  - Firebase/Auth (10.16.0):
+  - Firebase/Auth (10.17.0):
     - Firebase/CoreOnly
-    - FirebaseAuth (~> 10.16.0)
-  - Firebase/CoreOnly (10.16.0):
-    - FirebaseCore (= 10.16.0)
-  - firebase_auth (4.12.1):
-    - Firebase/Auth (= 10.16.0)
+    - FirebaseAuth (~> 10.17.0)
+  - Firebase/CoreOnly (10.17.0):
+    - FirebaseCore (= 10.17.0)
+  - firebase_auth (4.14.0):
+    - Firebase/Auth (= 10.17.0)
     - firebase_core
     - Flutter
-  - firebase_core (2.21.0):
-    - Firebase/CoreOnly (= 10.16.0)
+  - firebase_core (2.22.0):
+    - Firebase/CoreOnly (= 10.17.0)
     - Flutter
   - FirebaseAppCheckInterop (10.17.0)
-  - FirebaseAuth (10.16.0):
-    - FirebaseAppCheckInterop (~> 10.0)
+  - FirebaseAuth (10.17.0):
+    - FirebaseAppCheckInterop (~> 10.17)
     - FirebaseCore (~> 10.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.8)
     - GoogleUtilities/Environment (~> 7.8)
     - GTMSessionFetcher/Core (< 4.0, >= 2.1)
     - RecaptchaInterop (~> 100.0)
-  - FirebaseCore (10.16.0):
+  - FirebaseCore (10.17.0):
     - FirebaseCoreInternal (~> 10.0)
     - GoogleUtilities/Environment (~> 7.8)
     - GoogleUtilities/Logger (~> 7.8)
@@ -117,12 +117,12 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   connectivity_plus: 07c49e96d7fc92bc9920617b83238c4d178b446a
-  Firebase: 25899099b77d255a636e3579c3d9dce10ec150d5
-  firebase_auth: ff474dcf17bee5762106162e0791433024890ada
-  firebase_core: 68027ba03585e3efe1608e35d3ab2777a64eabe9
+  Firebase: f4ac0b02927af9253ae094d23deecf0890da7374
+  firebase_auth: 6a41305f668ac6f9bcbefdedfcba5aacb8367e92
+  firebase_core: efc9455611b8769fa90fbdae5da182600bd6901c
   FirebaseAppCheckInterop: 534d033d8d0436b4ab066a8205013d271e18a2b9
-  FirebaseAuth: 3862d87d4d58deff08f705d471896a2f66e8bbf0
-  FirebaseCore: 65a801af84cca84361ef9eac3fd868656968a53b
+  FirebaseAuth: 8d285d9f6e39cc8e23be53a4edd83a923ea629d8
+  FirebaseCore: 534544dd98cabcf4bf8598d88ec683b02319a528
   FirebaseCoreInternal: 2cf9202e226e3f78d2bf6d56c472686b935bfb7f
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   flutter_secure_storage: 23fc622d89d073675f2eaa109381aefbcf5a49be
