@@ -13,7 +13,16 @@ class ResultPage extends ConsumerWidget {
       backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title: const Text('ResultPage'),
+        title: const Text(
+          'ResultPage',
+          style: TextStyle(
+            fontFamily: 'WorkSans',
+            fontWeight: FontWeight.w600,
+            fontSize: 22.0,
+            height: 1.17,
+            color: Colors.white,
+          ),
+        ),
         centerTitle: true,
       ),
       body: SafeArea(
