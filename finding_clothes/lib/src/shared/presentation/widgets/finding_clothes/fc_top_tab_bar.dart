@@ -72,6 +72,8 @@ class FCTopTabBar extends StatelessWidget {
           ),
           borderRadius: BorderRadius.circular(8),
         ),
+        dividerColor: Colors.transparent,
+        indicatorPadding: const EdgeInsets.symmetric(horizontal: -10),
       ),
     );
   }
