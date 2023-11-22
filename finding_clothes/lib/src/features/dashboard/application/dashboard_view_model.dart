@@ -1,3 +1,4 @@
+import 'package:finding_clothes/src/features/dashboard/domain/list_result.dart';
 import 'package:finding_clothes/src/features/dashboard/presentation/bookmark_presentation/bookmark_page.dart';
 import 'package:finding_clothes/src/features/dashboard/presentation/home_page.dart';
 import 'package:finding_clothes/src/features/dashboard/presentation/result_presentation/result_page.dart';
@@ -14,6 +15,7 @@ class DashboardViewModel extends ViewModel {
   late final PresentationService _presentationService;
   int currentTab = 0;
   XFile? image;
+  ListResultModel? resultModel;
 
   late List<Widget> screens;
 

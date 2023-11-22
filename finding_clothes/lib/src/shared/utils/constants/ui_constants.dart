@@ -30,4 +30,5 @@ class UIConstants {
 
   //card Clothes
   static const double heightCardClothes = 204;
+  static const double widthCardClothes = 159;
 }

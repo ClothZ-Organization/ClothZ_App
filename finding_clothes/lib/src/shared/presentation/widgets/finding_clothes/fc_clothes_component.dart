@@ -31,7 +31,7 @@ class FCClothesCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
           color: Colors.transparent,
         ),
-        width: 159,
+        width: UIConstants.widthCardClothes,
         height: UIConstants.heightCardClothes,
         child: Stack(
           children: [
@@ -54,7 +54,8 @@ class FCClothesCard extends StatelessWidget {
                       // ),
                       child: CachedNetworkImage(
                         imageUrl: image,
-                        placeholder: (context, url) => const Center(child: FCLoadingIndicator()),
+                        placeholder: (context, url) =>
+                            const Center(child: FCLoadingIndicator()),
                         // const CircularProgressIndicator(),
                         errorWidget: (context, url, error) =>
                             const Icon(Icons.error),
@@ -107,6 +108,8 @@ class FCClothesCard extends StatelessWidget {
                   const Spacer(),
                   Text(
                     title,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 3,
                     style: const TextStyle(
                       fontFamily: 'WorkSans',
                       fontWeight: FontWeight.w600,
@@ -131,19 +134,23 @@ class FCClothesCard extends StatelessWidget {
                         ),
                       ),
                       const Spacer(),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: Colors.black,
-                          borderRadius: BorderRadius.circular(9.0),
-                        ),
-                        child: Text(
-                          '  $nameBrand  ',
-                          style: const TextStyle(
-                            fontFamily: 'WorkSans',
-                            fontWeight: FontWeight.w600,
-                            fontSize: 10,
-                            height: 1.3,
-                            color: Color(0XFFFFFFFF),
+                      Flexible(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.black,
+                            borderRadius: BorderRadius.circular(9.0),
+                          ),
+                          child: Text(
+                            '  $nameBrand  ',
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                            style: const TextStyle(
+                              fontFamily: 'WorkSans',
+                              fontWeight: FontWeight.w600,
+                              fontSize: 10,
+                              height: 1.3,
+                              color: Color(0XFFFFFFFF),
+                            ),
                           ),
                         ),
                       ),
