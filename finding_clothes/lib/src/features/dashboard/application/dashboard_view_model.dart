@@ -16,6 +16,7 @@ class DashboardViewModel extends ViewModel {
   int currentTab = 0;
   XFile? image;
   ListResultModel? resultModel;
+  bool isSearch = false;
 
   late List<Widget> screens;
 
@@ -49,6 +50,7 @@ class DashboardViewModel extends ViewModel {
 
   Future setImage(XFile? imageF) async {
     image = imageF;
+    isSearch = true;
   }
 
   bool isThis(int index) {

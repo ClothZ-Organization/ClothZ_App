@@ -5,7 +5,6 @@ import 'package:finding_clothes/src/features/dashboard/data/dashboard_api.dart';
 import 'package:finding_clothes/src/features/dashboard/domain/list_result.dart';
 import 'package:finding_clothes/src/shared/application/view_model.dart';
 import 'package:finding_clothes/src/shared/utils/constants/api_constants.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 
@@ -22,7 +21,8 @@ class ResultPageViewModel extends ViewModel {
   String imagePath() {
     String path = _dashboardViewModel.image?.path ??
         'assets/images/register_img.png'; // TODO: must be modified
-    if (path != 'assets/images/register_img.png') {
+    if (path != 'assets/images/register_img.png' && _dashboardViewModel.isSearch) {
+      _dashboardViewModel.isSearch = false;
       // search(path);
     }
     return path;
