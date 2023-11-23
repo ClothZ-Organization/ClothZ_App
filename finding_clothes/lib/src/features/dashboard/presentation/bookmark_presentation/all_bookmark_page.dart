@@ -7,19 +7,27 @@ class AllBookmarkPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // final viewModel = ref.watch();
-    return const Padding(
-      padding:  EdgeInsets.symmetric(horizontal: 24),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
-            "All Bookmarks",
-            style: TextStyle(
-              fontFamily: 'WorkSans',
-              fontWeight: FontWeight.w600,
-              fontSize: 40.0,
-              height: 1.12,
-              color: Color(0xFF7C00FF),
-              decoration: TextDecoration.none,
+          SizedBox(
+            width: MediaQuery.sizeOf(context).width * 0.46,
+            child: const Text(
+              "No saved products",
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 3,
+              style: TextStyle(
+                fontFamily: 'WorkSans',
+                fontWeight: FontWeight.w500,
+                fontSize: 30.0,
+                height: 1.2,
+                color: Colors.white,
+                decoration: TextDecoration.none,
+              ),
             ),
           ),
         ],

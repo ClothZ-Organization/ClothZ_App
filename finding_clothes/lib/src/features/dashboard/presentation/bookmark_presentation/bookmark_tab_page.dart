@@ -1,8 +1,5 @@
-import 'package:finding_clothes/src/features/dashboard/presentation/bookmark_presentation/accessories_bookmark_page.dart';
 import 'package:finding_clothes/src/features/dashboard/presentation/bookmark_presentation/all_bookmark_page.dart';
-import 'package:finding_clothes/src/features/dashboard/presentation/bookmark_presentation/clothes_bookmark_page.dart';
-import 'package:finding_clothes/src/features/dashboard/presentation/bookmark_presentation/watch_bookmark_page.dart';
-import 'package:finding_clothes/src/shared/presentation/widgets/finding_clothes/fc_top_tab_bar.dart';
+import 'package:finding_clothes/src/shared/presentation/widgets/finding_clothes/fc_top_title_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -12,7 +9,7 @@ class BookMarkTabPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return const DefaultTabController(
-      length: 4,
+      length: 1,
       child: Scaffold(
         backgroundColor: Colors.black,
         body: Column(
@@ -20,9 +17,14 @@ class BookMarkTabPage extends ConsumerWidget {
             Material(
               color: Colors.black,
               child: SizedBox(
-                width: double.infinity,
-                child: Center(
-                  child: FCTopTabBar(),
+                // width: double.infinity,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 24,
+                  ),
+                  child: FCTopTitlePage(
+                    nameText: 'Saved results',
+                  ),
                 ),
               ),
             ),
@@ -33,9 +35,9 @@ class BookMarkTabPage extends ConsumerWidget {
               child: TabBarView(
                 children: [
                   AllBookmarkPage(),
-                  ClothesBookmarkPage(),
-                  WatchBookmarkPage(),
-                  AccesoriesBookmarkPage(),
+                  // ClothesBookmarkPage(),
+                  // WatchBookmarkPage(),
+                  // AccesoriesBookmarkPage(),
                 ],
               ),
             ),

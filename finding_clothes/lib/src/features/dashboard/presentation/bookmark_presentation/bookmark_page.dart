@@ -23,7 +23,7 @@ class BookmarkPage extends ConsumerWidget {
           ),
         ),
       ),
-      body: Column(
+      body: const Column(
         children: [
           Expanded(
             child: BookMarkTabPage(),
