@@ -36,6 +36,11 @@ class AllResultPage extends ConsumerWidget {
                                   image: viewModel.getThumbnail(index * 2),
                                   onTapBookMark: () {
                                     debugPrint("Click on bookMark");
+                                    viewModel.openUrl(index * 2);
+                                  },
+                                  onTapOpenLink: () {
+                                    debugPrint('Click on Open link');
+                                    viewModel.openUrl(index * 2);
                                   },
                                 ),
                                 const SizedBox(
@@ -53,6 +58,10 @@ class AllResultPage extends ConsumerWidget {
                                             .getThumbnail(index * 2 + 1),
                                         onTapBookMark: () {
                                           debugPrint("Click on bookMark");
+                                        },
+                                        onTapOpenLink: () {
+                                          debugPrint('Click on Open link');
+                                          viewModel.openUrl(index * 2 + 1);
                                         },
                                       )
                                     : const SizedBox(

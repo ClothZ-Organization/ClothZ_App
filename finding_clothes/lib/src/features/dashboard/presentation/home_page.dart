@@ -86,9 +86,9 @@ class HomePage extends ConsumerWidget {
                       // viewModel.changeScreen();
                       debugPrint('-- add Photo');
                       //
-                      if(await viewModel.getImage(false)) {
-                          // ignore: use_build_context_synchronously
-                          showAlertDialog(context);
+                      if (await viewModel.getImage(false)) {
+                        // ignore: use_build_context_synchronously
+                        showAlertDialog(context);
                       }
                     },
                     splashColor: Colors.transparent,
@@ -206,6 +206,9 @@ class HomePage extends ConsumerWidget {
                             onTapBookMark: () {
                               debugPrint("Click on bookMark");
                               viewModel.change();
+                            },
+                            onTapOpenLink: () {
+                              debugPrint('Click on Open link');
                             },
                           ),
                           const SizedBox(

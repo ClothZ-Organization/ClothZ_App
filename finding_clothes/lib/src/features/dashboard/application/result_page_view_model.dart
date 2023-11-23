@@ -5,8 +5,10 @@ import 'package:finding_clothes/src/features/dashboard/data/dashboard_api.dart';
 import 'package:finding_clothes/src/features/dashboard/domain/list_result.dart';
 import 'package:finding_clothes/src/shared/application/view_model.dart';
 import 'package:finding_clothes/src/shared/utils/constants/api_constants.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
 
 class ResultPageViewModel extends ViewModel {
   late final DashboardViewModel _dashboardViewModel;
@@ -21,7 +23,8 @@ class ResultPageViewModel extends ViewModel {
   String imagePath() {
     String path = _dashboardViewModel.image?.path ??
         'assets/images/register_img.png'; // TODO: must be modified
-    if (path != 'assets/images/register_img.png' && _dashboardViewModel.isSearch) {
+    if (path != 'assets/images/register_img.png' &&
+        _dashboardViewModel.isSearch) {
       _dashboardViewModel.isSearch = false;
       // search(path);
     }
@@ -59,6 +62,17 @@ class ResultPageViewModel extends ViewModel {
     }
   }
 
+  Future<void> openUrl(int index) async {
+    final Uri uri =
+        Uri.parse(_dashboardViewModel.resultModel!.visual_matches[index].link);
+    if (!await launchUrl(
+      uri,
+      mode: LaunchMode.inAppWebView,
+    )) {
+      throw "Can not launch url $uri";
+    }
+  }
+
   bool isResult() {
     return _dashboardViewModel.resultModel != null;
   }
@@ -79,9 +93,9 @@ class ResultPageViewModel extends ViewModel {
     if (_dashboardViewModel.resultModel?.visual_matches[index].price != null) {
       return _dashboardViewModel
               .resultModel!.visual_matches[index].price?.value ??
-          '\$$index';
+          '';
     }
-    return '\$$index';
+    return '';
   }
 
   String getSource(int index) {

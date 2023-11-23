@@ -14,7 +14,7 @@ class ResultPage extends ConsumerWidget {
       appBar: AppBar(
         backgroundColor: Colors.black,
         title: const Text(
-          'ResultPage',
+          'Searched Product',
           style: TextStyle(
             fontFamily: 'WorkSans',
             fontWeight: FontWeight.w600,
