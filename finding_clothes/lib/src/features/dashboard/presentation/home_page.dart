@@ -124,9 +124,9 @@ class HomePage extends ConsumerWidget {
                 const SizedBox(
                   height: 16,
                 ),
-                const Text(
-                  "Scanned 483",
-                  style: TextStyle(
+                Text(
+                  "Scanned ${viewModel.counter}",
+                  style: const TextStyle(
                     fontFamily: 'WorkSans',
                     fontWeight: FontWeight.w700,
                     fontSize: 15.0,

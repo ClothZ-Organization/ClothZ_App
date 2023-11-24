@@ -44,7 +44,7 @@ class ResultPageViewModel extends ViewModel {
     }
   }
 
-  Future<void> _uploadImage(String imagePath) async {
+  Future<void> _uploadImage(String imagePath) async { // TODO: must be moved
     final url = Uri.parse('https://api.cloudinary.com/v1_1/dmkj3jw9a/upload');
     final request = http.MultipartRequest('POST', url)
       ..fields['upload_preset'] = 'pp9uwbox'
