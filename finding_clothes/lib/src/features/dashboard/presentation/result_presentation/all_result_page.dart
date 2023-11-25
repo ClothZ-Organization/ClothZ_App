@@ -18,73 +18,93 @@ class AllResultPage extends ConsumerWidget {
       ),
       child: Column(
         children: [
-          viewModel.isResult()
-              ? Expanded(
-                  child: ListView.builder(
-                      itemCount: viewModel.sizeResult(),
-                      itemBuilder: (BuildContext context, int index) {
-                        return Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                FCClothesCard(
-                                  title: viewModel.getTitle(index * 2),
-                                  price: viewModel.getPrice(index * 2),
-                                  nameBrand: viewModel.getSource(index * 2),
-                                  isBookMark: viewModel.isBookMark(index * 2),
-                                  image: viewModel.getThumbnail(index * 2),
-                                  onTapBookMark: () {
-                                    debugPrint("Click on bookMark");
-                                    viewModel.addElementInWishList(index * 2);
-                                  },
-                                  onTapOpenLink: () {
-                                    debugPrint('Click on Open link');
-                                    viewModel.openUrl(index * 2);
-                                  },
-                                ),
-                                const SizedBox(
-                                  width: 15,
-                                ),
-                                viewModel.isIndexOk(index * 2 + 1)
-                                    ? FCClothesCard(
-                                        title:
-                                            viewModel.getTitle(index * 2 + 1),
-                                        price:
-                                            viewModel.getPrice(index * 2 + 1),
-                                        nameBrand:
-                                            viewModel.getSource(index * 2 + 1),
-                                        isBookMark:
-                                            viewModel.isBookMark(index * 2 + 1),
-                                        image: viewModel
-                                            .getThumbnail(index * 2 + 1),
-                                        onTapBookMark: () {
-                                          debugPrint("Click on bookMark");
-                                          viewModel.addElementInWishList(
-                                              index * 2 + 1);
-                                        },
-                                        onTapOpenLink: () {
-                                          debugPrint('Click on Open link');
-                                          viewModel.openUrl(index * 2 + 1);
-                                        },
-                                      )
-                                    : const SizedBox(
-                                        width: UIConstants.widthCardClothes,
-                                      ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                          ],
-                        );
-                      }),
-                )
-              : const Center(
+          viewModel.isSearch
+              ? const Center(
                   child: FCLoadingIndicator(
                     size: LoadingIndicatorSize.standart,
                   ),
                 )
+              : viewModel.isResult()
+                  ? Expanded(
+                      child: ListView.builder(
+                          itemCount: viewModel.sizeResult(),
+                          itemBuilder: (BuildContext context, int index) {
+                            return Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    FCClothesCard(
+                                      title: viewModel.getTitle(index * 2),
+                                      price: viewModel.getPrice(index * 2),
+                                      nameBrand: viewModel.getSource(index * 2),
+                                      isBookMark:
+                                          viewModel.isBookMark(index * 2),
+                                      image: viewModel.getThumbnail(index * 2),
+                                      onTapBookMark: () {
+                                        debugPrint("Click on bookMark");
+                                        viewModel
+                                            .addElementInWishList(index * 2);
+                                      },
+                                      onTapOpenLink: () {
+                                        debugPrint('Click on Open link');
+                                        viewModel.openUrl(index * 2);
+                                      },
+                                    ),
+                                    const SizedBox(
+                                      width: 15,
+                                    ),
+                                    viewModel.isIndexOk(index * 2 + 1)
+                                        ? FCClothesCard(
+                                            title: viewModel
+                                                .getTitle(index * 2 + 1),
+                                            price: viewModel
+                                                .getPrice(index * 2 + 1),
+                                            nameBrand: viewModel
+                                                .getSource(index * 2 + 1),
+                                            isBookMark: viewModel
+                                                .isBookMark(index * 2 + 1),
+                                            image: viewModel
+                                                .getThumbnail(index * 2 + 1),
+                                            onTapBookMark: () {
+                                              debugPrint("Click on bookMark");
+                                              viewModel.addElementInWishList(
+                                                  index * 2 + 1);
+                                            },
+                                            onTapOpenLink: () {
+                                              debugPrint('Click on Open link');
+                                              viewModel.openUrl(index * 2 + 1);
+                                            },
+                                          )
+                                        : const SizedBox(
+                                            width: UIConstants.widthCardClothes,
+                                          ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                              ],
+                            );
+                          }),
+                    )
+                  : SizedBox(
+                  width: MediaQuery.sizeOf(context).width * 0.46,
+                  child: const Text(
+                    'No scanned products yet!',
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 3,
+                    style: TextStyle(
+                      fontFamily: 'WorkSans',
+                      fontWeight: FontWeight.w500,
+                      fontSize: 30.0,
+                      height: 1.2,
+                      color: Colors.white,
+                      decoration: TextDecoration.none,
+                    ),
+                  ),
+                ),
         ],
       ),
     );

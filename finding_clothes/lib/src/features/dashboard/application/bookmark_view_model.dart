@@ -1,11 +1,9 @@
 import 'package:finding_clothes/src/features/dashboard/application/dashboard_view_model.dart';
-import 'package:finding_clothes/src/features/dashboard/data/dashboard_api.dart';
 import 'package:finding_clothes/src/features/dashboard/data/firebase_data.dart';
 import 'package:finding_clothes/src/features/dashboard/domain/result_model.dart';
 import 'package:finding_clothes/src/shared/application/view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class BookMarkPageViewModel extends ViewModel {
   late final DashboardViewModel _dashboardViewModel;
