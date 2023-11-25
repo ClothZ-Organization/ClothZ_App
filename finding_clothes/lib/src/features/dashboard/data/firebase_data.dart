@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:finding_clothes/src/features/dashboard/domain/result_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -25,10 +26,68 @@ class FirebaseApi {
         int counter = documentSnapshot.get('counter');
         return counter;
       } else {
-        return -1; 
+        return -1;
       }
     } catch (e) {
       return -1;
+    }
+  }
+
+  Future<void> addInitialWishList(
+      String userId, List<ResultModel> wishList) async {
+    await FirebaseFirestore.instance.collection('bookMarks').doc(userId).set({
+      'wishList': wishList,
+    });
+  }
+
+  Future<void> addElementInWishList(String userId, ResultModel element) async {
+    await FirebaseFirestore.instance
+        .collection('bookMarks')
+        .doc(userId)
+        .update({
+      'wishList': FieldValue.arrayUnion([element.toJson()]),
+    });
+  }
+
+  // Future<void> updateWishList(
+  //     String userId, List<ResultModel> newWishList) async {
+  //   await FirebaseFirestore.instance
+  //       .collection('bookMarks')
+  //       .doc(userId)
+  //       .update({
+  //     'wishList': newWishList,
+  //   });
+  // }
+
+  Future<void> deleteElementFromWishList(
+      String userId, ResultModel element) async {
+    await FirebaseFirestore.instance
+        .collection('bookMarks')
+        .doc(userId)
+        .update({
+      'wishList': FieldValue.arrayRemove([element.toJson()]),
+    });
+  }
+
+  Future<List<ResultModel>> getWishList(String userId) async {
+    try {
+      DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance
+          .collection('bookMarks')
+          .doc(userId)
+          .get();
+
+      if (documentSnapshot.exists) {
+        var wishList = documentSnapshot.get('wishList') as List<dynamic>? ?? [];
+
+        List<ResultModel> resultModels =
+            wishList.map((element) => ResultModel.fromJson(element)).toList();
+
+        return resultModels;
+      } else {
+        return [];
+      }
+    } catch (e) {
+      return [];
     }
   }
 }

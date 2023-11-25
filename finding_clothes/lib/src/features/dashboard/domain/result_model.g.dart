@@ -14,6 +14,7 @@ ResultModel _$ResultModelFromJson(Map<String, dynamic> json) => ResultModel(
           ? null
           : PriceModel.fromJson(json['price'] as Map<String, dynamic>),
       thumbnail: json['thumbnail'] as String,
+      isBookMark: json['isBookMark'] as bool?,
     );
 
 Map<String, dynamic> _$ResultModelToJson(ResultModel instance) =>
@@ -21,6 +22,7 @@ Map<String, dynamic> _$ResultModelToJson(ResultModel instance) =>
       'title': instance.title,
       'link': instance.link,
       'source': instance.source,
-      'price': instance.price,
+      'price': instance.price?.toJson(),
       'thumbnail': instance.thumbnail,
+      'isBookMark': instance.isBookMark,
     };

@@ -10,6 +10,7 @@ class ResultModel {
   String source;
   PriceModel? price;
   String thumbnail;
+  bool? isBookMark;
 
   ResultModel({
     required this.title,
@@ -17,6 +18,7 @@ class ResultModel {
     required this.source,
     required this.price,
     required this.thumbnail,
+    required this.isBookMark,
   });
 
   factory ResultModel.fromJson(Map<String, dynamic> json) =>

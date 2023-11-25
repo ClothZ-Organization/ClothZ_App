@@ -1,4 +1,5 @@
 import 'package:finding_clothes/src/features/dashboard/domain/list_result.dart';
+import 'package:finding_clothes/src/features/dashboard/domain/result_model.dart';
 import 'package:finding_clothes/src/features/dashboard/presentation/bookmark_presentation/bookmark_page.dart';
 import 'package:finding_clothes/src/features/dashboard/presentation/home_page.dart';
 import 'package:finding_clothes/src/features/dashboard/presentation/result_presentation/result_page.dart';
@@ -7,6 +8,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../shared/application/view_model.dart';
 import '../../../shared/services/presentation_service.dart';
@@ -17,6 +19,8 @@ class DashboardViewModel extends ViewModel {
   XFile? image;
   ListResultModel? resultModel;
   bool isSearch = false;
+
+  List<ResultModel> wishList = [];
 
   late List<Widget> screens;
 
@@ -55,6 +59,16 @@ class DashboardViewModel extends ViewModel {
 
   bool isThis(int index) {
     return currentTab == index;
+  }
+
+  Future<void> openUrl(String url) async {
+    final Uri uri = Uri.parse(url);
+    if (!await launchUrl(
+      uri,
+      mode: LaunchMode.inAppWebView,
+    )) {
+      throw "Can not launch url $uri";
+    }
   }
 
   Future setTab(int index) async {

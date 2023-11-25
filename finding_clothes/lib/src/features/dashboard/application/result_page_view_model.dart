@@ -2,9 +2,12 @@ import 'dart:convert';
 
 import 'package:finding_clothes/src/features/dashboard/application/dashboard_view_model.dart';
 import 'package:finding_clothes/src/features/dashboard/data/dashboard_api.dart';
+import 'package:finding_clothes/src/features/dashboard/data/firebase_data.dart';
 import 'package:finding_clothes/src/features/dashboard/domain/list_result.dart';
+import 'package:finding_clothes/src/features/dashboard/domain/result_model.dart';
 import 'package:finding_clothes/src/shared/application/view_model.dart';
 import 'package:finding_clothes/src/shared/utils/constants/api_constants.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
@@ -13,11 +16,13 @@ import 'package:url_launcher/url_launcher.dart';
 class ResultPageViewModel extends ViewModel {
   late final DashboardViewModel _dashboardViewModel;
   late final DashboardApi _dashboardApi;
+  late final FirebaseApi _firebaseApi;
   String _imageUrl = '';
 
   ResultPageViewModel(Ref ref) {
     _dashboardViewModel = ref.read(dashboardViewModelProvider);
     _dashboardApi = ref.read(dashboardApi);
+    _firebaseApi = ref.read(firebaseApi);
   }
 
   String imagePath() {
@@ -39,12 +44,12 @@ class ResultPageViewModel extends ViewModel {
         apiKey: ApiConstants.apiKey,
       );
       _dashboardViewModel.resultModel = response;
-      // debugPrint('--length = ${response.visual_matches.length}');
       notifyListeners();
     }
   }
 
-  Future<void> _uploadImage(String imagePath) async { // TODO: must be moved
+  Future<void> _uploadImage(String imagePath) async {
+    // TODO: must be moved
     final url = Uri.parse('https://api.cloudinary.com/v1_1/dmkj3jw9a/upload');
     final request = http.MultipartRequest('POST', url)
       ..fields['upload_preset'] = 'pp9uwbox'
@@ -63,14 +68,23 @@ class ResultPageViewModel extends ViewModel {
   }
 
   Future<void> openUrl(int index) async {
-    final Uri uri =
-        Uri.parse(_dashboardViewModel.resultModel!.visual_matches[index].link);
-    if (!await launchUrl(
-      uri,
-      mode: LaunchMode.inAppWebView,
-    )) {
-      throw "Can not launch url $uri";
+    _dashboardViewModel.openUrl(_dashboardViewModel.resultModel!.visual_matches[index].link);
+  }
+
+  Future<void> addElementInWishList(int index) async {
+    String userId = FirebaseAuth.instance.currentUser!.uid;
+    if (_dashboardViewModel.resultModel!.visual_matches[index].isBookMark ??
+        false) {
+      _firebaseApi.deleteElementFromWishList(
+          userId, _dashboardViewModel.resultModel!.visual_matches[index]);
+      _dashboardViewModel.resultModel?.visual_matches[index].isBookMark = false;
+    } else {
+      _dashboardViewModel.resultModel?.visual_matches[index].isBookMark = true;
+      _firebaseApi.addElementInWishList(
+          userId, _dashboardViewModel.resultModel!.visual_matches[index]);
     }
+
+    notifyListeners();
   }
 
   bool isResult() {
@@ -79,6 +93,11 @@ class ResultPageViewModel extends ViewModel {
 
   bool isIndexOk(int index) {
     return index < _dashboardViewModel.resultModel!.visual_matches.length;
+  }
+
+  bool isBookMark(index) {
+    return _dashboardViewModel.resultModel?.visual_matches[index].isBookMark ??
+        false;
   }
 
   int? sizeResult() {

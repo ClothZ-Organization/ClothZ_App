@@ -32,11 +32,11 @@ class AllResultPage extends ConsumerWidget {
                                   title: viewModel.getTitle(index * 2),
                                   price: viewModel.getPrice(index * 2),
                                   nameBrand: viewModel.getSource(index * 2),
-                                  // isBookMark: false,
+                                  isBookMark: viewModel.isBookMark(index * 2),
                                   image: viewModel.getThumbnail(index * 2),
                                   onTapBookMark: () {
                                     debugPrint("Click on bookMark");
-                                    viewModel.openUrl(index * 2);
+                                    viewModel.addElementInWishList(index * 2);
                                   },
                                   onTapOpenLink: () {
                                     debugPrint('Click on Open link');
@@ -54,10 +54,14 @@ class AllResultPage extends ConsumerWidget {
                                             viewModel.getPrice(index * 2 + 1),
                                         nameBrand:
                                             viewModel.getSource(index * 2 + 1),
+                                        isBookMark:
+                                            viewModel.isBookMark(index * 2 + 1),
                                         image: viewModel
                                             .getThumbnail(index * 2 + 1),
                                         onTapBookMark: () {
                                           debugPrint("Click on bookMark");
+                                          viewModel.addElementInWishList(
+                                              index * 2 + 1);
                                         },
                                         onTapOpenLink: () {
                                           debugPrint('Click on Open link');
