@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:finding_clothes/src/features/dashboard/domain/result_model.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class FirebaseApi {
@@ -40,12 +39,12 @@ class FirebaseApi {
     });
   }
 
-  Future<void> addElementInWishList(String userId, ResultModel element) async {
+  Future<void> addElementInWishList(String userId, ResultModel item) async {
     await FirebaseFirestore.instance
         .collection('bookMarks')
         .doc(userId)
         .update({
-      'wishList': FieldValue.arrayUnion([element.toJson()]),
+      'wishList': FieldValue.arrayUnion([item.toJson()]),
     });
   }
 
@@ -60,12 +59,12 @@ class FirebaseApi {
   // }
 
   Future<void> deleteElementFromWishList(
-      String userId, ResultModel element) async {
+      String userId, ResultModel item) async {
     await FirebaseFirestore.instance
         .collection('bookMarks')
         .doc(userId)
         .update({
-      'wishList': FieldValue.arrayRemove([element.toJson()]),
+      'wishList': FieldValue.arrayRemove([item.toJson()]),
     });
   }
 
