@@ -18,7 +18,7 @@ class AllResultPage extends ConsumerWidget {
       ),
       child: Column(
         children: [
-          viewModel.isSearch
+          viewModel.isSearching
               ? const Center(
                   child: FCLoadingIndicator(
                     size: LoadingIndicatorSize.standart,

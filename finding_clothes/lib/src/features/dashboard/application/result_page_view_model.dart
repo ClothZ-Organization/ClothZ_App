@@ -16,7 +16,7 @@ class ResultPageViewModel extends ViewModel {
   late final DashboardApi _dashboardApi;
   late final FirebaseApi _firebaseApi;
   String _imageUrl = '';
-  bool isSearch = false;
+  bool isSearching = false;
 
   ResultPageViewModel(Ref ref) {
     _dashboardViewModel = ref.read(dashboardViewModelProvider);
@@ -36,7 +36,7 @@ class ResultPageViewModel extends ViewModel {
   }
 
   Future search(String imagePath) async {
-    isSearch = true;
+    isSearching = true;
     await _uploadImage(imagePath);
     if (_imageUrl != '') {
       ListResultModel response = await _dashboardApi.searchClothes(
@@ -45,7 +45,7 @@ class ResultPageViewModel extends ViewModel {
       );
       _dashboardViewModel.resultModel = response;
     }
-    isSearch = false;
+    isSearching = false;
     notifyListeners();
   }
 
