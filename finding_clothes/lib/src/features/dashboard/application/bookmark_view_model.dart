@@ -3,6 +3,7 @@ import 'package:finding_clothes/src/features/dashboard/data/firebase_data.dart';
 import 'package:finding_clothes/src/features/dashboard/domain/result_model.dart';
 import 'package:finding_clothes/src/shared/application/view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class BookMarkPageViewModel extends ViewModel {
@@ -79,6 +80,14 @@ class BookMarkPageViewModel extends ViewModel {
 
   String getThumbnail(int index) {
     return _dashboardViewModel.wishList[index].thumbnail;
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+
+    debugPrint('----- BookMark disposed');
   }
 }
 

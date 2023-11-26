@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:finding_clothes/src/features/dashboard/application/result_page_view_model.dart';
 import 'package:finding_clothes/src/features/dashboard/presentation/result_presentation/result_tab_page.dart';
 import 'package:flutter/material.dart';
@@ -37,11 +39,17 @@ class ResultPage extends ConsumerWidget {
                 width: double.infinity,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(14.0),
-                  child: Image.asset(
+                  child: _buildImageWidget(
                     viewModel.imagePath(),
-                    fit: BoxFit.cover,
                   ),
                 ),
+                // child: ClipRRect(
+                //   borderRadius: BorderRadius.circular(14.0),
+                //   child: Image.asset(
+                //     viewModel.imagePath(),
+                //     fit: BoxFit.cover,
+                //   ),
+                // ),
               ),
             ),
             const SizedBox(
@@ -54,5 +62,19 @@ class ResultPage extends ConsumerWidget {
         ),
       ),
     );
+  }
+
+  Widget _buildImageWidget(String imagePath) {
+    if (imagePath.startsWith('assets/')) {
+      return Image.asset(
+        imagePath,
+        fit: BoxFit.cover,
+      );
+    } else {
+      return Image.file(
+        File(imagePath),
+        fit: BoxFit.cover,
+      );
+    }
   }
 }

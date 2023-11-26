@@ -94,7 +94,7 @@ class AllResultPage extends ConsumerWidget {
                     'No scanned products yet!',
                     textAlign: TextAlign.center,
                     overflow: TextOverflow.ellipsis,
-                    maxLines: 3,
+                    maxLines: 4,
                     style: TextStyle(
                       fontFamily: 'WorkSans',
                       fontWeight: FontWeight.w500,

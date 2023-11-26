@@ -6,6 +6,7 @@ import 'package:finding_clothes/src/shared/services/authentication/authenticatio
 import 'package:finding_clothes/src/shared/services/presentation_service.dart';
 import 'package:finding_clothes/src/shared/utils/constants/routes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -70,6 +71,14 @@ class HomeViewModel extends ViewModel {
   Future change() async {
     isBookMark = !isBookMark;
     notifyListeners();
+  }
+  
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+
+    debugPrint('----- Home disposed');
   }
 }
 
