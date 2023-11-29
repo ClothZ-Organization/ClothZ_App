@@ -17,7 +17,7 @@ class ResultPageViewModel extends ViewModel {
   late final FirebaseApi _firebaseApi;
   String _imageUrl = '';
   bool isSearching = false;
-  String textMessage = 'No scanned products yet.';
+  String textMessage = 'No scanned products yet';
 
   ResultPageViewModel(Ref ref) {
     _dashboardViewModel = ref.read(dashboardViewModelProvider);
@@ -46,7 +46,7 @@ class ResultPageViewModel extends ViewModel {
       );
       _dashboardViewModel.resultModel = response;
       if(_dashboardViewModel.resultModel == null){
-        textMessage = 'Nothing found.';
+        textMessage = 'Nothing Found';
       }
     }
     isSearching = false;
