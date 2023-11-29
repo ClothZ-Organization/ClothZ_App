@@ -1,5 +1,4 @@
 import 'package:finding_clothes/src/features/dashboard/application/home_view_model.dart';
-import 'package:finding_clothes/src/features/drawer/presentation/drawer_page.dart';
 import 'package:finding_clothes/src/shared/presentation/widgets/finding_clothes/fc_clothes_component.dart';
 import 'package:finding_clothes/src/shared/utils/constants/ui_constants.dart';
 import 'package:flutter/cupertino.dart';

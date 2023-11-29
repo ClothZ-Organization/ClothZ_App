@@ -1,4 +1,3 @@
-import 'dart:ffi';
 
 import 'package:finding_clothes/src/features/drawer/application/drawer_view_model.dart';
 import 'package:flutter/material.dart';
