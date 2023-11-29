@@ -1,4 +1,5 @@
 import 'package:finding_clothes/src/features/dashboard/application/home_view_model.dart';
+import 'package:finding_clothes/src/features/drawer/presentation/drawer_page.dart';
 import 'package:finding_clothes/src/shared/presentation/widgets/finding_clothes/fc_clothes_component.dart';
 import 'package:finding_clothes/src/shared/utils/constants/ui_constants.dart';
 import 'package:flutter/cupertino.dart';
@@ -42,23 +43,40 @@ class HomePage extends ConsumerWidget {
               ),
             ],
           ),
+          AppBar(
+            backgroundColor: Colors.transparent,
+            toolbarHeight: 40,
+            leading: IconButton(
+              highlightColor: Colors.grey,
+              iconSize: 24,
+              icon: const Icon(
+                Icons.grid_view,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+                debugPrint('Preessed grid_view');
+              },
+            ),
+            actions: [
+              IconButton(
+                highlightColor: Colors.grey,
+                iconSize: 24,
+                icon: const Icon(
+                  Icons.settings,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+                  debugPrint('Preessed settings');
+                },
+              ),
+            ],
+          ),
           SafeArea(
             child: Column(
               // mainAxisAlignment: MainAxisAlignment.center,
               // mainAxisSize: MainAxisSize.max,
               children: [
-                // Spacer(),
-                const Text(
-                  "Scan ClothZ",
-                  style: TextStyle(
-                    fontFamily: 'WorkSans',
-                    fontWeight: FontWeight.w600,
-                    fontSize: 22.0,
-                    height: 1.17,
-                    color: Colors.white,
-                    decoration: TextDecoration.none,
-                  ),
-                ),
                 const SizedBox(
                   height: 40,
                 ),

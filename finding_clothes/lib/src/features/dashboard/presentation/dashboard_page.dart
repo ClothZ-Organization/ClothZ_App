@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:finding_clothes/src/features/dashboard/application/dashboard_view_model.dart';
+import 'package:finding_clothes/src/features/drawer/presentation/drawer_page.dart';
 import 'package:finding_clothes/src/shared/presentation/widgets/finding_clothes/fc_bottom_tab_bar_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -14,6 +15,8 @@ class DashboardPage extends ConsumerWidget {
 
     return Scaffold(
       backgroundColor: Colors.black,
+      drawer: const DrawerPage(),
+      drawerScrimColor: Colors.transparent,
       bottomNavigationBar: BottomAppBar(
         height: 60,
         padding: const EdgeInsets.all(0),

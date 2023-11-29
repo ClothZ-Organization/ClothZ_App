@@ -49,6 +49,7 @@ dependencies:
   firebase_core: ^2.20.0
   firebase_auth: ^4.12.1
   cloud_firestore: ^4.13.2
+  firebase_storage: ^11.5.3
   cached_network_image: ^3.3.0
   image_picker: ^1.0.4
   permission_handler: ^11.0.1
