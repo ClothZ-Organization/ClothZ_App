@@ -90,12 +90,12 @@ class AllResultPage extends ConsumerWidget {
                     )
                   : SizedBox(
                   width: MediaQuery.sizeOf(context).width * 0.46,
-                  child: const Text(
-                    'No scanned products yet!',
+                  child: Text(
+                    viewModel.textMessage,
                     textAlign: TextAlign.center,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 4,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontFamily: 'WorkSans',
                       fontWeight: FontWeight.w500,
                       fontSize: 30.0,
