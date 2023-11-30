@@ -53,10 +53,6 @@ class FCClothesCard extends StatelessWidget {
                         height: UIConstants.heightCardClothes * 0.68,
                         width: UIConstants.widthCardClothes * 0.68, //
                         child: ClipRRect(
-                          // child: Image.asset(
-                          //   image,
-                          //   // fit: BoxFit.cover,
-                          // ),
                           child: CachedNetworkImage(
                             imageUrl: image,
                             fit: BoxFit.cover,
@@ -84,7 +80,7 @@ class FCClothesCard extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.only(
-                top: 6,
+                top: 9,
                 bottom: 12,
                 left: 12,
                 right: 10,

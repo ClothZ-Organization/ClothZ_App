@@ -1,4 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:finding_clothes/src/features/drawer/application/drawer_view_model.dart';
+import 'package:finding_clothes/src/shared/domain/loading_indicator_size.dart';
+import 'package:finding_clothes/src/shared/presentation/widgets/finding_clothes/fc_dialog_utils.dart';
+import 'package:finding_clothes/src/shared/presentation/widgets/finding_clothes/fc_loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
@@ -10,75 +14,109 @@ class DrawerPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final viewModel = ref.watch(drawerViewModelProvider);
 
-    return Drawer(
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.zero,
-      ),
-      width: MediaQuery.of(context).size.width * 0.76,
-      backgroundColor: Colors.black,
-      shadowColor: const Color(0xFF7C00FF),
-      elevation: 110,
-      child: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            const Center(
-              child: Text(
-                'Menu',
-                style: TextStyle(
-                  fontFamily: 'WorkSans',
-                  fontWeight: FontWeight.w600,
-                  fontSize: 22,
-                  height: 1.25,
-                  color: Colors.white,
+    return Stack(
+      children: [
+        IgnorePointer(
+          ignoring: viewModel.isLoading,
+          child: Drawer(
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.zero,
+            ),
+            width: MediaQuery.of(context).size.width * 0.76,
+            backgroundColor: Colors.black,
+            shadowColor: const Color(0xFF7C00FF),
+            elevation: 110,
+            child: SafeArea(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  const Center(
+                    child: Text(
+                      'Menu',
+                      style: TextStyle(
+                        fontFamily: 'WorkSans',
+                        fontWeight: FontWeight.w600,
+                        fontSize: 22,
+                        height: 1.25,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 31,
+                  ),
+                  Center(
+                    child: Material(
+                      borderRadius: const BorderRadius.all(Radius.circular(90)),
+                      color: const Color(0xFF222222),
+                      child: imageDrawer(
+                        MediaQuery.of(context).size.width * 0.33,
+                        viewModel.getImagePath(),
+                        () async {
+                          if (await viewModel.setImage()) {
+                            // ignore: use_build_context_synchronously
+                            FCDialogUtils.showAlertDialog(context);
+                          }
+                          debugPrint('Click on image');
+                        },
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 45,
+                  ),
+                  buttonDrawer(viewModel, context, 'lib/icons/edit.svg',
+                      'Privacy Policy', () {}),
+                  const SizedBox(
+                    height: 34,
+                  ),
+                  buttonDrawer(
+                      viewModel,
+                      context,
+                      'lib/icons/clipboard-text.svg',
+                      'Terms & Conditions',
+                      () {}),
+                  const SizedBox(
+                    height: 34,
+                  ),
+                  buttonDrawer(viewModel, context, 'lib/icons/user-square.svg',
+                      'Community', () {}),
+                  const SizedBox(
+                    height: 34,
+                  ),
+                  buttonDrawer(viewModel, context, 'lib/icons/star.svg',
+                      'Leave a Review', () {}),
+                  const SizedBox(
+                    height: 34,
+                  ),
+                  buttonDrawer(
+                      viewModel, context, 'lib/icons/logout.svg', 'Log Out',
+                      () {
+                    viewModel.logOut();
+                  }),
+                  const SizedBox(
+                    height: 24,
+                  ),
+                  SizedBox(
+                    height: MediaQuery.paddingOf(context).bottom,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        if (viewModel.isLoading)
+          Container(
+            color: Colors.black.withOpacity(0.5), 
+            child: const Center(
+              child: Center(
+                child: FCLoadingIndicator(
+                  size: LoadingIndicatorSize.standart,
                 ),
               ),
             ),
-            const SizedBox(
-              height: 31,
-            ),
-            Center(
-              child: Material(
-                  borderRadius: const BorderRadius.all(Radius.circular(90)),
-                  color: const Color(0xFF222222),
-                  child: imageDrawer(MediaQuery.of(context).size.width * 0.33)),
-            ),
-            const SizedBox(
-              height: 45,
-            ),
-            buttonDrawer(viewModel, context, 'lib/icons/edit.svg',
-                'Privacy Policy', () {}),
-            const SizedBox(
-              height: 34,
-            ),
-            buttonDrawer(viewModel, context, 'lib/icons/clipboard-text.svg',
-                'Terms & Conditions', () {}),
-            const SizedBox(
-              height: 34,
-            ),
-            buttonDrawer(viewModel, context, 'lib/icons/user-square.svg',
-                'Community', () {}),
-            const SizedBox(
-              height: 34,
-            ),
-            buttonDrawer(viewModel, context, 'lib/icons/star.svg',
-                'Leave a Review', () {}),
-            const SizedBox(
-              height: 34,
-            ),
-            buttonDrawer(viewModel, context, 'lib/icons/logout.svg', 'Log Out',
-                () {
-              viewModel.logOut();
-            }),
-            const SizedBox(
-              height: 24,
-            ),
-            SizedBox(
-              height: MediaQuery.paddingOf(context).bottom,
-            ),
-          ],
-        ),
-      ),
+          ),
+      ],
     );
   }
 
@@ -125,7 +163,7 @@ class DrawerPage extends ConsumerWidget {
     );
   }
 
-  Widget imageDrawer(double sizeImg) {
+  Widget imageDrawer(double sizeImg, String imagePath, VoidCallback onTap) {
     return Stack(
       children: <Widget>[
         Material(
@@ -135,6 +173,7 @@ class DrawerPage extends ConsumerWidget {
             borderRadius: BorderRadius.circular(90.0),
             splashColor: Colors.transparent,
             highlightColor: Colors.grey,
+            onTap: onTap,
             child: Container(
               height: sizeImg,
               width: sizeImg,
@@ -145,18 +184,16 @@ class DrawerPage extends ConsumerWidget {
                 ),
                 child: Opacity(
                   opacity: 0.8,
-                  child: Image.asset(
-                    'assets/images/profile.jpeg',
-                    width: sizeImg,
-                    height: sizeImg,
-                    fit: BoxFit.cover,
-                  ),
+                  child: _buildImageWidget(imagePath, sizeImg),
+                  // Image.asset(
+                  //   imagePath,
+                  //   width: sizeImg,
+                  //   height: sizeImg,
+                  //   fit: BoxFit.cover,
+                  // ),
                 ),
               ),
             ),
-            onTap: () {
-              debugPrint('Click on image');
-            },
           ),
         ),
         Positioned(
@@ -172,5 +209,32 @@ class DrawerPage extends ConsumerWidget {
         ),
       ],
     );
+  }
+
+  Widget _buildImageWidget(String imagePath, double sizeImg) {
+    if (imagePath.startsWith('assets/')) {
+      return Image.asset(
+        imagePath,
+        width: sizeImg,
+        height: sizeImg,
+        fit: BoxFit.cover,
+      );
+    } else {
+      return CachedNetworkImage(
+        imageUrl: imagePath,
+        height: sizeImg,
+        width: sizeImg,
+        fit: BoxFit.cover,
+        placeholder: (context, url) =>
+            const Center(child: FCLoadingIndicator()),
+        errorWidget: (context, url, error) => const Icon(Icons.error),
+      );
+      // Image.file(
+      //   File(imagePath),
+      //   width: sizeImg,
+      //   height: sizeImg,
+      //   fit: BoxFit.cover,
+      // );
+    }
   }
 }

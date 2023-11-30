@@ -7,12 +7,12 @@ class FCTextField extends StatelessWidget {
   final bool isObscureText;
 
   const FCTextField({
-    Key? key,
+    super.key,
     required this.controller,
     required this.onChanged,
     required this.hintText,
     this.isObscureText = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

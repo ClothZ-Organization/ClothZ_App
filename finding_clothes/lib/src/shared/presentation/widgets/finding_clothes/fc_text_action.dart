@@ -22,7 +22,7 @@ class FCTextAction extends StatelessWidget {
           decoration: TextDecoration.none,
         ),
         children: <InlineSpan>[
-           TextSpan(
+          TextSpan(
             text: text,
             style: const TextStyle(
               fontWeight: FontWeight.w400,
@@ -34,16 +34,20 @@ class FCTextAction extends StatelessWidget {
           ),
           WidgetSpan(
             child: InkWell(
-              onTap:  onTap,
-              splashColor: const Color(0xFFF4F6F8),
-              child: Text(
-                textAction,
-                style: const TextStyle(
-                  fontWeight: FontWeight.w400,
-                  fontSize: 14,
-                  height: 1.14,
-                  color: Colors.white,
-                  decoration: TextDecoration.none,
+              splashColor: Colors.transparent,
+              borderRadius: BorderRadius.circular(8.0),
+              onTap: onTap,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 5),
+                child: Text(
+                  textAction,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 14,
+                    height: 1.14,
+                    color: Colors.white,
+                    decoration: TextDecoration.none,
+                  ),
                 ),
               ),
             ),

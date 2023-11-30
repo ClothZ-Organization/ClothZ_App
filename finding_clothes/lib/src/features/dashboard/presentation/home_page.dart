@@ -1,11 +1,10 @@
 import 'package:finding_clothes/src/features/dashboard/application/home_view_model.dart';
 import 'package:finding_clothes/src/shared/presentation/widgets/finding_clothes/fc_clothes_component.dart';
+import 'package:finding_clothes/src/shared/presentation/widgets/finding_clothes/fc_dialog_utils.dart';
 import 'package:finding_clothes/src/shared/utils/constants/ui_constants.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 // ignore: must_be_immutable
 class HomePage extends ConsumerWidget {
@@ -111,7 +110,7 @@ class HomePage extends ConsumerWidget {
                       //
                       if (await viewModel.getImage(false)) {
                         // ignore: use_build_context_synchronously
-                        showAlertDialog(context);
+                        FCDialogUtils.showAlertDialog(context);
                       }
                     },
                     splashColor: Colors.transparent,
@@ -246,24 +245,4 @@ class HomePage extends ConsumerWidget {
       ),
     );
   }
-
-  showAlertDialog(context) => showCupertinoDialog<void>(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) => CupertinoAlertDialog(
-          title: const Text('Permission Denied'),
-          content: const Text('Allow access to gallery and photos'),
-          actions: <CupertinoDialogAction>[
-            CupertinoDialogAction(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Cancel'),
-            ),
-            CupertinoDialogAction(
-              isDefaultAction: true,
-              onPressed: () => openAppSettings(),
-              child: const Text('Settings'),
-            ),
-          ],
-        ),
-      );
 }
