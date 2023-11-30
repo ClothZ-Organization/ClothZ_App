@@ -1,24 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+import 'package:flutter_svg/svg.dart';
 
 class FCBottomTabBarButton extends StatelessWidget {
   final bool isSelected;
-  final IconData iconButton;
+  final String iconButtonPath;
   final VoidCallback onTap;
   const FCBottomTabBarButton(
       {super.key,
       required this.isSelected,
-      required this.iconButton,
+      required this.iconButtonPath,
       required this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      splashColor:
-          Colors.transparent, 
-      highlightColor:
-          Colors.transparent, 
+      splashColor: Colors.transparent,
+      highlightColor: Colors.transparent,
       child: Column(
         children: [
           Container(
@@ -35,10 +33,13 @@ class FCBottomTabBarButton extends StatelessWidget {
           const SizedBox(
             height: 16,
           ),
-          Icon(
-            size: 30,
-            iconButton,
-            color: isSelected ? const Color(0xFF7C00FF) : Colors.white,
+          SvgPicture.asset(
+            iconButtonPath,
+            colorFilter: ColorFilter.mode(
+                isSelected ? const Color(0xFF7C00FF) : Colors.white,
+                BlendMode.srcATop),
+            height: 24,
+            width: 24,
           ),
         ],
       ),

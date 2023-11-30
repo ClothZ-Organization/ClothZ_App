@@ -18,7 +18,7 @@ class DashboardPage extends ConsumerWidget {
       drawer: const DrawerPage(),
       drawerScrimColor: Colors.transparent,
       bottomNavigationBar: BottomAppBar(
-        height: 60,
+        height: 50,
         padding: const EdgeInsets.all(0),
         color: Colors.black,
         shape: const CircularNotchedRectangle(),
@@ -29,7 +29,7 @@ class DashboardPage extends ConsumerWidget {
             children: [
               FCBottomTabBarButton(
                 isSelected: viewModel.isThis(0),
-                iconButton: Icons.home,
+                iconButtonPath: 'lib/icons/home.svg',
                 onTap: () {
                   viewModel.setTab(0);
                 },
@@ -39,7 +39,7 @@ class DashboardPage extends ConsumerWidget {
               ),
               FCBottomTabBarButton(
                 isSelected: viewModel.isThis(1),
-                iconButton: Icons.fit_screen_sharp,
+                iconButtonPath: 'lib/icons/scan.svg',
                 onTap: () {
                   viewModel.setTab(1);
                 },
@@ -49,7 +49,7 @@ class DashboardPage extends ConsumerWidget {
               ),
               FCBottomTabBarButton(
                 isSelected: viewModel.isThis(2),
-                iconButton: Icons.bookmark_border,
+                iconButtonPath: 'lib/icons/bookmark.svg',
                 onTap: () {
                   viewModel.setTab(2);
                 },

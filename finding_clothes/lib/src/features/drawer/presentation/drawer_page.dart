@@ -1,7 +1,7 @@
-
 import 'package:finding_clothes/src/features/drawer/application/drawer_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/svg.dart';
 
 class DrawerPage extends ConsumerWidget {
   const DrawerPage({super.key});
@@ -17,7 +17,7 @@ class DrawerPage extends ConsumerWidget {
       width: MediaQuery.of(context).size.width * 0.76,
       backgroundColor: Colors.black,
       shadowColor: const Color(0xFF7C00FF),
-      elevation: 50,
+      elevation: 110,
       child: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -46,27 +46,28 @@ class DrawerPage extends ConsumerWidget {
             const SizedBox(
               height: 45,
             ),
-            buttonDrawer(viewModel, context, Icons.edit_document,
+            buttonDrawer(viewModel, context, 'lib/icons/edit.svg',
                 'Privacy Policy', () {}),
             const SizedBox(
               height: 34,
             ),
-            buttonDrawer(viewModel, context, Icons.file_open_outlined,
+            buttonDrawer(viewModel, context, 'lib/icons/clipboard-text.svg',
                 'Terms & Conditions', () {}),
             const SizedBox(
               height: 34,
             ),
-            buttonDrawer(viewModel, context, Icons.person_outline_rounded,
+            buttonDrawer(viewModel, context, 'lib/icons/user-square.svg',
                 'Community', () {}),
             const SizedBox(
               height: 34,
             ),
-            buttonDrawer(
-                viewModel, context, Icons.star_border, 'Leave a Review', () {}),
+            buttonDrawer(viewModel, context, 'lib/icons/star.svg',
+                'Leave a Review', () {}),
             const SizedBox(
               height: 34,
             ),
-            buttonDrawer(viewModel, context, Icons.logout, 'Log Out', () {
+            buttonDrawer(viewModel, context, 'lib/icons/logout.svg', 'Log Out',
+                () {
               viewModel.logOut();
             }),
             const SizedBox(
@@ -81,7 +82,7 @@ class DrawerPage extends ConsumerWidget {
     );
   }
 
-  Widget buttonDrawer(final viewModel, BuildContext context, IconData iconData,
+  Widget buttonDrawer(final viewModel, BuildContext context, String iconPath,
       String nameButton, VoidCallback onTap) {
     return InkWell(
       borderRadius: BorderRadius.circular(8.0),
@@ -98,10 +99,12 @@ class DrawerPage extends ConsumerWidget {
             SizedBox(
               width: MediaQuery.sizeOf(context).width * 0.082,
             ),
-            Icon(
-              iconData,
-              size: 20,
-              color: Colors.white,
+            SvgPicture.asset(
+              iconPath,
+              colorFilter:
+                  const ColorFilter.mode(Colors.white, BlendMode.srcATop),
+              height: 20,
+              width: 20,
             ),
             const SizedBox(
               width: 15,
@@ -156,13 +159,15 @@ class DrawerPage extends ConsumerWidget {
             },
           ),
         ),
-        const Positioned(
+        Positioned(
           bottom: 0,
           right: 0,
-          child: Icon(
-            Icons.image,
-            color: Colors.white,
-            size: 32,
+          child: SvgPicture.asset(
+            'lib/icons/gallery.svg',
+            colorFilter:
+                const ColorFilter.mode(Colors.white, BlendMode.srcATop),
+            height: 32,
+            width: 32,
           ),
         ),
       ],

@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:finding_clothes/src/shared/domain/loading_indicator_size.dart';
 import 'package:finding_clothes/src/shared/presentation/widgets/finding_clothes/fc_loading_indicator.dart';
 import 'package:finding_clothes/src/shared/utils/constants/ui_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class FCClothesCard extends StatelessWidget {
   final String title;
@@ -87,7 +87,7 @@ class FCClothesCard extends StatelessWidget {
                 top: 6,
                 bottom: 12,
                 left: 12,
-                right: 12,
+                right: 10,
               ),
               child: Column(
                 mainAxisSize: MainAxisSize.max,
@@ -111,12 +111,17 @@ class FCClothesCard extends StatelessWidget {
                               end: Alignment.bottomRight,
                             ).createShader(bounds);
                           },
-                          child: Icon(
-                            isBookMark ? Icons.bookmark : Icons.bookmark_border,
-                            size: 24,
-                            color: isBookMark
-                                ? const Color(0xFFFFFFFF)
-                                : Colors.black,
+                          child: SvgPicture.asset(
+                            isBookMark
+                                ? 'lib/icons/bookmark_full.svg'
+                                : 'lib/icons/bookmark.svg',
+                            colorFilter: ColorFilter.mode(
+                                isBookMark
+                                    ? const Color(0xFFFFFFFF)
+                                    : Colors.black,
+                                BlendMode.srcATop),
+                            height: 16,
+                            width: 16,
                           ),
                         ),
                       ),

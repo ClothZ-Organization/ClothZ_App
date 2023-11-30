@@ -4,6 +4,7 @@ import 'package:finding_clothes/src/shared/utils/constants/ui_constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 // ignore: must_be_immutable
@@ -48,9 +49,12 @@ class HomePage extends ConsumerWidget {
             leading: IconButton(
               highlightColor: Colors.grey,
               iconSize: 24,
-              icon: const Icon(
-                Icons.grid_view,
-                color: Colors.white,
+              icon: SvgPicture.asset(
+                'lib/icons/category.svg',
+                colorFilter:
+                    const ColorFilter.mode(Colors.white, BlendMode.srcATop),
+                height: 24,
+                width: 24,
               ),
               onPressed: () {
                 Scaffold.of(context).openDrawer();
@@ -61,9 +65,12 @@ class HomePage extends ConsumerWidget {
               IconButton(
                 highlightColor: Colors.grey,
                 iconSize: 24,
-                icon: const Icon(
-                  Icons.settings,
-                  color: Colors.white,
+                icon: SvgPicture.asset(
+                  'lib/icons/setting.svg',
+                  colorFilter:
+                      const ColorFilter.mode(Colors.white, BlendMode.srcATop),
+                  height: 24,
+                  width: 24,
                 ),
                 onPressed: () {
                   debugPrint('Preessed settings');
@@ -93,7 +100,6 @@ class HomePage extends ConsumerWidget {
                 const SizedBox(
                   height: 40,
                 ),
-
                 Material(
                   borderRadius: BorderRadius.circular(16.0),
                   color: const Color(0xFF222222),
@@ -123,7 +129,6 @@ class HomePage extends ConsumerWidget {
                     ),
                   ),
                 ),
-
                 const SizedBox(
                   height: 16,
                 ),
@@ -155,9 +160,7 @@ class HomePage extends ConsumerWidget {
                 const SizedBox(
                   height: 16,
                 ),
-
                 const Spacer(),
-
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 28),
                   child: Row(
