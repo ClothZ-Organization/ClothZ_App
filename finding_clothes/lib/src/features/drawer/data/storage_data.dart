@@ -14,7 +14,7 @@ class StorageDrawerApi {
   Future<String> uploadPhoto(File file) async {
     Reference storageRef = _storage.ref().child('users/imageProfile/$userId');
     UploadTask uploadTask = storageRef.putFile(file);
-    TaskSnapshot snapshot = await uploadTask;//storageRef.putFile(file);
+    TaskSnapshot snapshot = await uploadTask;
     String downloadurl = await snapshot.ref.getDownloadURL();
 
     return downloadurl;
