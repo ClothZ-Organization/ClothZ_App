@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:finding_clothes/src/features/drawer/application/drawer_view_model.dart';
+import 'package:finding_clothes/src/features/drawer/presentation/card_upgrade_plan_drawer.dart';
 import 'package:finding_clothes/src/shared/domain/loading_indicator_size.dart';
 import 'package:finding_clothes/src/shared/presentation/widgets/finding_clothes/fc_dialog_utils.dart';
 import 'package:finding_clothes/src/shared/presentation/widgets/finding_clothes/fc_loading_indicator.dart';
@@ -94,11 +95,21 @@ class DrawerPage extends ConsumerWidget {
                       () {
                     viewModel.logOut();
                   }),
-                  const SizedBox(
-                    height: 24,
-                  ),
-                  SizedBox(
-                    height: MediaQuery.paddingOf(context).bottom,
+                  const Spacer(),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      left: MediaQuery.sizeOf(context).width * 0.082,
+                      right: MediaQuery.sizeOf(context).width * 0.082,
+                    ),
+                    child: CardUpgradePlanDrawer(
+                      scanNumber: 35,
+                      fromNumberScan: 100,
+                      descriptionText: 'Scanned Products',
+                      textButton: 'Upgrade Plan',
+                      onTap: () {
+                        debugPrint('Click on Upgrade Plan');
+                      },
+                    ),
                   ),
                 ],
               ),
@@ -107,7 +118,7 @@ class DrawerPage extends ConsumerWidget {
         ),
         if (viewModel.isLoading)
           Container(
-            color: Colors.black.withOpacity(0.5), 
+            color: Colors.black.withOpacity(0.5),
             child: const Center(
               child: Center(
                 child: FCLoadingIndicator(
@@ -185,12 +196,6 @@ class DrawerPage extends ConsumerWidget {
                 child: Opacity(
                   opacity: 0.8,
                   child: _buildImageWidget(imagePath, sizeImg),
-                  // Image.asset(
-                  //   imagePath,
-                  //   width: sizeImg,
-                  //   height: sizeImg,
-                  //   fit: BoxFit.cover,
-                  // ),
                 ),
               ),
             ),

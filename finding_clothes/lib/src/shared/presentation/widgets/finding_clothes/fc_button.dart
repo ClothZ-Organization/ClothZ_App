@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 
 class FCButton extends StatelessWidget {
   final String text;
+  final double fontSize;
+  final double height;
   final VoidCallback onTap;
-  const FCButton({super.key, this.text = '', required this.onTap});
+  const FCButton({super.key, this.text = '', this.fontSize = 16.0, this.height = 49.0, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 49.0,
+      height: height,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8.0),
         gradient: const LinearGradient(
@@ -33,11 +35,11 @@ class FCButton extends StatelessWidget {
         ),
         child: Text(
           text,
-          style: const TextStyle(
+          style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.w500,
-            fontSize: 16,
-            height: 1.0,
+            fontSize: fontSize,
+            height: 1.2,
           ),
         ),
       ),

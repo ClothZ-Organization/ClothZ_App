@@ -160,14 +160,14 @@ class HomePage extends ConsumerWidget {
                   height: 16,
                 ),
                 const Spacer(),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 28),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 28),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Text(
-                        "Featured Products",
+                      Text(
+                        "Searched Products",
                         style: TextStyle(
                           fontFamily: 'WorkSans',
                           fontWeight: FontWeight.w500,
@@ -177,27 +177,7 @@ class HomePage extends ConsumerWidget {
                           decoration: TextDecoration.none,
                         ),
                       ),
-                      const Spacer(),
-                      InkWell(
-                        onTap: () {
-                          debugPrint('Action See all.');
-                          //
-                          viewModel.logOut(); // must be deleted
-                          //
-                        },
-                        splashColor: Colors.transparent,
-                        borderRadius: BorderRadius.circular(8.0),
-                        child: const Text(
-                          ' See all ',
-                          style: TextStyle(
-                            fontFamily: 'WorkSans',
-                            fontWeight: FontWeight.w500,
-                            fontSize: 14,
-                            height: 1.17,
-                            color: Color(0XFFC4C4C4),
-                          ),
-                        ),
-                      ),
+                      Spacer(),
                     ],
                   ),
                 ),
