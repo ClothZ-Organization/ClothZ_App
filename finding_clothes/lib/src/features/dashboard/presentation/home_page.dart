@@ -1,6 +1,7 @@
 import 'package:finding_clothes/src/features/dashboard/application/home_view_model.dart';
 import 'package:finding_clothes/src/shared/presentation/widgets/finding_clothes/fc_clothes_component.dart';
 import 'package:finding_clothes/src/shared/presentation/widgets/finding_clothes/fc_dialog_utils.dart';
+import 'package:finding_clothes/src/shared/presentation/widgets/finding_clothes/fc_card_scan.dart';
 import 'package:finding_clothes/src/shared/utils/constants/ui_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -99,34 +100,17 @@ class HomePage extends ConsumerWidget {
                 const SizedBox(
                   height: 40,
                 ),
-                Material(
-                  borderRadius: BorderRadius.circular(16.0),
-                  color: const Color(0xFF222222),
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(16.0),
-                    onTap: () async {
-                      // viewModel.changeScreen();
-                      debugPrint('-- add Photo');
-                      //
-                      if (await viewModel.getImage(false)) {
-                        // ignore: use_build_context_synchronously
-                        FCDialogUtils.showAlertDialog(context);
-                      }
-                    },
-                    splashColor: Colors.transparent,
-                    child: Container(
-                      height: 150,
-                      width: 150,
-                      decoration: const BoxDecoration(
-                        color: Colors.transparent,
-                      ),
-                      child: ClipRRect(
-                        child: Image.asset(
-                          'assets/images/folder_img.png',
-                        ),
-                      ),
-                    ),
-                  ),
+                FCCardScan(
+                  titleText: 'Search products',
+                  descriptionText: 'Upload your own photo to find similar products and the best prices.',
+                  iconPath: 'lib/icons/scan.svg',
+                  onTap: () async {
+                    debugPrint('-- add Photo');
+                    if (await viewModel.getImage(false)) {
+                      // ignore: use_build_context_synchronously
+                      FCDialogUtils.showAlertDialog(context);
+                    }
+                  },
                 ),
                 const SizedBox(
                   height: 16,
