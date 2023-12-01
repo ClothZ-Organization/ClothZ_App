@@ -102,7 +102,7 @@ class DrawerPage extends ConsumerWidget {
                       right: MediaQuery.sizeOf(context).width * 0.082,
                     ),
                     child: CardUpgradePlanDrawer(
-                      scanNumber: 35,
+                      scanNumber: viewModel.getCounter(),
                       fromNumberScan: 100,
                       descriptionText: 'Scanned Products',
                       textButton: 'Upgrade Plan',

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:finding_clothes/src/features/dashboard/application/dashboard_view_model.dart';
 import 'package:finding_clothes/src/features/drawer/data/storage_data.dart';
 import 'package:finding_clothes/src/shared/application/view_model.dart';
 import 'package:finding_clothes/src/shared/services/authentication/authentication_service.dart';
@@ -12,21 +13,27 @@ import 'package:permission_handler/permission_handler.dart';
 class DrawerViewModel extends ViewModel {
   late final PresentationService _presentationService;
   late final AuthenticationService _authenticationService;
+  late final DashboardViewModel _dashboardViewModel;
   late final StorageDrawerApi _storageDrawerApi;
+  
   late String imageProfilePath = 'assets/images/profile.jpeg';
   bool isLoading = false;
 
   DrawerViewModel(Ref ref) {
     _presentationService = ref.read(presentationServiceProvider);
     _authenticationService = ref.read(authenticationServiceProvider);
+    _dashboardViewModel = ref.read(dashboardViewModelProvider);
     _storageDrawerApi = ref.read(storageDrawerApi);
-
+    
     getPhoto();
   }
 
   Future<void> getPhoto() async {
     imageProfilePath = await _storageDrawerApi.getImageUrl();
     notifyListeners();
+  }
+  int getCounter() {
+    return _dashboardViewModel.counter;
   }
 
   String getImagePath() {

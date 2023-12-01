@@ -25,7 +25,7 @@ class FCButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onTap,
         style: ElevatedButton.styleFrom(
-          fixedSize: Size(MediaQuery.of(context).size.width / 2.2, 49),
+          fixedSize: Size(MediaQuery.of(context).size.width / 2.2, height),
           backgroundColor: Colors.transparent,
           shadowColor: Colors.transparent,
           shape: RoundedRectangleBorder(

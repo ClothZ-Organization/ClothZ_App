@@ -1,3 +1,4 @@
+import 'package:finding_clothes/src/features/dashboard/data/firebase_data.dart';
 import 'package:finding_clothes/src/features/dashboard/domain/list_result.dart';
 import 'package:finding_clothes/src/features/dashboard/domain/result_model.dart';
 import 'package:finding_clothes/src/features/dashboard/presentation/bookmark_presentation/bookmark_page.dart';
@@ -15,6 +16,8 @@ import '../../../shared/services/presentation_service.dart';
 
 class DashboardViewModel extends ViewModel {
   late final PresentationService _presentationService;
+  late final FirebaseApi _firebaseApi;
+  int counter = 0;
   int currentTab = 0;
   XFile? image;
   ListResultModel? resultModel;
@@ -29,6 +32,7 @@ class DashboardViewModel extends ViewModel {
 
   DashboardViewModel(Ref ref) {
     _presentationService = ref.read(presentationServiceProvider);
+    _firebaseApi = ref.read(firebaseApi);
 
     screens = [
       const HomePage(),
@@ -37,6 +41,19 @@ class DashboardViewModel extends ViewModel {
     ];
 
     currentScreen = const HomePage();
+
+    getCounter();
+  }
+
+  Future<void> getCounter() async {
+    String userId = FirebaseAuth.instance.currentUser!.uid;
+    int response = await _firebaseApi.getCounter(userId);
+    if(response < 0) {
+      _firebaseApi.addUserCounter(userId, counter);
+    } else {
+      counter = response;
+      notifyListeners();
+    }
   }
 
   Future goBack() async {

@@ -1,4 +1,6 @@
 import 'package:finding_clothes/src/features/dashboard/application/home_view_model.dart';
+import 'package:finding_clothes/src/features/dashboard/presentation/card_number_products_scanned.dart';
+import 'package:finding_clothes/src/features/dashboard/presentation/card_upgrade_plan.dart';
 import 'package:finding_clothes/src/shared/presentation/widgets/finding_clothes/fc_clothes_component.dart';
 import 'package:finding_clothes/src/shared/presentation/widgets/finding_clothes/fc_dialog_utils.dart';
 import 'package:finding_clothes/src/shared/presentation/widgets/finding_clothes/fc_card_scan.dart';
@@ -98,11 +100,38 @@ class HomePage extends ConsumerWidget {
                   ),
                 ),
                 const SizedBox(
-                  height: 40,
+                  height: 35,
+                ),
+                Row(
+                  children: [
+                    const SizedBox(
+                      width: 12,
+                    ),
+                    CardNumberProductsScanned(
+                      scanNumber: viewModel.counter,
+                      fromNumberScan: 100,
+                      width: MediaQuery.sizeOf(context).width * 0.45,
+                      descriptionText: 'Scanned Products',
+                    ),
+                    const Spacer(),
+                    CardUpgradePlan(
+                      width: MediaQuery.sizeOf(context).width * 0.45,
+                      onTap: () {
+                        debugPrint('Upgrade Plan Home');
+                      },
+                    ),
+                    const SizedBox(
+                      width: 12,
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 18,
                 ),
                 FCCardScan(
                   titleText: 'Search products',
-                  descriptionText: 'Upload your own photo to find similar products and the best prices.',
+                  descriptionText:
+                      'Upload your own photo to find similar products and the best prices.',
                   iconPath: 'lib/icons/scan.svg',
                   onTap: () async {
                     debugPrint('-- add Photo');
@@ -111,37 +140,6 @@ class HomePage extends ConsumerWidget {
                       FCDialogUtils.showAlertDialog(context);
                     }
                   },
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
-                const Text(
-                  "Upload New",
-                  style: TextStyle(
-                    fontFamily: 'WorkSans',
-                    fontWeight: FontWeight.w500,
-                    fontSize: 30.0,
-                    height: 1.16,
-                    color: Colors.white,
-                    decoration: TextDecoration.none,
-                  ),
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
-                Text(
-                  "Scanned ${viewModel.counter}",
-                  style: const TextStyle(
-                    fontFamily: 'WorkSans',
-                    fontWeight: FontWeight.w700,
-                    fontSize: 15.0,
-                    height: 1.17,
-                    color: Color(0xFFB7B7C1),
-                    decoration: TextDecoration.none,
-                  ),
-                ),
-                const SizedBox(
-                  height: 16,
                 ),
                 const Spacer(),
                 const Padding(

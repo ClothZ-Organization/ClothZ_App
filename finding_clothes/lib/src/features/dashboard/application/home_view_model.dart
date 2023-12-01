@@ -30,9 +30,7 @@ class HomeViewModel extends ViewModel {
   Future<void> getCounter() async {
     String userId = FirebaseAuth.instance.currentUser!.uid;
     int response = await _firebaseApi.getCounter(userId);
-    if(response < 0) {
-      _firebaseApi.addUserCounter(userId, counter);
-    } else {
+    if(response >= 0) {
       counter = response;
       notifyListeners();
     }
