@@ -30,7 +30,7 @@ class HomeViewModel extends ViewModel {
   Future<void> getCounter() async {
     String userId = FirebaseAuth.instance.currentUser!.uid;
     int response = await _firebaseApi.getCounter(userId);
-    if(response >= 0) {
+    if (response >= 0) {
       counter = response;
       notifyListeners();
     }
@@ -56,6 +56,7 @@ class HomeViewModel extends ViewModel {
       _dashboardViewModel.setImage(image);
       _dashboardViewModel.setTab(1);
       _firebaseApi.counterIncrement(userId);
+      _dashboardViewModel.counter++;
     }
     return false;
   }
@@ -69,7 +70,7 @@ class HomeViewModel extends ViewModel {
     isBookMark = !isBookMark;
     notifyListeners();
   }
-  
+
   // @override
   // void dispose() {
   //   // TODO: implement dispose

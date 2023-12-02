@@ -63,22 +63,22 @@ class HomePage extends ConsumerWidget {
                 debugPrint('Preessed grid_view');
               },
             ),
-            actions: [
-              IconButton(
-                highlightColor: Colors.grey,
-                iconSize: 24,
-                icon: SvgPicture.asset(
-                  'lib/icons/setting.svg',
-                  colorFilter:
-                      const ColorFilter.mode(Colors.white, BlendMode.srcATop),
-                  height: 24,
-                  width: 24,
-                ),
-                onPressed: () {
-                  debugPrint('Preessed settings');
-                },
-              ),
-            ],
+            // actions: [
+            //   IconButton(
+            //     highlightColor: Colors.grey,
+            //     iconSize: 24,
+            //     icon: SvgPicture.asset(
+            //       'lib/icons/setting.svg',
+            //       colorFilter:
+            //           const ColorFilter.mode(Colors.white, BlendMode.srcATop),
+            //       height: 24,
+            //       width: 24,
+            //     ),
+            //     onPressed: () {
+            //       debugPrint('Preessed settings');
+            //     },
+            //   ),
+            // ],
           ),
           SafeArea(
             child: Column(
@@ -135,7 +135,7 @@ class HomePage extends ConsumerWidget {
                   iconPath: 'lib/icons/scan.svg',
                   onTap: () async {
                     debugPrint('-- add Photo');
-                    if (await viewModel.getImage(false)) {
+                    if (await viewModel.getImage(true)) {
                       // ignore: use_build_context_synchronously
                       FCDialogUtils.showAlertDialog(context);
                     }
