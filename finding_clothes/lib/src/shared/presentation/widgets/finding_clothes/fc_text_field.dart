@@ -19,6 +19,7 @@ class FCTextField extends StatelessWidget {
     return SizedBox(
       height: 50,
       child: TextField(
+        keyboardAppearance: Brightness.dark,
         style: const TextStyle(
           fontWeight: FontWeight.w500,
           fontSize: 14,
