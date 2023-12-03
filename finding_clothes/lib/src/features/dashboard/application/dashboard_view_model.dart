@@ -1,18 +1,22 @@
+import 'package:camera/camera.dart';
 import 'package:finding_clothes/src/features/dashboard/data/firebase_data.dart';
 import 'package:finding_clothes/src/features/dashboard/domain/list_result.dart';
 import 'package:finding_clothes/src/features/dashboard/domain/result_model.dart';
 import 'package:finding_clothes/src/features/dashboard/presentation/bookmark_presentation/bookmark_page.dart';
 import 'package:finding_clothes/src/features/dashboard/presentation/home_page.dart';
-import 'package:finding_clothes/src/features/dashboard/presentation/result_presentation/result_page.dart';
+import 'package:finding_clothes/src/features/dashboard/presentation/result_presentation/result_strategy_page.dart';
 import 'package:finding_clothes/src/shared/utils/constants/routes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../shared/application/view_model.dart';
 import '../../../shared/services/presentation_service.dart';
+
+// TODO: maybe they should be moved separately: cameras, cameraController and initCamera
+late List<CameraDescription> cameras;
+late CameraController cameraController;
 
 class DashboardViewModel extends ViewModel {
   late final PresentationService _presentationService;
@@ -29,6 +33,7 @@ class DashboardViewModel extends ViewModel {
 
   final PageStorageBucket bucket = PageStorageBucket();
   late Widget currentScreen;
+  int pageNumberResult = 1;
 
   DashboardViewModel(Ref ref) {
     _presentationService = ref.read(presentationServiceProvider);
@@ -36,24 +41,46 @@ class DashboardViewModel extends ViewModel {
 
     screens = [
       const HomePage(),
-      const ResultPage(),
+      const ResultStrategyPage(),
       const BookmarkPage(),
     ];
 
     currentScreen = const HomePage();
 
     getCounter();
+    initCamera();
   }
 
   Future<void> getCounter() async {
     String userId = FirebaseAuth.instance.currentUser!.uid;
     int response = await _firebaseApi.getCounter(userId);
-    if(response < 0) {
+    if (response < 0) {
       _firebaseApi.addUserCounter(userId, counter);
     } else {
       counter = response;
       notifyListeners();
     }
+  }
+
+  Future<void> initCamera() async {
+    WidgetsFlutterBinding.ensureInitialized();
+
+    cameras = await availableCameras();
+    cameraController = CameraController(cameras[0], ResolutionPreset.max);
+    cameraController.initialize().then((_) {
+      notifyListeners();
+    }).catchError((Object e) {
+      if (e is CameraException) {
+        switch (e.code) {
+          case 'CameraAccessDenied':
+            debugPrint('--- CameraAccessDenied');
+            break;
+          default:
+            debugPrint('--- ${e.description}');
+            break;
+        }
+      }
+    });
   }
 
   Future goBack() async {

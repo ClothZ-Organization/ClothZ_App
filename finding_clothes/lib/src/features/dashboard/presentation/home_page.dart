@@ -2,7 +2,6 @@ import 'package:finding_clothes/src/features/dashboard/application/home_view_mod
 import 'package:finding_clothes/src/features/dashboard/presentation/card_number_products_scanned.dart';
 import 'package:finding_clothes/src/features/dashboard/presentation/card_upgrade_plan.dart';
 import 'package:finding_clothes/src/shared/presentation/widgets/finding_clothes/fc_clothes_component.dart';
-import 'package:finding_clothes/src/shared/presentation/widgets/finding_clothes/fc_dialog_utils.dart';
 import 'package:finding_clothes/src/shared/presentation/widgets/finding_clothes/fc_card_scan.dart';
 import 'package:finding_clothes/src/shared/utils/constants/ui_constants.dart';
 import 'package:flutter/material.dart';
@@ -135,10 +134,11 @@ class HomePage extends ConsumerWidget {
                   iconPath: 'lib/icons/scan.svg',
                   onTap: () async {
                     debugPrint('-- add Photo');
-                    if (await viewModel.getImage(true)) {
-                      // ignore: use_build_context_synchronously
-                      FCDialogUtils.showAlertDialog(context);
-                    }
+                    viewModel.clickScanCard();
+                    // if (await viewModel.getImage(true)) {
+                    //   // ignore: use_build_context_synchronously
+                    //   FCDialogUtils.showAlertDialog(context);
+                    // }
                   },
                 ),
                 const Spacer(),

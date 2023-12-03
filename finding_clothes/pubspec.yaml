@@ -55,6 +55,7 @@ dependencies:
   permission_handler: ^11.0.1
   url_launcher: ^6.2.1
   flutter_svg: ^2.0.9
+  camera: ^0.10.5+5
   
 dev_dependencies:
   flutter_test:

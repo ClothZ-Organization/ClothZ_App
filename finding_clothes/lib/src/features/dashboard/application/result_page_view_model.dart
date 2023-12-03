@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:camera/camera.dart';
 import 'package:finding_clothes/src/features/dashboard/application/dashboard_view_model.dart';
 import 'package:finding_clothes/src/features/dashboard/data/dashboard_api.dart';
 import 'package:finding_clothes/src/features/dashboard/data/firebase_data.dart';
@@ -10,6 +11,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class ResultPageViewModel extends ViewModel {
   late final DashboardViewModel _dashboardViewModel;
@@ -18,11 +21,21 @@ class ResultPageViewModel extends ViewModel {
   String _imageUrl = '';
   bool isSearching = false;
   String textMessage = 'No scanned products yet';
+  late XFile? picture;
 
   ResultPageViewModel(Ref ref) {
     _dashboardViewModel = ref.read(dashboardViewModelProvider);
     _dashboardApi = ref.read(dashboardApi);
     _firebaseApi = ref.read(firebaseApi);
+    picture = _dashboardViewModel.image;
+  }
+  bool isCameraScanPage() {
+    return _dashboardViewModel.pageNumberResult == 1;
+  }
+
+  void setPageNumber(int pageNumber) {
+    _dashboardViewModel.pageNumberResult = pageNumber;
+    notifyListeners();
   }
 
   String imagePath() {
@@ -36,6 +49,45 @@ class ResultPageViewModel extends ViewModel {
     return path;
   }
 
+  Future<void> takePhoto() async {
+    if (cameraController.value.isInitialized &&
+        !cameraController.value.isTakingPicture) {
+      try {
+        await cameraController.setFlashMode(FlashMode.auto);
+        picture = await cameraController.takePicture();
+      } on CameraException catch (e) {
+        debugPrint('Error ocurred while taking picture: $e');
+      }
+    }
+  }
+
+  Future<bool> getImage(bool isCamera) async {
+    final ImagePicker picker = ImagePicker();
+    try {
+      if (isCamera) {
+        await takePhoto();
+        // picture = await picker.pickImage(source: ImageSource.camera);
+      } else {
+        picture = await picker.pickImage(source: ImageSource.gallery);
+      }
+    } catch (exception) {
+      var statusGalery = await Permission.photos.status;
+      var statusCamera = await Permission.camera.status;
+      if (statusGalery.isDenied || statusCamera.isDenied) {
+        return true;
+      }
+    }
+    if (picture != null) {
+      String userId = FirebaseAuth.instance.currentUser!.uid;
+      _dashboardViewModel.setImage(picture);
+      _firebaseApi.counterIncrement(userId);
+      _dashboardViewModel.counter++;
+      _dashboardViewModel.pageNumberResult = 2;
+      notifyListeners();
+    }
+    return false;
+  }
+
   Future search(String imagePath) async {
     isSearching = true;
     await _uploadImage(imagePath);
@@ -45,7 +97,7 @@ class ResultPageViewModel extends ViewModel {
         apiKey: ApiConstants.apiKey,
       );
       _dashboardViewModel.resultModel = response;
-      if(_dashboardViewModel.resultModel == null){
+      if (_dashboardViewModel.resultModel == null) {
         textMessage = 'Nothing Found';
       }
     }
@@ -54,7 +106,8 @@ class ResultPageViewModel extends ViewModel {
   }
 
   Future<void> _uploadImage(String imagePath) async {
-    final url = Uri.parse('https://api.cloudinary.com/v1_1/${ApiConstants.cloudName}/upload');
+    final url = Uri.parse(
+        'https://api.cloudinary.com/v1_1/${ApiConstants.cloudName}/upload');
     final request = http.MultipartRequest('POST', url)
       ..fields['upload_preset'] = ApiConstants.uploadPreset
       ..files.add(await http.MultipartFile.fromPath('file', imagePath));
@@ -72,7 +125,8 @@ class ResultPageViewModel extends ViewModel {
   }
 
   Future<void> openUrl(int index) async {
-    _dashboardViewModel.openUrl(_dashboardViewModel.resultModel!.visual_matches[index].link);
+    _dashboardViewModel
+        .openUrl(_dashboardViewModel.resultModel!.visual_matches[index].link);
   }
 
   Future<void> addElementInWishList(int index) async {
@@ -139,13 +193,6 @@ class ResultPageViewModel extends ViewModel {
   String getThumbnail(int index) {
     return _dashboardViewModel.resultModel?.visual_matches[index].thumbnail ??
         '';
-  }
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-
-    debugPrint('----- Result disposed');
   }
 }
 

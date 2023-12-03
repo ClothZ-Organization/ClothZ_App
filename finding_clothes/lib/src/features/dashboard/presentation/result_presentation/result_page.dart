@@ -4,6 +4,7 @@ import 'package:finding_clothes/src/features/dashboard/application/result_page_v
 import 'package:finding_clothes/src/features/dashboard/presentation/result_presentation/result_tab_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/svg.dart';
 
 class ResultPage extends ConsumerWidget {
   const ResultPage({super.key});
@@ -15,6 +16,21 @@ class ResultPage extends ConsumerWidget {
       backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.black,
+        leading: IconButton(
+          highlightColor: Colors.grey,
+          iconSize: 22,
+          icon: SvgPicture.asset(
+            'lib/icons/arrow-back.svg',
+            colorFilter:
+                const ColorFilter.mode(Colors.white, BlendMode.srcATop),
+            height: 22,
+            width: 22,
+          ),
+          onPressed: () {
+            viewModel.setPageNumber(1);
+            debugPrint('Preessed arrow_back');
+          },
+        ),
         title: const Text(
           'Searched Product',
           style: TextStyle(
