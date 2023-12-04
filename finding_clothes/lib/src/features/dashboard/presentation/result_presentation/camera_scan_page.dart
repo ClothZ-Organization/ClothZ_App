@@ -5,6 +5,7 @@ import 'package:finding_clothes/src/shared/presentation/widgets/finding_clothes/
 import 'package:finding_clothes/src/shared/presentation/widgets/finding_clothes/fc_dialog_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/svg.dart';
 
 class CameraScanPage extends ConsumerWidget {
   const CameraScanPage({super.key});
@@ -22,16 +23,16 @@ class CameraScanPage extends ConsumerWidget {
           Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              // Padding(
-              //   padding: const EdgeInsets.symmetric(horizontal: 20),
-              //   child: SvgPicture.asset(
-              //     'lib/icons/scanner.svg',
-              //     colorFilter:
-              //         const ColorFilter.mode(Colors.black, BlendMode.srcATop),
-              //     height: MediaQuery.sizeOf(context).width - 40,
-              //     width: double.infinity,
-              //   ),
-              // ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: SvgPicture.asset(
+                  'lib/icons/scanner.svg',
+                  colorFilter:
+                      const ColorFilter.mode(Colors.white, BlendMode.srcATop),
+                  height: MediaQuery.sizeOf(context).width - 40,
+                  width: double.infinity,
+                ),
+              ),
               const SizedBox(
                 height: 15,
               ),
