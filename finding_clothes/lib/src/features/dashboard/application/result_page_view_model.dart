@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:camera/camera.dart';
 import 'package:finding_clothes/src/features/dashboard/application/dashboard_view_model.dart';
 import 'package:finding_clothes/src/features/dashboard/data/dashboard_api.dart';
 import 'package:finding_clothes/src/features/dashboard/data/firebase_data.dart';
@@ -8,7 +7,6 @@ import 'package:finding_clothes/src/features/dashboard/domain/list_result.dart';
 import 'package:finding_clothes/src/shared/application/view_model.dart';
 import 'package:finding_clothes/src/shared/utils/constants/api_constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
@@ -49,23 +47,11 @@ class ResultPageViewModel extends ViewModel {
     return path;
   }
 
-  Future<void> takePhoto() async {
-    if (cameraController.value.isInitialized &&
-        !cameraController.value.isTakingPicture) {
-      try {
-        await cameraController.setFlashMode(FlashMode.auto);
-        picture = await cameraController.takePicture();
-      } on CameraException catch (e) {
-        debugPrint('Error ocurred while taking picture: $e');
-      }
-    }
-  }
-
   Future<bool> getImage(bool isCamera) async {
     final ImagePicker picker = ImagePicker();
     try {
       if (isCamera) {
-        await takePhoto();
+       picture =  await _dashboardViewModel.takePhoto();
         // picture = await picker.pickImage(source: ImageSource.camera);
       } else {
         picture = await picker.pickImage(source: ImageSource.gallery);

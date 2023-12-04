@@ -1,5 +1,5 @@
 import 'package:camera/camera.dart';
-import 'package:finding_clothes/src/features/dashboard/application/dashboard_view_model.dart';
+import 'package:finding_clothes/src/features/dashboard/application/camera_page_view_model.dart';
 import 'package:finding_clothes/src/features/dashboard/application/result_page_view_model.dart';
 import 'package:finding_clothes/src/shared/presentation/widgets/finding_clothes/fc_card_scan.dart';
 import 'package:finding_clothes/src/shared/presentation/widgets/finding_clothes/fc_dialog_utils.dart';
@@ -22,6 +22,19 @@ class CameraScanPage extends ConsumerWidget {
           Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(horizontal: 20),
+              //   child: SvgPicture.asset(
+              //     'lib/icons/scanner.svg',
+              //     colorFilter:
+              //         const ColorFilter.mode(Colors.black, BlendMode.srcATop),
+              //     height: MediaQuery.sizeOf(context).width - 40,
+              //     width: double.infinity,
+              //   ),
+              // ),
+              const SizedBox(
+                height: 15,
+              ),
               FCCardScan(
                 titleText: 'Upload from galery',
                 descriptionText:

@@ -1,4 +1,5 @@
 import 'package:camera/camera.dart';
+import 'package:finding_clothes/src/features/dashboard/application/camera_page_view_model.dart';
 import 'package:finding_clothes/src/features/dashboard/data/firebase_data.dart';
 import 'package:finding_clothes/src/features/dashboard/domain/list_result.dart';
 import 'package:finding_clothes/src/features/dashboard/domain/result_model.dart';
@@ -14,13 +15,10 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../../shared/application/view_model.dart';
 import '../../../shared/services/presentation_service.dart';
 
-// TODO: maybe they should be moved separately: cameras, cameraController and initCamera
-late List<CameraDescription> cameras;
-late CameraController cameraController;
-
 class DashboardViewModel extends ViewModel {
   late final PresentationService _presentationService;
   late final FirebaseApi _firebaseApi;
+  late final CameraPageViewModel _cameraPageViewModel;
   int counter = 0;
   int currentTab = 0;
   XFile? image;
@@ -38,6 +36,7 @@ class DashboardViewModel extends ViewModel {
   DashboardViewModel(Ref ref) {
     _presentationService = ref.read(presentationServiceProvider);
     _firebaseApi = ref.read(firebaseApi);
+    _cameraPageViewModel = ref.read(cameratPageViewModel);
 
     screens = [
       const HomePage(),
@@ -48,7 +47,6 @@ class DashboardViewModel extends ViewModel {
     currentScreen = const HomePage();
 
     getCounter();
-    initCamera();
   }
 
   Future<void> getCounter() async {
@@ -62,25 +60,8 @@ class DashboardViewModel extends ViewModel {
     }
   }
 
-  Future<void> initCamera() async {
-    WidgetsFlutterBinding.ensureInitialized();
-
-    cameras = await availableCameras();
-    cameraController = CameraController(cameras[0], ResolutionPreset.max);
-    cameraController.initialize().then((_) {
-      notifyListeners();
-    }).catchError((Object e) {
-      if (e is CameraException) {
-        switch (e.code) {
-          case 'CameraAccessDenied':
-            debugPrint('--- CameraAccessDenied');
-            break;
-          default:
-            debugPrint('--- ${e.description}');
-            break;
-        }
-      }
-    });
+  Future<XFile?> takePhoto() {
+    return _cameraPageViewModel.takePhoto();
   }
 
   Future goBack() async {
