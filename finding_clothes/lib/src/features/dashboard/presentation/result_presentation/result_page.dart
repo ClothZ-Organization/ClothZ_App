@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:finding_clothes/src/features/dashboard/application/result_page_view_model.dart';
-import 'package:finding_clothes/src/features/dashboard/presentation/result_presentation/result_tab_page.dart';
+import 'package:finding_clothes/src/features/dashboard/presentation/result_presentation/all_result_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
@@ -28,7 +28,6 @@ class ResultPage extends ConsumerWidget {
           ),
           onPressed: () {
             viewModel.setPageNumber(1);
-            debugPrint('Preessed arrow_back');
           },
         ),
         title: const Text(
@@ -59,20 +58,13 @@ class ResultPage extends ConsumerWidget {
                     viewModel.imagePath(),
                   ),
                 ),
-                // child: ClipRRect(
-                //   borderRadius: BorderRadius.circular(14.0),
-                //   child: Image.asset(
-                //     viewModel.imagePath(),
-                //     fit: BoxFit.cover,
-                //   ),
-                // ),
               ),
             ),
             const SizedBox(
               height: 33,
             ),
-            const Expanded(
-              child: ResultTabPage(),
+            Expanded(
+              child: AllResultPage(),
             ),
           ],
         ),

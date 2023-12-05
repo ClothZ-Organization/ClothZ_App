@@ -27,8 +27,8 @@ class CameraScanPage extends ConsumerWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: SvgPicture.asset(
                   'lib/icons/scanner.svg',
-                  colorFilter:
-                      const ColorFilter.mode(Colors.white, BlendMode.srcATop),
+                  // colorFilter:
+                  //     const ColorFilter.mode(Colors.white, BlendMode.srcATop),
                   height: MediaQuery.sizeOf(context).width - 40,
                   width: double.infinity,
                 ),
