@@ -61,12 +61,10 @@ class AllResultPage extends ConsumerWidget {
                                             image: viewModel
                                                 .getThumbnail(index * 2),
                                             onTapBookMark: () {
-                                              debugPrint("Click on bookMark");
                                               viewModel.addElementInWishList(
                                                   index * 2);
                                             },
                                             onTapOpenLink: () {
-                                              debugPrint('Click on Open link');
                                               viewModel.openUrl(index * 2);
                                             },
                                           ),
@@ -87,15 +85,11 @@ class AllResultPage extends ConsumerWidget {
                                                   image: viewModel.getThumbnail(
                                                       index * 2 + 1),
                                                   onTapBookMark: () {
-                                                    debugPrint(
-                                                        "Click on bookMark");
                                                     viewModel
                                                         .addElementInWishList(
                                                             index * 2 + 1);
                                                   },
                                                   onTapOpenLink: () {
-                                                    debugPrint(
-                                                        'Click on Open link');
                                                     viewModel
                                                         .openUrl(index * 2 + 1);
                                                   },
