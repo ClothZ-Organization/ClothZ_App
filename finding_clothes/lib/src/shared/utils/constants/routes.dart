@@ -8,6 +8,8 @@ class Routes {
   static const dashboard = "/dashboard";
 
   static const result = "/result";
+
+  static const subscrition = "/subscrition";
 }
 
 class RouteParameters {

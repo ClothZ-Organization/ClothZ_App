@@ -73,6 +73,10 @@ class DrawerViewModel extends ViewModel {
     return false;
   }
 
+  void goSubscritionPage() {
+    _presentationService.push(route: Routes.subscrition);
+  }
+
   Future logOut() async {
     _authenticationService.logOut();
     await _presentationService.push(route: Routes.login, clearBackStack: true);

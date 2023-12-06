@@ -107,6 +107,7 @@ class DrawerPage extends ConsumerWidget {
                       descriptionText: 'Scanned Products',
                       textButton: 'Upgrade Plan',
                       onTap: () {
+                        viewModel.goSubscritionPage();
                         debugPrint('Click on Upgrade Plan');
                       },
                     ),

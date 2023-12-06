@@ -4,6 +4,7 @@ import 'package:finding_clothes/src/features/dashboard/data/firebase_data.dart';
 import 'package:finding_clothes/src/shared/application/view_model.dart';
 import 'package:finding_clothes/src/shared/services/authentication/authentication_service.dart';
 import 'package:finding_clothes/src/shared/services/presentation_service.dart';
+import 'package:finding_clothes/src/shared/utils/constants/routes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -39,6 +40,10 @@ class HomeViewModel extends ViewModel {
   Future change() async {
     isBookMark = !isBookMark;
     notifyListeners();
+  }
+
+  void goSubscritionPage() {
+    _presentationService.push(route: Routes.subscrition);
   }
 
   // @override

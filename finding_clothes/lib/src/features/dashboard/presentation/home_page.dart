@@ -116,6 +116,7 @@ class HomePage extends ConsumerWidget {
                     CardUpgradePlan(
                       width: MediaQuery.sizeOf(context).width * 0.45,
                       onTap: () {
+                        viewModel.goSubscritionPage();
                         debugPrint('Upgrade Plan Home');
                       },
                     ),

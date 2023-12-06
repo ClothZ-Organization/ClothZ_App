@@ -4,15 +4,25 @@ class FCButton extends StatelessWidget {
   final String text;
   final double fontSize;
   final double height;
+  final double cornerRadius;
+  final bool isWidthMax;
   final VoidCallback onTap;
-  const FCButton({super.key, this.text = '', this.fontSize = 16.0, this.height = 49.0, required this.onTap});
+  const FCButton({
+    super.key,
+    this.text = '',
+    this.fontSize = 16.0,
+    this.height = 49.0,
+    this.cornerRadius = 8.0,
+    this.isWidthMax = false,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: height,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8.0),
+        borderRadius: BorderRadius.circular(cornerRadius),
         gradient: const LinearGradient(
           colors: [
             Color(0xFF000000),
@@ -25,11 +35,13 @@ class FCButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onTap,
         style: ElevatedButton.styleFrom(
-          fixedSize: Size(MediaQuery.of(context).size.width / 2.2, height),
+          fixedSize: Size(
+              MediaQuery.of(context).size.width / (isWidthMax ? 1 : 2.2),
+              height),
           backgroundColor: Colors.transparent,
           shadowColor: Colors.transparent,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8.0),
+            borderRadius: BorderRadius.circular(cornerRadius),
           ),
           elevation: 0,
         ),
