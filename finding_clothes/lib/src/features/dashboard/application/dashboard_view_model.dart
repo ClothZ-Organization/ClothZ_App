@@ -23,6 +23,7 @@ class DashboardViewModel extends ViewModel {
   int counter = 0;
   int currentTab = 0;
   XFile? image;
+  String imagePathSearched = '';
   ListResultModel? resultModel;
   bool isSearch = false;
 
@@ -77,6 +78,15 @@ class DashboardViewModel extends ViewModel {
       await _presentationService.push(
           route: Routes.login, clearBackStack: true);
     });
+  }
+
+  String getImagePath() {
+    if (image != null) {
+      String path = image?.path ?? 'assets/images/register_img.png';
+      return path;
+    } else {
+      return imagePathSearched;
+    }
   }
 
   Future setImage(XFile? imageF) async {

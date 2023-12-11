@@ -1,4 +1,3 @@
-
 import 'package:finding_clothes/src/features/dashboard/application/dashboard_view_model.dart';
 import 'package:finding_clothes/src/features/dashboard/data/firebase_data.dart';
 import 'package:finding_clothes/src/shared/application/view_model.dart';
@@ -28,9 +27,7 @@ class ResultPageViewModel extends ViewModel {
   }
 
   String imagePath() {
-    String path =
-        _dashboardViewModel.image?.path ?? 'assets/images/register_img.png';
-    return path;
+    return _dashboardViewModel.getImagePath();
   }
 
   Future<bool> getImage(bool isCamera) async {

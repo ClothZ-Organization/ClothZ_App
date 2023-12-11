@@ -57,7 +57,7 @@ class FCScannedCard extends StatelessWidget {
             height: 6,
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 28.0),
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: FCButton(
               text: 'See more',
               fontSize: 12,

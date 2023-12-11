@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:finding_clothes/src/features/dashboard/application/dashboard_view_model.dart';
 import 'package:finding_clothes/src/features/dashboard/data/firebase_data.dart';
+import 'package:finding_clothes/src/features/dashboard/domain/list_result.dart';
 import 'package:finding_clothes/src/features/dashboard/domain/search_list.dart';
 import 'package:finding_clothes/src/shared/application/view_model.dart';
 import 'package:finding_clothes/src/shared/services/presentation_service.dart';
@@ -49,8 +50,20 @@ class HomeViewModel extends ViewModel {
   int sizeSearchList() {
     return _dashboardViewModel.searchList.length;
   }
- 
+  void actionSeeMore(int index) {
+    ListResultModel listResultModel = ListResultModel(visual_matches: _dashboardViewModel.searchList[index].visual_matches ?? []);
 
+    _dashboardViewModel.resultModel = listResultModel;
+    _dashboardViewModel.image = null;
+    _dashboardViewModel.imagePathSearched = _dashboardViewModel.searchList[index].imageUrl;
+    _dashboardViewModel.pageNumberResult = 2;
+    _dashboardViewModel.setTab(1);
+  }
+
+  bool isReverse() {
+    return _dashboardViewModel.searchList.length > 2;
+  }
+ 
   void clickScanCard() {
     _dashboardViewModel.setTab(1);
   }

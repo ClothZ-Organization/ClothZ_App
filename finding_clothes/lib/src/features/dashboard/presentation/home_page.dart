@@ -172,22 +172,22 @@ class HomePage extends ConsumerWidget {
                   child: ListView.builder(
                     padding: EdgeInsets.zero, 
                     scrollDirection: Axis.horizontal,
-                    reverse: true,
+                    reverse: viewModel.isReverse(),
                     itemCount: viewModel.sizeSearchList(),
                     itemBuilder: (BuildContext context, int index) {
                       return Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
+                          const SizedBox(
+                            width: 14,
+                          ),
                           FCScannedCard(
                             image: viewModel.getImageCard(index),
                             numberScan: index,
                             onTap: () {
-                              debugPrint('Tap See more');
+                              viewModel.actionSeeMore(index);
                             },
-                          ),
-                          const SizedBox(
-                            width: 14,
                           ),
                         ],
                       );

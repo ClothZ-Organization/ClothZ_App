@@ -1,7 +1,9 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:finding_clothes/src/features/dashboard/application/result_page_view_model.dart';
 import 'package:finding_clothes/src/features/dashboard/presentation/result_presentation/all_result_page.dart';
+import 'package:finding_clothes/src/shared/presentation/widgets/finding_clothes/fc_loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
@@ -77,6 +79,14 @@ class ResultPage extends ConsumerWidget {
       return Image.asset(
         imagePath,
         fit: BoxFit.cover,
+      );
+    } else if (imagePath.toLowerCase().contains('http')) {
+      return CachedNetworkImage(
+        imageUrl: imagePath,
+        fit: BoxFit.cover,
+        placeholder: (context, url) =>
+            const Center(child: FCLoadingIndicator()),
+        errorWidget: (context, url, error) => const Icon(Icons.error),
       );
     } else {
       return Image.file(
