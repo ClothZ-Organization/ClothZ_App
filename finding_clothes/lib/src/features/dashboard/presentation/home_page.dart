@@ -170,15 +170,17 @@ class HomePage extends ConsumerWidget {
                 SizedBox(
                   height: UIConstants.heightCardClothes,
                   child: ListView.builder(
-                    padding: EdgeInsets.zero,
+                    padding: EdgeInsets.zero, 
                     scrollDirection: Axis.horizontal,
-                    itemCount: 4,
+                    reverse: true,
+                    itemCount: viewModel.sizeSearchList(),
                     itemBuilder: (BuildContext context, int index) {
                       return Row(
-                        crossAxisAlignment: CrossAxisAlignment.end, 
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
                           FCScannedCard(
+                            image: viewModel.getImageCard(index),
                             numberScan: index,
                             onTap: () {
                               debugPrint('Tap See more');

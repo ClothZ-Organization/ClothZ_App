@@ -5,6 +5,7 @@ import 'package:finding_clothes/src/features/dashboard/data/dashboard_api.dart';
 import 'package:finding_clothes/src/features/dashboard/data/firebase_data.dart';
 import 'package:finding_clothes/src/features/dashboard/domain/list_result.dart';
 import 'package:finding_clothes/src/features/dashboard/domain/result_model.dart';
+import 'package:finding_clothes/src/features/dashboard/domain/search_list.dart';
 import 'package:finding_clothes/src/shared/application/view_model.dart';
 import 'package:finding_clothes/src/shared/utils/constants/api_constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -20,6 +21,8 @@ class SearchResultViewModel extends ViewModel {
   bool isSearching = false;
   String textMessage = 'Nothing Found'; //'No scanned products yet';
 
+  String userId = FirebaseAuth.instance.currentUser!.uid;
+
   SearchResultViewModel(Ref ref) {
     _dashboardViewModel = ref.read(dashboardViewModelProvider);
     _firebaseApi = ref.read(firebaseApi);
@@ -29,11 +32,11 @@ class SearchResultViewModel extends ViewModel {
   }
 
   Future<void> init() async {
-    if(isResult()){
-      listResultModel = List.from(_dashboardViewModel.resultModel!.visual_matches);
+    if (isResult()) {
+      listResultModel =
+          List.from(_dashboardViewModel.resultModel!.visual_matches);
     }
   }
-
 
   Future<void> searchImage() async {
     String path =
@@ -60,6 +63,12 @@ class SearchResultViewModel extends ViewModel {
       } else {
         listResultModel = List.from(response.visual_matches);
       }
+      //adding search in database
+      SearchListModel searchListModel = SearchListModel(
+          imageUrl: _imageUrl, visual_matches: response.visual_matches);
+      _dashboardViewModel.searchList.add(searchListModel);
+      _firebaseApi.addElementInSearchList(userId, searchListModel);
+      //
     }
     isSearching = false;
     notifyListeners();
@@ -85,21 +94,17 @@ class SearchResultViewModel extends ViewModel {
   }
 
   Future<void> openUrl(int index) async {
-    _dashboardViewModel
-        .openUrl(listResultModel[index].link);
+    _dashboardViewModel.openUrl(listResultModel[index].link);
   }
 
   Future<void> addElementInWishList(int index) async {
     String userId = FirebaseAuth.instance.currentUser!.uid;
-    if (listResultModel[index].isBookMark ??
-        false) {
-      _firebaseApi.deleteElementFromWishList(
-          userId, listResultModel[index]);
+    if (listResultModel[index].isBookMark ?? false) {
+      _firebaseApi.deleteElementFromWishList(userId, listResultModel[index]);
       listResultModel[index].isBookMark = false;
     } else {
       listResultModel[index].isBookMark = true;
-      _firebaseApi.addElementInWishList(
-          userId, listResultModel[index]);
+      _firebaseApi.addElementInWishList(userId, listResultModel[index]);
     }
 
     notifyListeners();
@@ -111,7 +116,8 @@ class SearchResultViewModel extends ViewModel {
   }
 
   void searchBar(String word) {
-    listResultModel = List.from(_dashboardViewModel.resultModel!.visual_matches);
+    listResultModel =
+        List.from(_dashboardViewModel.resultModel!.visual_matches);
     if (word != '') {
       for (int i = 0; i < listResultModel.length; i++) {
         if (!verify(i, word)) {

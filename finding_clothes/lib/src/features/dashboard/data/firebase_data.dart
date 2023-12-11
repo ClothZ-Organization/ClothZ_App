@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:finding_clothes/src/features/dashboard/domain/result_model.dart';
+import 'package:finding_clothes/src/features/dashboard/domain/search_list.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class FirebaseApi {
@@ -80,6 +82,46 @@ class FirebaseApi {
 
         List<ResultModel> resultModels =
             wishList.map((element) => ResultModel.fromJson(element)).toList();
+
+        return resultModels;
+      } else {
+        return [];
+      }
+    } catch (e) {
+      return [];
+    }
+  }
+
+  ///Search List
+  Future<void> addInitialSearchList(
+      String userId, List<SearchListModel> searchList) async {
+    await FirebaseFirestore.instance.collection('searchFor').doc(userId).set({
+      'searchList': searchList,
+    });
+  }
+
+  Future<void> addElementInSearchList(String userId, SearchListModel item) async {
+    debugPrint('Element to be added: ${item.toJson()}');
+    await FirebaseFirestore.instance
+        .collection('searchFor')
+        .doc(userId)
+        .update({
+      'searchList': FieldValue.arrayUnion([item.toJson()]),
+    });
+  }
+
+  Future<List<SearchListModel>> getSearchList(String userId) async {
+    try {
+      DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance
+          .collection('searchFor')
+          .doc(userId)
+          .get();
+
+      if (documentSnapshot.exists) {
+        var searchList = documentSnapshot.get('searchList') as List<dynamic>? ?? [];
+
+        List<SearchListModel> resultModels =
+            searchList.map((element) => SearchListModel.fromJson(element)).toList();
 
         return resultModels;
       } else {

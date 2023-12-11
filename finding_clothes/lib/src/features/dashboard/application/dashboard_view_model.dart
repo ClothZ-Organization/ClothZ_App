@@ -3,6 +3,7 @@ import 'package:finding_clothes/src/features/dashboard/application/camera_page_v
 import 'package:finding_clothes/src/features/dashboard/data/firebase_data.dart';
 import 'package:finding_clothes/src/features/dashboard/domain/list_result.dart';
 import 'package:finding_clothes/src/features/dashboard/domain/result_model.dart';
+import 'package:finding_clothes/src/features/dashboard/domain/search_list.dart';
 import 'package:finding_clothes/src/features/dashboard/presentation/bookmark_presentation/bookmark_page.dart';
 import 'package:finding_clothes/src/features/dashboard/presentation/home_page.dart';
 import 'package:finding_clothes/src/features/dashboard/presentation/result_presentation/result_strategy_page.dart';
@@ -26,6 +27,7 @@ class DashboardViewModel extends ViewModel {
   bool isSearch = false;
 
   List<ResultModel> wishList = [];
+  List<SearchListModel> searchList = [];
 
   late List<Widget> screens;
 
