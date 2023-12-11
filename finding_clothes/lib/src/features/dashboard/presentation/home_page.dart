@@ -1,8 +1,8 @@
 import 'package:finding_clothes/src/features/dashboard/application/home_view_model.dart';
 import 'package:finding_clothes/src/features/dashboard/presentation/card_number_products_scanned.dart';
 import 'package:finding_clothes/src/features/dashboard/presentation/card_upgrade_plan.dart';
-import 'package:finding_clothes/src/shared/presentation/widgets/finding_clothes/fc_clothes_component.dart';
 import 'package:finding_clothes/src/shared/presentation/widgets/finding_clothes/fc_card_scan.dart';
+import 'package:finding_clothes/src/shared/presentation/widgets/finding_clothes/fc_scanned_card.dart';
 import 'package:finding_clothes/src/shared/utils/constants/ui_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -175,22 +175,13 @@ class HomePage extends ConsumerWidget {
                     itemCount: 4,
                     itemBuilder: (BuildContext context, int index) {
                       return Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.end, 
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
-                          FCClothesCard(
-                            title: 'title $index',
-                            price: '\$$index',
-                            nameBrand: 'H&M',
-                            isBookMark: viewModel.isBookMark,
-                            // image: 'assets/images/imgClst.jpeg',
-                            // image: viewModel.image?.path ?? 'assets/images/imgClst.jpeg',
-                            onTapBookMark: () {
-                              debugPrint("Click on bookMark");
-                              viewModel.change();
-                            },
-                            onTapOpenLink: () {
-                              debugPrint('Click on Open link');
+                          FCScannedCard(
+                            numberScan: index,
+                            onTap: () {
+                              debugPrint('Tap See more');
                             },
                           ),
                           const SizedBox(

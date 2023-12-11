@@ -6,6 +6,7 @@ class FCButton extends StatelessWidget {
   final double height;
   final double cornerRadius;
   final bool isWidthMax;
+  final Color color;
   final VoidCallback onTap;
   const FCButton({
     super.key,
@@ -14,6 +15,7 @@ class FCButton extends StatelessWidget {
     this.height = 49.0,
     this.cornerRadius = 8.0,
     this.isWidthMax = false,
+    this.color = const Color(0xFF7C00FF),
     required this.onTap,
   });
 
@@ -23,10 +25,10 @@ class FCButton extends StatelessWidget {
       height: height,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(cornerRadius),
-        gradient: const LinearGradient(
+        gradient: LinearGradient(
           colors: [
-            Color(0xFF000000),
-            Color(0xFF7C00FF),
+            color != const Color(0xFF7C00FF) ? color : const Color(0xFF000000),
+            color,
           ],
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
