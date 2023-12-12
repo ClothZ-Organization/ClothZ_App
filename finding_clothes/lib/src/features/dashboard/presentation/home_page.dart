@@ -143,57 +143,61 @@ class HomePage extends ConsumerWidget {
                   },
                 ),
                 const Spacer(),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 28),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        "Searched Products",
-                        style: TextStyle(
-                          fontFamily: 'WorkSans',
-                          fontWeight: FontWeight.w500,
-                          fontSize: 14.0,
-                          height: 1.14,
-                          color: Color(0xFFFFFFFF),
-                          decoration: TextDecoration.none,
+                viewModel.isResult()
+                    ? const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 28),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              "Searched Products",
+                              style: TextStyle(
+                                fontFamily: 'WorkSans',
+                                fontWeight: FontWeight.w500,
+                                fontSize: 14.0,
+                                height: 1.14,
+                                color: Color(0xFFFFFFFF),
+                                decoration: TextDecoration.none,
+                              ),
+                            ),
+                            Spacer(),
+                          ],
                         ),
-                      ),
-                      Spacer(),
-                    ],
-                  ),
-                ),
+                      )
+                    : const SizedBox.shrink(),
                 const SizedBox(
                   height: 26,
                 ),
-                SizedBox(
-                  height: UIConstants.heightCardClothes,
-                  child: ListView.builder(
-                    padding: EdgeInsets.zero, 
-                    scrollDirection: Axis.horizontal,
-                    reverse: viewModel.isReverse(),
-                    itemCount: viewModel.sizeSearchList(),
-                    itemBuilder: (BuildContext context, int index) {
-                      return Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          const SizedBox(
-                            width: 14,
-                          ),
-                          FCScannedCard(
-                            image: viewModel.getImageCard(index),
-                            numberScan: index,
-                            onTap: () {
-                              viewModel.actionSeeMore(index);
-                            },
-                          ),
-                        ],
-                      );
-                    },
-                  ),
-                ),
+                viewModel.isResult()
+                    ? SizedBox(
+                        height: UIConstants.heightCardClothes,
+                        child: ListView.builder(
+                          padding: EdgeInsets.zero,
+                          scrollDirection: Axis.horizontal,
+                          reverse: viewModel.isReverse(),
+                          itemCount: viewModel.sizeSearchList(),
+                          itemBuilder: (BuildContext context, int index) {
+                            return Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                const SizedBox(
+                                  width: 14,
+                                ),
+                                FCScannedCard(
+                                  image: viewModel.getImageCard(index),
+                                  numberScan: index,
+                                  onTap: () {
+                                    viewModel.actionSeeMore(index);
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        ),
+                      )
+                    : const SizedBox.shrink(),
               ],
             ),
           ),

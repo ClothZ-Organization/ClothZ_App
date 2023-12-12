@@ -60,6 +60,10 @@ class HomeViewModel extends ViewModel {
     _dashboardViewModel.setTab(1);
   }
 
+  bool isResult(){
+    return _dashboardViewModel.searchList.isNotEmpty;
+  }
+
   bool isReverse() {
     return _dashboardViewModel.searchList.length > 2;
   }
