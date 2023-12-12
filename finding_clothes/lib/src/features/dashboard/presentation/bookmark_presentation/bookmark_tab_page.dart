@@ -20,7 +20,7 @@ class BookMarkTabPage extends ConsumerWidget {
                 // width: double.infinity,
                 child: Padding(
                   padding: EdgeInsets.symmetric(
-                    horizontal: 24,
+                    horizontal: 20,
                   ),
                   child: FCTopTitlePage(
                     nameText: 'Saved results',

@@ -5,20 +5,17 @@ class IconCard extends StatelessWidget {
   final String iconPath;
   final String text;
   final double width;
-  final double height;
   const IconCard({
     super.key,
     required this.iconPath,
     required this.text,
     required this.width,
-    required this.height,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: width,
-      height: height,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(14),
         color: const Color(0xFF343434).withOpacity(0.9),

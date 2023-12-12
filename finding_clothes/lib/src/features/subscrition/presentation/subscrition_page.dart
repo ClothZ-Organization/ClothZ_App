@@ -129,7 +129,6 @@ class SubscritionPage extends ConsumerWidget {
                       iconPath: 'lib/icons/scan-subscrition.svg',
                       text: 'Unlimited Scans',
                       width: MediaQuery.sizeOf(context).width * 0.19,
-                      height: MediaQuery.sizeOf(context).height * 0.10,
                     ),
                     const SizedBox(
                       width: 16,
@@ -138,7 +137,6 @@ class SubscritionPage extends ConsumerWidget {
                       iconPath: 'lib/icons/ticket-discount.svg',
                       text: 'Discount Coupons',
                       width: MediaQuery.sizeOf(context).width * 0.19,
-                      height: MediaQuery.sizeOf(context).height * 0.10,
                     ),
                     const SizedBox(
                       width: 16,
@@ -147,16 +145,14 @@ class SubscritionPage extends ConsumerWidget {
                       iconPath: 'lib/icons/lightning.svg',
                       text: 'Faster Scan Results',
                       width: MediaQuery.sizeOf(context).width * 0.19,
-                      height: MediaQuery.sizeOf(context).height * 0.10,
                     ),
                     const SizedBox(
                       width: 16,
                     ),
                     IconCard(
                       iconPath: 'lib/icons/ads.svg',
-                      text: ' No ADS',
+                      text: ' No\nADS',
                       width: MediaQuery.sizeOf(context).width * 0.19,
-                      height: MediaQuery.sizeOf(context).height * 0.10,
                     ),
                     const SizedBox(
                       width: 16,
