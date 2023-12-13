@@ -14,6 +14,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 @RoutePage()
 class RegisterPage extends ConsumerWidget {
   RegisterPage({super.key});
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController(text: '');
   TextEditingController passwordController = TextEditingController(text: '');
   TextEditingController confirmPasswordController =
@@ -25,11 +26,11 @@ class RegisterPage extends ConsumerWidget {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
     return Scaffold(
       backgroundColor: Colors.black,
-      body: viewModel.isLoading
-          ? const Center(
-            child: FCLoadingIndicator(size: LoadingIndicatorSize.large,),
-            )
-          : MaterialApp(
+      body: Stack(
+        children: [
+          IgnorePointer(
+            ignoring: viewModel.isLoading,
+            child: MaterialApp(
               home: SafeArea(
                 child: SingleChildScrollView(
                   child: Column(
@@ -47,100 +48,109 @@ class RegisterPage extends ConsumerWidget {
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 36),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const SizedBox(
-                              height: 40,
-                            ),
-                            const Text(
-                              'START THE JOURNEY NOW',
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
-                              style: TextStyle(
-                                fontFamily: 'WorkSans',
-                                fontWeight: FontWeight.w600,
-                                fontSize: 40.0,
-                                height: 1.12,
-                                color: Colors.white,
-                                decoration: TextDecoration.none,
+                        child: Form(
+                          key: _formKey,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBox(
+                                height: 40,
                               ),
-                            ),
-                            const SizedBox(
-                              height: 22,
-                            ),
-                            const Text(
-                              'Join clothesx community today and find all the products you need',
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
-                              style: TextStyle(
-                                fontFamily: 'WorkSans',
-                                fontWeight: FontWeight.w400,
-                                fontSize: 14.0,
-                                height: 1.64,
-                                color: Colors.white,
-                                decoration: TextDecoration.none,
+                              const Text(
+                                'START THE JOURNEY NOW',
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2,
+                                style: TextStyle(
+                                  fontFamily: 'WorkSans',
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 40.0,
+                                  height: 1.12,
+                                  color: Colors.white,
+                                  decoration: TextDecoration.none,
+                                ),
                               ),
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            FCTextField(
-                              controller: emailController,
-                              onChanged: viewModel.changeText,
-                              hintText: 'Email',
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            FCTextField(
-                              controller: passwordController,
-                              onChanged: viewModel.changeText,
-                              hintText: 'Password',
-                              isObscureText: true,
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            FCTextField(
-                              controller: confirmPasswordController,
-                              onChanged: viewModel.changeText,
-                              hintText: 'Confirm Password',
-                              isObscureText: true,
-                            ),
-                            const SizedBox(
-                              height: 28,
-                            ),
-                            Center(
-                              child: FCButton(
-                                onTap: () {
-                                  debugPrint('---${emailController.text}');
-                                  debugPrint('---${passwordController.text}');
-                                  debugPrint(
-                                      '---${confirmPasswordController.text}');
-                                  viewModel.register(
-                                      email: emailController.text,
-                                      password: passwordController.text,
-                                      passwordConfirm:
-                                          confirmPasswordController.text);
-                                },
-                                text: "Register Now",
+                              const SizedBox(
+                                height: 22,
                               ),
-                            ),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            Center(
-                              child: FCTextAction(
-                                text: 'Already registered? ',
-                                textAction: 'Log In',
-                                onTap: () {
-                                  debugPrint('----dadad LogIn');
-                                  viewModel.goLogIn();
-                                },
+                              const Text(
+                                'Join clothesx community today and find all the products you need',
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2,
+                                style: TextStyle(
+                                  fontFamily: 'WorkSans',
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 14.0,
+                                  height: 1.64,
+                                  color: Colors.white,
+                                  decoration: TextDecoration.none,
+                                ),
                               ),
-                            ),
-                          ],
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              FCTextField(
+                                controller: emailController,
+                                onChanged: viewModel.changeTextEmail,
+                                hintText: 'Email',
+                                isNotOk: viewModel.isNotOkEmail,
+                                textIsNotOk: viewModel.textEmailIsNotOk,
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              FCTextField(
+                                controller: passwordController,
+                                onChanged: viewModel.changeTextPass1,
+                                hintText: 'Password',
+                                isObscureText: true,
+                                isNotOk: viewModel.isNotOkPass,
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              FCTextField(
+                                controller: confirmPasswordController,
+                                onChanged: viewModel.changeTextPass2,
+                                hintText: 'Confirm Password',
+                                isObscureText: true,
+                                isNotOk: viewModel.isNotOkPass,
+                                textIsNotOk: viewModel.textPasswordIsNotOk,
+                              ),
+                              const SizedBox(
+                                height: 28,
+                              ),
+                              Center(
+                                child: FCButton(
+                                  onTap: () async {
+                                    debugPrint('---${emailController.text}');
+                                    debugPrint('---${passwordController.text}');
+                                    debugPrint(
+                                        '---${confirmPasswordController.text}');
+                                    await viewModel.register(
+                                        email: emailController.text,
+                                        password: passwordController.text,
+                                        passwordConfirm:
+                                            confirmPasswordController.text);
+                                    _formKey.currentState?.validate();
+                                  },
+                                  text: "Register Now",
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 15,
+                              ),
+                              Center(
+                                child: FCTextAction(
+                                  text: 'Already registered? ',
+                                  textAction: 'Log In',
+                                  onTap: () {
+                                    debugPrint('----dadad LogIn');
+                                    viewModel.goLogIn();
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ],
@@ -148,6 +158,20 @@ class RegisterPage extends ConsumerWidget {
                 ),
               ),
             ),
+          ),
+          if (viewModel.isLoading)
+            Container(
+              color: Colors.black.withOpacity(0.5),
+              child: const Center(
+                child: Center(
+                  child: FCLoadingIndicator(
+                    size: LoadingIndicatorSize.standart,
+                  ),
+                ),
+              ),
+            ),
+        ],
+      ),
     );
   }
 }

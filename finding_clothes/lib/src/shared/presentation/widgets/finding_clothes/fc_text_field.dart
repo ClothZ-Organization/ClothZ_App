@@ -1,24 +1,33 @@
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class FCTextField extends StatelessWidget {
   final TextEditingController controller;
   final Function(String) onChanged;
   final String hintText;
   final bool isObscureText;
+  bool isNotOk;
+  String? textIsNotOk;
 
-  const FCTextField({
+  FCTextField({
     super.key,
     required this.controller,
     required this.onChanged,
     required this.hintText,
     this.isObscureText = false,
+    this.isNotOk = false,
+    this.textIsNotOk,
   });
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 50,
-      child: TextField(
+      height: isNotOk && textIsNotOk != null ? 80 : 50,
+      child: TextFormField(
+        validator: (_) {
+          return textIsNotOk;
+        },
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         keyboardAppearance: Brightness.dark,
         style: const TextStyle(
           fontWeight: FontWeight.w500,
@@ -36,14 +45,27 @@ class FCTextField extends StatelessWidget {
           filled: true,
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
-            borderSide: const BorderSide(
-              color: Color(0xFFC4C4C4),
+            borderSide: BorderSide(
+              color: isNotOk ? Colors.red : const Color(0xFFC4C4C4),
             ),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide(
+              color: isNotOk ? Colors.red : const Color(0xFFC4C4C4),
+            ),
+          ),
+          errorMaxLines: 2,
+          errorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
             borderSide: const BorderSide(
-              color: Color(0xFFC4C4C4),
+              color: Colors.red,
+            ),
+          ),
+          focusedErrorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: const BorderSide(
+              color: Colors.red,
             ),
           ),
           hintText: hintText,
