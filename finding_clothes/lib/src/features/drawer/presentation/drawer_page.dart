@@ -28,97 +28,122 @@ class DrawerPage extends ConsumerWidget {
             shadowColor: const Color(0xFF7C00FF),
             elevation: 110,
             child: SafeArea(
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    const Center(
-                      child: Text(
-                        'Menu',
-                        style: TextStyle(
-                          fontFamily: 'WorkSans',
-                          fontWeight: FontWeight.w600,
-                          fontSize: 22,
-                          height: 1.25,
-                          color: Colors.white,
-                        ),
+              child: LayoutBuilder(
+                builder:
+                    (BuildContext context, BoxConstraints viewportConstraints) {
+                  return SingleChildScrollView(
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        minHeight: viewportConstraints.maxHeight,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Column(//
+                            children: [
+                              const Center(
+                                child: Text(
+                                  'Menu',
+                                  style: TextStyle(
+                                    fontFamily: 'WorkSans',
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 22,
+                                    height: 1.25,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 31,
+                              ),
+                              Center(
+                                child: Material(
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(90)),
+                                  color: const Color(0xFF222222),
+                                  child: imageDrawer(
+                                    MediaQuery.of(context).size.width * 0.33,
+                                    viewModel.getImagePath(),
+                                    () async {
+                                      if (await viewModel.setImage()) {
+                                        // ignore: use_build_context_synchronously
+                                        FCDialogUtils.showAlertDialog(context);
+                                      }
+                                      debugPrint('Click on image');
+                                    },
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 45,
+                              ),
+                              buttonDrawer(
+                                  viewModel,
+                                  context,
+                                  'lib/icons/edit.svg',
+                                  'Privacy Policy',
+                                  () {}),
+                              const SizedBox(
+                                height: 34,
+                              ),
+                              buttonDrawer(
+                                  viewModel,
+                                  context,
+                                  'lib/icons/clipboard-text.svg',
+                                  'Terms & Conditions',
+                                  () {}),
+                              const SizedBox(
+                                height: 34,
+                              ),
+                              buttonDrawer(
+                                  viewModel,
+                                  context,
+                                  'lib/icons/user-square.svg',
+                                  'Community',
+                                  () {}),
+                              const SizedBox(
+                                height: 34,
+                              ),
+                              buttonDrawer(
+                                  viewModel,
+                                  context,
+                                  'lib/icons/star.svg',
+                                  'Leave a Review',
+                                  () {}),
+                              const SizedBox(
+                                height: 34,
+                              ),
+                              buttonDrawer(viewModel, context,
+                                  'lib/icons/logout.svg', 'Log Out', () {
+                                viewModel.logOut();
+                              }),
+                              const SizedBox(
+                                height: 50,
+                              ),
+                            ],
+                          ),//
+                          Padding(
+                            padding: EdgeInsets.only(
+                              left: MediaQuery.sizeOf(context).width * 0.082,
+                              right: MediaQuery.sizeOf(context).width * 0.082,
+                            ),
+                            child: CardUpgradePlanDrawer(
+                              scanNumber: viewModel.getCounter(),
+                              fromNumberScan: 100,
+                              descriptionText: 'Scanned Products',
+                              textButton: 'Upgrade Plan',
+                              onTap: () {
+                                viewModel.goSubscritionPage();
+                                debugPrint('Click on Upgrade Plan');
+                              },
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    const SizedBox(
-                      height: 31,
-                    ),
-                    Center(
-                      child: Material(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(90)),
-                        color: const Color(0xFF222222),
-                        child: imageDrawer(
-                          MediaQuery.of(context).size.width * 0.33,
-                          viewModel.getImagePath(),
-                          () async {
-                            if (await viewModel.setImage()) {
-                              // ignore: use_build_context_synchronously
-                              FCDialogUtils.showAlertDialog(context);
-                            }
-                            debugPrint('Click on image');
-                          },
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 45,
-                    ),
-                    buttonDrawer(viewModel, context, 'lib/icons/edit.svg',
-                        'Privacy Policy', () {}),
-                    const SizedBox(
-                      height: 34,
-                    ),
-                    buttonDrawer(
-                        viewModel,
-                        context,
-                        'lib/icons/clipboard-text.svg',
-                        'Terms & Conditions',
-                        () {}),
-                    const SizedBox(
-                      height: 34,
-                    ),
-                    buttonDrawer(viewModel, context,
-                        'lib/icons/user-square.svg', 'Community', () {}),
-                    const SizedBox(
-                      height: 34,
-                    ),
-                    buttonDrawer(viewModel, context, 'lib/icons/star.svg',
-                        'Leave a Review', () {}),
-                    const SizedBox(
-                      height: 34,
-                    ),
-                    buttonDrawer(
-                        viewModel, context, 'lib/icons/logout.svg', 'Log Out',
-                        () {
-                      viewModel.logOut();
-                    }),
-                    const SizedBox(
-                      height: 50,
-                    ),
-                    // const Spacer(),
-                    Padding(
-                      padding: EdgeInsets.only(
-                        left: MediaQuery.sizeOf(context).width * 0.082,
-                        right: MediaQuery.sizeOf(context).width * 0.082,
-                      ),
-                      child: CardUpgradePlanDrawer(
-                        scanNumber: viewModel.getCounter(),
-                        fromNumberScan: 100,
-                        descriptionText: 'Scanned Products',
-                        textButton: 'Upgrade Plan',
-                        onTap: () {
-                          viewModel.goSubscritionPage();
-                          debugPrint('Click on Upgrade Plan');
-                        },
-                      ),
-                    ),
-                  ],
-                ),
+                  );
+                },
               ),
             ),
           ),
