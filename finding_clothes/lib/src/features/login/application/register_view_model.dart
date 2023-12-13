@@ -30,30 +30,38 @@ class RegisterViewModel extends ViewModel {
       textPasswordIsNotOk = null;
       isNotOkEmail = false;
       textEmailIsNotOk = null;
-      try {
-        await _authenticationService.register(email, password);
-        debugPrint("Created New Account");
+      if (password != '') {
+        try {
+          await _authenticationService.register(email, password);
+          debugPrint("Created New Account");
 
-        await _authenticationService.login(email, password);
-        debugPrint("Logged in New Account");
+          await _authenticationService.login(email, password);
+          debugPrint("Logged in New Account");
 
-        await _presentationService.push(
-            route: Routes.dashboard, clearBackStack: true);
-      } catch (error) {
-        if (error is FirebaseAuthException) {
-          if (error.code.contains('email')) {
-            isNotOkEmail = true;
-            textEmailIsNotOk = error.message;
+          await _presentationService.push(
+              route: Routes.dashboard, clearBackStack: true);
+        } catch (error) {
+          if (error is FirebaseAuthException) {
+            if (error.code.contains('email')) {
+              isNotOkEmail = true;
+              textEmailIsNotOk = error.message;
+            }
+            if (error.code.contains('password')) {
+              isNotOkPass = true;
+              textPasswordIsNotOk = error.message;
+            }
+            notifyListeners();
           }
-          if (error.code.contains('password')) {
-            isNotOkPass = true;
-            textPasswordIsNotOk = error.message;
-          }
+          isLoading = false;
           notifyListeners();
+          debugPrint("Error: ${error.toString()}");
         }
+      } else {
+        isNotOkPass = true;
+        textPasswordIsNotOk = 'Password should be at least 6 characters';
+
         isLoading = false;
         notifyListeners();
-        debugPrint("Error: ${error.toString()}");
       }
     } else {
       isNotOkPass = true;
