@@ -26,7 +26,7 @@ class LoginPage extends ConsumerWidget {
       backgroundColor: Colors.black,
       body: viewModel.isLoading
           ? const Center(
-            child: FCLoadingIndicator(size: LoadingIndicatorSize.large,),
+            child: FCLoadingIndicator(size: LoadingIndicatorSize.standart,),
             )
           : SafeArea(
               child: SingleChildScrollView(
