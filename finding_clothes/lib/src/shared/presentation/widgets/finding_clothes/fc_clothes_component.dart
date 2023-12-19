@@ -144,7 +144,7 @@ class FCClothesCard extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        price,
+                        price.replaceAll('*', ''),
                         style: const TextStyle(
                           fontFamily: 'WorkSans',
                           fontWeight: FontWeight.w600,
