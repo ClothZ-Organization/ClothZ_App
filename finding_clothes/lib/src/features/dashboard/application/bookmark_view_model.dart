@@ -67,6 +67,10 @@ class BookMarkPageViewModel extends ViewModel {
     return _dashboardViewModel.wishList[index].source;
   }
 
+  String getIconSource(int index) {
+    return _dashboardViewModel.wishList[index].sourceIcon ?? '';
+  }
+
   String getTitle(int index) {
     String title = '';
     try {

@@ -172,6 +172,11 @@ class SearchResultViewModel extends ViewModel {
     return listResultModel[index].source;
   }
 
+  String getIconSource(int index) {
+    return listResultModel[index].sourceIcon ?? '';
+  }
+
+
   String getTitle(int index) {
     String title = '';
     try {

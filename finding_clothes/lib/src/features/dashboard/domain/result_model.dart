@@ -8,6 +8,7 @@ class ResultModel {
   String title;
   String link;
   String source;
+  String? sourceIcon;
   PriceModel? price;
   String thumbnail;
   bool? isBookMark;
@@ -16,6 +17,7 @@ class ResultModel {
     required this.title,
     required this.link,
     required this.source,
+    required this.sourceIcon,
     required this.price,
     required this.thumbnail,
     required this.isBookMark,

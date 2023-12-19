@@ -56,6 +56,8 @@ class AllResultPage extends ConsumerWidget {
                                                 viewModel.getPrice(index * 2),
                                             nameBrand:
                                                 viewModel.getSource(index * 2),
+                                            iconBrand: viewModel
+                                                .getIconSource(index * 2),
                                             isBookMark:
                                                 viewModel.isBookMark(index * 2),
                                             image: viewModel
@@ -79,6 +81,9 @@ class AllResultPage extends ConsumerWidget {
                                                       .getPrice(index * 2 + 1),
                                                   nameBrand: viewModel
                                                       .getSource(index * 2 + 1),
+                                                  iconBrand:
+                                                      viewModel.getIconSource(
+                                                          index * 2 + 1),
                                                   isBookMark:
                                                       viewModel.isBookMark(
                                                           index * 2 + 1),

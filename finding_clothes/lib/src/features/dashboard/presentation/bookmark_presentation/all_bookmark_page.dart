@@ -30,6 +30,7 @@ class AllBookmarkPage extends ConsumerWidget {
                                 title: viewModel.getTitle(index * 2),
                                 price: viewModel.getPrice(index * 2),
                                 nameBrand: viewModel.getSource(index * 2),
+                                iconBrand: viewModel.getIconSource(index * 2),
                                 isBookMark: viewModel.isBookMark(index * 2),
                                 image: viewModel.getThumbnail(index * 2),
                                 onTapBookMark: () {
@@ -51,6 +52,8 @@ class AllBookmarkPage extends ConsumerWidget {
                                       price: viewModel.getPrice(index * 2 + 1),
                                       nameBrand:
                                           viewModel.getSource(index * 2 + 1),
+                                      iconBrand: viewModel
+                                          .getIconSource(index * 2 + 1),
                                       isBookMark:
                                           viewModel.isBookMark(index * 2 + 1),
                                       image:

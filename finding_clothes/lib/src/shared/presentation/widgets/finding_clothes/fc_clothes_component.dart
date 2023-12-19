@@ -8,6 +8,7 @@ class FCClothesCard extends StatelessWidget {
   final String title;
   final String price;
   final String nameBrand;
+  final String iconBrand;
   final bool isBookMark;
   final String image;
   final VoidCallback onTapBookMark;
@@ -17,6 +18,7 @@ class FCClothesCard extends StatelessWidget {
     this.title = '',
     this.price = '',
     this.nameBrand = '',
+    this.iconBrand = '',
     this.isBookMark = false,
     this.image =
         'https://images.pexels.com/photos/4100420/pexels-photo-4100420.jpeg?auto=compress&cs=tinysrgb&w=800',
@@ -152,29 +154,44 @@ class FCClothesCard extends StatelessWidget {
                         ),
                       ),
                       const Spacer(),
-                      Flexible(
-                        child: Container(
-                          height: 15,
-                          decoration: BoxDecoration(
-                            color: Colors.black,
-                            borderRadius: BorderRadius.circular(9.0),
-                          ),
-                          child: Center(
-                            child: Text(
-                              nameBrand,
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                              style: const TextStyle(
-                                fontFamily: 'WorkSans',
-                                fontWeight: FontWeight.w600,
-                                fontSize: 10,
-                                height: 1.3,
-                                color: Color(0XFFFFFFFF),
+                      iconBrand == ''
+                          ? Flexible(
+                              child: Container(
+                                height: 15,
+                                decoration: BoxDecoration(
+                                  color: Colors.black,
+                                  borderRadius: BorderRadius.circular(9.0),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    nameBrand,
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
+                                    style: const TextStyle(
+                                      fontFamily: 'WorkSans',
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 10,
+                                      height: 1.3,
+                                      color: Color(0XFFFFFFFF),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            )
+                          : SizedBox(
+                              height: UIConstants.heightCardClothes * 0.07,
+                              width: UIConstants.widthCardClothes * 0.15,
+                              child: ClipRRect(
+                                child: CachedNetworkImage(
+                                  imageUrl: iconBrand,
+                                  fit: BoxFit.cover,
+                                  placeholder: (context, url) =>
+                                      const Center(child: FCLoadingIndicator()),
+                                  errorWidget: (context, url, error) =>
+                                      const Icon(Icons.error),
+                                ),
                               ),
                             ),
-                          ),
-                        ),
-                      ),
                     ],
                   ),
                 ],
