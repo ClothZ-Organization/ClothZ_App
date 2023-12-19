@@ -179,7 +179,7 @@ class AllResultPage extends ConsumerWidget {
             ),
             controller: controller,
             onSubmitted: onAction,
-            // onChanged: onAction,
+            onChanged: onAction,
             textAlignVertical: TextAlignVertical.center,
             decoration: InputDecoration(
               contentPadding: const EdgeInsets.only(left: 10),

@@ -57,6 +57,12 @@ class SearchResultViewModel extends ViewModel {
         urlImg: _imageUrl,
         apiKey: ApiConstants.apiKey,
       );
+      for (int i = 0; i < response.visual_matches.length; i++) {
+        if(response.visual_matches[i].price == null) {
+          response.visual_matches.removeAt(i);
+          i--;
+        }
+      }
       _dashboardViewModel.resultModel = response;
       if (_dashboardViewModel.resultModel == null) {
         textMessage = 'Nothing Found';
@@ -136,7 +142,7 @@ class SearchResultViewModel extends ViewModel {
   }
 
   bool isResult() {
-    return _dashboardViewModel.resultModel != null;
+    return _dashboardViewModel.resultModel != null && _dashboardViewModel.resultModel!.visual_matches.isNotEmpty;
   }
 
   bool isResulSearchBar() {
