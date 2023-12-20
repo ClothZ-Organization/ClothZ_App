@@ -29,10 +29,14 @@ class AllBookmarkPage extends ConsumerWidget {
                               FCClothesCard(
                                 title: viewModel.getTitle(index * 2),
                                 price: viewModel.getPrice(index * 2),
+                                currency: viewModel.getCurrency(index * 2),
+                                extractedValue:
+                                    viewModel.getExtractedValue(index * 2),
                                 nameBrand: viewModel.getSource(index * 2),
                                 iconBrand: viewModel.getIconSource(index * 2),
                                 isBookMark: viewModel.isBookMark(index * 2),
                                 image: viewModel.getThumbnail(index * 2),
+                                isDiscount: viewModel.isDiscount(index * 2),
                                 onTapBookMark: () {
                                   debugPrint("Click on bookMark");
                                   viewModel
@@ -50,6 +54,10 @@ class AllBookmarkPage extends ConsumerWidget {
                                   ? FCClothesCard(
                                       title: viewModel.getTitle(index * 2 + 1),
                                       price: viewModel.getPrice(index * 2 + 1),
+                                      currency:
+                                          viewModel.getCurrency(index * 2 + 1),
+                                      extractedValue: viewModel
+                                          .getExtractedValue(index * 2 + 1),
                                       nameBrand:
                                           viewModel.getSource(index * 2 + 1),
                                       iconBrand: viewModel
@@ -58,6 +66,8 @@ class AllBookmarkPage extends ConsumerWidget {
                                           viewModel.isBookMark(index * 2 + 1),
                                       image:
                                           viewModel.getThumbnail(index * 2 + 1),
+                                      isDiscount:
+                                          viewModel.isDiscount(index * 2 + 1),
                                       onTapBookMark: () {
                                         debugPrint(
                                             "Click on bookMark bookmark");

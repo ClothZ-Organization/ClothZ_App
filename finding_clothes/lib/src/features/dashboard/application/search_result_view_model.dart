@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:finding_clothes/src/features/dashboard/application/dashboard_view_model.dart';
 import 'package:finding_clothes/src/features/dashboard/data/dashboard_api.dart';
 import 'package:finding_clothes/src/features/dashboard/data/firebase_data.dart';
@@ -166,6 +167,23 @@ class SearchResultViewModel extends ViewModel {
       return listResultModel[index].price?.value ?? '';
     }
     return '';
+  }
+
+  String getCurrency(int index) {
+    if (listResultModel[index].price != null) {
+      return listResultModel[index].price?.currency ?? '';
+    }
+    return '';
+  }
+
+  double getExtractedValue(int index) {
+    if (listResultModel[index].price != null) {
+      return listResultModel[index].price?.extracted_value ?? 0.0;
+    }
+    return 0.0;
+  }
+  bool isDiscount(int index){
+    return listResultModel[index].source.contains('Zara');
   }
 
   String getSource(int index) {

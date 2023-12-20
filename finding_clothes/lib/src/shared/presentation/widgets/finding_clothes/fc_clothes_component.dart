@@ -7,21 +7,29 @@ import 'package:flutter_svg/svg.dart';
 class FCClothesCard extends StatelessWidget {
   final String title;
   final String price;
+  final String currency;
+  final double extractedValue;
   final String nameBrand;
   final String iconBrand;
   final bool isBookMark;
   final String image;
+  final bool isDiscount;
+  final int discount;
   final VoidCallback onTapBookMark;
   final VoidCallback onTapOpenLink;
   const FCClothesCard({
     super.key,
     this.title = '',
     this.price = '',
+    this.currency = '',
+    this.extractedValue = 0.0,
     this.nameBrand = '',
     this.iconBrand = '',
     this.isBookMark = false,
     this.image =
         'https://images.pexels.com/photos/4100420/pexels-photo-4100420.jpeg?auto=compress&cs=tinysrgb&w=800',
+    this.isDiscount = false,
+    this.discount = 10,
     required this.onTapBookMark,
     required this.onTapOpenLink,
   });
@@ -92,9 +100,12 @@ class FCClothesCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.end,
                     mainAxisSize: MainAxisSize.max,
                     children: [
+                      if (isDiscount) discountBox(discount: discount),
+                      const Spacer(),
                       GestureDetector(
                         onTap: onTapBookMark,
                         child: ShaderMask(
@@ -144,8 +155,12 @@ class FCClothesCard extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        price.replaceAll('*', ''),
-                        style: const TextStyle(
+                        '$currency$extractedValue', //price.replaceAll('*', ''),
+                        style: TextStyle(
+                          decoration: isDiscount
+                              ? TextDecoration.lineThrough
+                              : TextDecoration.none,
+                          decorationColor: Colors.red,
                           fontFamily: 'WorkSans',
                           fontWeight: FontWeight.w600,
                           fontSize: 12,
@@ -153,6 +168,20 @@ class FCClothesCard extends StatelessWidget {
                           color: Colors.black,
                         ),
                       ),
+                      const SizedBox(
+                        width: 2,
+                      ),
+                      if (isDiscount)
+                        Text(
+                          '$currency${extractedValue - (0.1 * extractedValue)}',
+                          style: const TextStyle(
+                            fontFamily: 'WorkSans',
+                            fontWeight: FontWeight.w600,
+                            fontSize: 12,
+                            height: 1.33,
+                            color: Colors.red,
+                          ),
+                        ),
                       const Spacer(),
                       iconBrand == ''
                           ? Flexible(
@@ -180,11 +209,11 @@ class FCClothesCard extends StatelessWidget {
                             )
                           : SizedBox(
                               height: UIConstants.heightCardClothes * 0.07,
-                              width: UIConstants.widthCardClothes * 0.15,
+                              width: UIConstants.widthCardClothes * 0.20,
                               child: ClipRRect(
                                 child: CachedNetworkImage(
                                   imageUrl: iconBrand,
-                                  fit: BoxFit.cover,
+                                  // fit: BoxFit.cover,
                                   placeholder: (context, url) =>
                                       const Center(child: FCLoadingIndicator()),
                                   errorWidget: (context, url, error) =>
@@ -198,6 +227,40 @@ class FCClothesCard extends StatelessWidget {
               ),
             )
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget discountBox({required int discount}) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(6),
+        gradient: const LinearGradient(
+          colors: [
+            Color(0xFF000000),
+            Color(0xFF7C00FF),
+          ],
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 8,
+          vertical: 2,
+        ),
+        child: Text(
+          '$discount% EXTRA',
+          overflow: TextOverflow.ellipsis,
+          maxLines: 1,
+          style: const TextStyle(
+            fontFamily: 'WorkSans',
+            fontWeight: FontWeight.w500,
+            fontSize: 9,
+            height: 1.77,
+            color: Colors.white,
+          ),
         ),
       ),
     );
