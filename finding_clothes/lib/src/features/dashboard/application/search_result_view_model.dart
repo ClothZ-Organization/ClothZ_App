@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:finding_clothes/src/features/dashboard/application/dashboard_view_model.dart';
 import 'package:finding_clothes/src/features/dashboard/data/dashboard_api.dart';
 import 'package:finding_clothes/src/features/dashboard/data/firebase_data.dart';

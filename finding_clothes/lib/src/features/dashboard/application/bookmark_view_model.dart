@@ -62,6 +62,24 @@ class BookMarkPageViewModel extends ViewModel {
     }
     return '';
   }
+  
+  String getCurrency(int index) {
+    if (_dashboardViewModel.wishList[index].price != null) {
+      return _dashboardViewModel.wishList[index].price?.currency ?? '';
+    }
+    return '';
+  }
+
+  double getExtractedValue(int index) {
+    if (_dashboardViewModel.wishList[index].price != null) {
+      return _dashboardViewModel.wishList[index].price?.extracted_value ?? 0.0;
+    }
+    return 0.0;
+  }
+
+  bool isDiscount(int index){
+    return _dashboardViewModel.wishList[index].source.contains('Zara');
+  }
 
   String getSource(int index) {
     return _dashboardViewModel.wishList[index].source;

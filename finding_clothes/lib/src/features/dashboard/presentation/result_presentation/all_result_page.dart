@@ -54,6 +54,10 @@ class AllResultPage extends ConsumerWidget {
                                                 viewModel.getTitle(index * 2),
                                             price:
                                                 viewModel.getPrice(index * 2),
+                                            currency: viewModel
+                                                .getCurrency(index * 2),
+                                            extractedValue: viewModel
+                                                .getExtractedValue(index * 2),
                                             nameBrand:
                                                 viewModel.getSource(index * 2),
                                             iconBrand: viewModel
@@ -62,6 +66,8 @@ class AllResultPage extends ConsumerWidget {
                                                 viewModel.isBookMark(index * 2),
                                             image: viewModel
                                                 .getThumbnail(index * 2),
+                                            isDiscount:
+                                                viewModel.isDiscount(index * 2),
                                             onTapBookMark: () {
                                               viewModel.addElementInWishList(
                                                   index * 2);
@@ -79,6 +85,12 @@ class AllResultPage extends ConsumerWidget {
                                                       .getTitle(index * 2 + 1),
                                                   price: viewModel
                                                       .getPrice(index * 2 + 1),
+                                                  currency:
+                                                      viewModel.getCurrency(
+                                                          index * 2 + 1),
+                                                  extractedValue: viewModel
+                                                      .getExtractedValue(
+                                                          index * 2 + 1),
                                                   nameBrand: viewModel
                                                       .getSource(index * 2 + 1),
                                                   iconBrand:
@@ -89,6 +101,9 @@ class AllResultPage extends ConsumerWidget {
                                                           index * 2 + 1),
                                                   image: viewModel.getThumbnail(
                                                       index * 2 + 1),
+                                                  isDiscount:
+                                                      viewModel.isDiscount(
+                                                          index * 2 + 1),
                                                   onTapBookMark: () {
                                                     viewModel
                                                         .addElementInWishList(
