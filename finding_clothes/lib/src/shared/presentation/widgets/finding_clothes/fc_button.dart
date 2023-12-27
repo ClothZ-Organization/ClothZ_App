@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class FCButton extends StatelessWidget {
   final String text;
+  final Color textColor;
   final double fontSize;
   final double height;
   final double cornerRadius;
@@ -11,6 +12,7 @@ class FCButton extends StatelessWidget {
   const FCButton({
     super.key,
     this.text = '',
+    this.textColor = Colors.white,
     this.fontSize = 16.0,
     this.height = 49.0,
     this.cornerRadius = 8.0,
@@ -50,7 +52,7 @@ class FCButton extends StatelessWidget {
         child: Text(
           text,
           style: TextStyle(
-            color: Colors.white,
+            color: textColor,
             fontWeight: FontWeight.w500,
             fontSize: fontSize,
             height: 1.2,

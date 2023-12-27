@@ -40,7 +40,8 @@ class DrawerPage extends ConsumerWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          Column(//
+                          Column(
+                            //
                             children: [
                               const Center(
                                 child: Text(
@@ -119,10 +120,17 @@ class DrawerPage extends ConsumerWidget {
                                 viewModel.logOut();
                               }),
                               const SizedBox(
+                                height: 34,
+                              ),
+                              buttonDrawer(viewModel, context,
+                                  'lib/icons/logout.svg', 'Delete', () {
+                                viewModel.deleteAccount();
+                              }),
+                              const SizedBox(
                                 height: 50,
                               ),
                             ],
-                          ),//
+                          ), //
                           Padding(
                             padding: EdgeInsets.only(
                               left: MediaQuery.sizeOf(context).width * 0.082,

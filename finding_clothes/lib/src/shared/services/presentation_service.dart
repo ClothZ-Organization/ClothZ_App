@@ -1,10 +1,10 @@
 import 'dart:developer';
 
 import 'package:auto_route/auto_route.dart';
+import 'package:finding_clothes/src/app/app_router.gr.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 
 import '../../app/app_router.dart';
 import '../domain/alert_action.dart';
@@ -15,49 +15,49 @@ class PresentationService {
   late final AppRouter router;
 
   bool get canNavigateBack {
-    return true;//router.canNavigateBack;
+    return true; //router.canNavigateBack;
   }
 
   void intialize(AppRouter router) {
     this.router = router;
   }
 
-  // Future showLoading(Future Function() future) async {
-  //   await router.push(const FullScreenLoadingIndicatorRoute());
-  //   await future();
-  //   await router.pop();
-  // }
+  Future<void> showLoading({required Future Function() future}) async {
+    router.push(const FullScreenLoadingIndicatorRoute());
+    await future();
+    router.pop();
+  }
 
+  void showDialog({
+    required String title,
+    required String message,
+    String confirmText = TextResources.confirm,
+    bool dismissOnTapOutside = true,
+    VoidCallback? onConfirm,
+    VoidCallback? onCancel,
+  }) {
+    AlertAction? onConfirmAction;
+    AlertAction? onCancelAction;
 
-  // void showDialog({
-  //   required String title,
-  //   required String message,
-  //   String confirmText = TextResources.confirm,
-  //   bool dismissOnTapOutside = true,
-  //   VoidCallback? onConfirm,
-  //   VoidCallback? onCancel,
-  // }) {
-  //   AlertAction? onConfirmAction;
-  //   AlertAction? onCancelAction;
+    if (onConfirm != null) {
+      onConfirmAction = AlertAction(title: confirmText, callback: onConfirm);
+    }
 
-  //   if (onConfirm != null) {
-  //     onConfirmAction = AlertAction(title: confirmText, callback: onConfirm);
-  //   }
+    if (onCancel != null) {
+      onCancelAction =
+          AlertAction(title: TextResources.cancel, callback: onCancel);
+    }
 
-  //   if (onCancel != null) {
-  //     onCancelAction = AlertAction(title: TextResources.cancel, callback: onCancel);
-  //   }
+    final alertModel = AlertModel(
+      title: title,
+      message: message,
+      onCancel: onCancelAction,
+      onConfirm: onConfirmAction,
+      dismissOnTapOutside: dismissOnTapOutside,
+    );
 
-  //   final alertModel = AlertModel(
-  //     title: title,
-  //     message: message,
-  //     onCancel: onCancelAction,
-  //     onConfirm: onConfirmAction,
-  //     dismissOnTapOutside: dismissOnTapOutside,
-  //   );
-
-  //   router.push(AlertDialogRoute(model: alertModel));
-  // }
+    router.push(AlertDialogRoute(model: alertModel));
+  }
 
   // void showInputDialog({
   //   required String title,
@@ -96,7 +96,8 @@ class PresentationService {
     return router.pop(result);
   }
 
-  Future<T?> push<T extends Object?>({required String route, bool clearBackStack = false}) {
+  Future<T?> push<T extends Object?>(
+      {required String route, bool clearBackStack = false}) {
     if (clearBackStack) {
       router.popUntilRoot();
       return router.replaceNamed(route);
@@ -116,4 +117,5 @@ class PresentationService {
   }
 }
 
-final presentationServiceProvider = Provider<PresentationService>((ref) => PresentationService());
+final presentationServiceProvider =
+    Provider<PresentationService>((ref) => PresentationService());

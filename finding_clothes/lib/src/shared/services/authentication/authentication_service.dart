@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../storage/storage_service.dart';
@@ -58,6 +59,31 @@ class AuthenticationService {
   Future logOut() async {
     await _storageService.removeUserData();
     log("Successfuly logged out!");
+  }
+
+  Future deleteAccount(User? user) async {
+    try {
+      if (user != null) {
+        await user.delete();
+        debugPrint('Account deleted successfully!');
+      } else {
+        debugPrint('There is not logged in.');
+      }
+    } on FirebaseAuthException catch (e) {
+
+      log(e.toString());
+      debugPrint('--- Exception FirebaseAuthException');
+      rethrow;
+      // if (e.code == "requires-recent-login") {
+      //   // await _reauthenticateAndDelete();
+      // } else {
+      //   // Handle other Firebase exceptions
+      // }
+    } catch (e) {
+      log(e.toString());
+      debugPrint('--- Exception catch');
+      rethrow;
+    }
   }
 }
 

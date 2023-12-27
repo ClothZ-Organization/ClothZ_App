@@ -1,12 +1,14 @@
 import 'dart:io';
 
 import 'package:finding_clothes/src/features/dashboard/application/dashboard_view_model.dart';
+import 'package:finding_clothes/src/features/drawer/data/remove_data_firebase.dart';
 import 'package:finding_clothes/src/features/drawer/data/storage_data.dart';
 import 'package:finding_clothes/src/shared/application/view_model.dart';
 import 'package:finding_clothes/src/shared/services/authentication/authentication_service.dart';
 import 'package:finding_clothes/src/shared/services/presentation_service.dart';
 import 'package:finding_clothes/src/shared/utils/constants/routes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -16,6 +18,7 @@ class DrawerViewModel extends ViewModel {
   late final AuthenticationService _authenticationService;
   late final DashboardViewModel _dashboardViewModel;
   late final StorageDrawerApi _storageDrawerApi;
+  late final RemoveDataFirebase _removeDataFirebase;
 
   late String imageProfilePath = 'assets/images/profile.jpeg';
   bool isLoading = false;
@@ -26,6 +29,7 @@ class DrawerViewModel extends ViewModel {
     _authenticationService = ref.read(authenticationServiceProvider);
     _dashboardViewModel = ref.read(dashboardViewModelProvider);
     _storageDrawerApi = ref.read(storageDrawerApi);
+    _removeDataFirebase = ref.read(removeDataFirebaseApi);
 
     getPhoto();
   }
@@ -36,6 +40,31 @@ class DrawerViewModel extends ViewModel {
       imageProfilePath = pathImg;
     }
     notifyListeners();
+  }
+
+  Future deleteAccount() async {
+    _presentationService.showDialog(
+      title: 'Delete Account',
+      message:
+          'Are you sure you want to delete the account? This action is irreversible.',
+      confirmText: 'Delete',
+      onConfirm: () async {
+        _presentationService.pop();
+        await _presentationService.showLoading(future: () async {
+          try {
+            await _removeDataFirebase.removeAllUser(userId);
+            await _authenticationService
+                .deleteAccount(FirebaseAuth.instance.currentUser);
+            logOut();
+          } catch (e) {
+            debugPrint(e.toString());
+          }
+        });
+      },
+      onCancel: () {
+        _presentationService.pop();
+      },
+    );
   }
 
   int getCounter() {
@@ -52,8 +81,6 @@ class DrawerViewModel extends ViewModel {
 
     try {
       imageSelected = await picker.pickImage(source: ImageSource.gallery);
-      isLoading = true;
-      notifyListeners();
     } catch (exception) {
       var statusGalery = await Permission.photos.status;
       var statusCamera = await Permission.camera.status;
@@ -61,15 +88,17 @@ class DrawerViewModel extends ViewModel {
         return true;
       }
     }
-    if (imageSelected != null) {
-      String pathImage = await _storageDrawerApi.saveData(
-          file: File(imageSelected.path), userId: userId);
-      if (pathImage != '') {
-        imageProfilePath = pathImage;
+    await _presentationService.showLoading(future: () async {
+      if (imageSelected != null) {
+        String pathImage = await _storageDrawerApi.saveData(
+            file: File(imageSelected.path), userId: userId);
+        if (pathImage != '') {
+          imageProfilePath = pathImage;
+        }
       }
-    }
+    });
+
     notifyListeners();
-    isLoading = false;
     return false;
   }
 
