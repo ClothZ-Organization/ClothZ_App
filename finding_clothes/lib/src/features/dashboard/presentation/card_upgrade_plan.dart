@@ -5,8 +5,9 @@ import 'package:flutter_svg/svg.dart';
 // ignore: must_be_immutable
 class CardUpgradePlan extends StatelessWidget {
   double width;
+  String namePlan;
   final VoidCallback onTap;
-  CardUpgradePlan({super.key, required this.width, required this.onTap});
+  CardUpgradePlan({super.key, required this.width, required this.namePlan, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -25,11 +26,11 @@ class CardUpgradePlan extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Text(
-                'FREE',
+              Text(
+                namePlan,
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1,
-                style: TextStyle(
+                style: const TextStyle(
                   fontFamily: 'WorkSans',
                   fontWeight: FontWeight.w500,
                   fontSize: 30,

@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:finding_clothes/src/features/subscrition/application/subscrition_page_view_model.dart';
+import 'package:finding_clothes/src/features/subscrition/presentation/apple_pay.dart';
+import 'package:finding_clothes/src/features/subscrition/presentation/google_pay.dart';
 import 'package:finding_clothes/src/features/subscrition/presentation/icon_card.dart';
 import 'package:finding_clothes/src/features/subscrition/presentation/plan_card.dart';
-import 'package:finding_clothes/src/shared/presentation/widgets/finding_clothes/fc_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
@@ -13,6 +16,7 @@ class SubscritionPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final viewModel = ref.watch(subscritionPlanViewModel);
+
     return MaterialApp(
       home: Scaffold(
         body: Stack(
@@ -170,14 +174,16 @@ class SubscritionPage extends ConsumerWidget {
                     children: [
                       PlanCard(
                         isSelected: viewModel.isSelected(1),
-                        text: 'Free 3-day trial, then \$3.99/week',
+                        text:
+                            'Free 3-day trial, then \$${viewModel.getPricePlan(1)}/week',
                         onTap: () {
                           viewModel.setPlan(1);
                         },
                       ),
                       PlanCard(
                         isSelected: viewModel.isSelected(2),
-                        text: 'Free 3-day trial, then \$149.99/year',
+                        text:
+                            'Free 3-day trial, then \$${viewModel.getPricePlan(2)}/year',
                         onTap: () {
                           viewModel.setPlan(2);
                         },
@@ -185,13 +191,35 @@ class SubscritionPage extends ConsumerWidget {
                       const SizedBox(
                         height: 30,
                       ),
-                      FCButton(
-                        text: 'Continue',
-                        fontSize: 19,
-                        cornerRadius: 27,
-                        isWidthMax: true,
-                        onTap: () {},
-                      ),
+                      // FCButton(
+                      //   text: 'Continue',
+                      //   fontSize: 19,
+                      //   cornerRadius: 27,
+                      //   isWidthMax: true,
+                      //   onTap: () {
+                      //     viewModel.paySubscrition();
+                      //   },
+                      // ),
+                      // const SizedBox(
+                      //   height: 20,
+                      // ),
+                      Platform.isIOS
+                          ? ApplePay(
+                              paymentItemsList: viewModel.paymentItemList,
+                              onPaymentResult: (result) async {
+                                await viewModel.onPaymentResult(result);
+                                debugPrint(
+                                    'Payment Result $result ---${result['status']}');
+                                
+                              },
+                            )
+                          : GooglePay(
+                              paymentItemsList: viewModel.paymentItemList,
+                              onPaymentResult: (result) async {
+                                await viewModel.onPaymentResult(result);
+                                debugPrint('Payment Result $result');
+                              },
+                            ),
                     ],
                   ),
                 ),
@@ -205,4 +233,45 @@ class SubscritionPage extends ConsumerWidget {
       ),
     );
   }
+
+  // Widget applePayButton(
+  //     {required List<PaymentItem> paymentItemsList,
+  //     required VoidCallback onPressed}) {
+  //   return ClipRRect(
+  //     borderRadius: BorderRadius.circular(28),
+  //     child: ApplePayButton(
+  //       key: UniqueKey(),
+  //       paymentConfiguration:
+  //           PaymentConfiguration.fromJsonString(defaultApplePay),
+  //       paymentItems: List.from(paymentItemsList),
+  //       style: ApplePayButtonStyle.white,
+  //       width: double.infinity,
+  //       height: 50,
+  //       type: ApplePayButtonType.inStore,
+  //       // margin: const EdgeInsets.only(top: 15.0),
+  //       onPaymentResult: (result) => debugPrint('Payment Result $result'),
+  //       onPressed: onPressed,
+  //       loadingIndicator: const Center(
+  //         child: CircularProgressIndicator(),
+  //       ),
+  //     ),
+  //   );
+  // }
+
+  // Widget googlePayButton({required List<PaymentItem> paymentItemsList}) {
+  //   return GooglePayButton(
+  //     key: UniqueKey(),
+  //     paymentConfiguration:
+  //         PaymentConfiguration.fromJsonString(defaultGooglePay),
+  //     paymentItems: paymentItemsList,
+  //     width: double.infinity,
+  //     height: 50,
+  //     type: GooglePayButtonType.pay,
+  //     // margin: const EdgeInsets.only(top: 15.0),
+  //     onPaymentResult: (result) => debugPrint('Payment Result $result'),
+  //     loadingIndicator: const Center(
+  //       child: CircularProgressIndicator(),
+  //     ),
+  //   );
+  // }
 }

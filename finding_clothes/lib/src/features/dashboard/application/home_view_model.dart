@@ -60,6 +60,10 @@ class HomeViewModel extends ViewModel {
     _dashboardViewModel.setTab(1);
   }
 
+  String getNamePlan() {
+    return _dashboardViewModel.getNamePlan();
+  }
+
   bool isResult(){
     return _dashboardViewModel.searchList.isNotEmpty;
   }

@@ -79,6 +79,7 @@ class HomePage extends ConsumerWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         topWidget(
+                          viewModel: viewModel,
                           counter: viewModel.counter,
                           context: context,
                           onTapGoSubscritionPage: () {
@@ -109,6 +110,7 @@ class HomePage extends ConsumerWidget {
   }
 
   Widget topWidget({
+    required final viewModel,
     required int counter,
     required BuildContext context,
     required VoidCallback onTapGoSubscritionPage,
@@ -144,6 +146,7 @@ class HomePage extends ConsumerWidget {
             const Spacer(),
             CardUpgradePlan(
               width: MediaQuery.sizeOf(context).width * 0.45,
+              namePlan: viewModel.getNamePlan(),
               onTap: onTapGoSubscritionPage,
             ),
             const SizedBox(
