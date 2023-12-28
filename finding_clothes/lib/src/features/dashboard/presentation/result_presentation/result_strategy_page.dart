@@ -1,4 +1,4 @@
-import 'package:finding_clothes/src/features/dashboard/application/result_page_view_model.dart';
+import 'package:finding_clothes/src/features/dashboard/application/camera_page_view_model.dart';
 import 'package:finding_clothes/src/features/dashboard/presentation/result_presentation/camera_scan_page.dart';
 import 'package:finding_clothes/src/features/dashboard/presentation/result_presentation/result_page.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +9,7 @@ class ResultStrategyPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final viewModel = ref.watch(resultPageViewModel);
+    final viewModel = ref.watch(cameraPageViewModel);
     return viewModel.isCameraScanPage()
         ? const CameraScanPage()
         : const ResultPage();

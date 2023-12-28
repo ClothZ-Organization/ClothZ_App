@@ -7,6 +7,7 @@ import 'package:finding_clothes/src/features/dashboard/domain/list_result.dart';
 import 'package:finding_clothes/src/features/dashboard/domain/result_model.dart';
 import 'package:finding_clothes/src/features/dashboard/domain/search_list.dart';
 import 'package:finding_clothes/src/shared/application/view_model.dart';
+import 'package:finding_clothes/src/shared/services/storage/storage_service.dart';
 import 'package:finding_clothes/src/shared/utils/constants/api_constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -16,6 +17,7 @@ class SearchResultViewModel extends ViewModel {
   late final DashboardViewModel _dashboardViewModel;
   late final DashboardApi _dashboardApi;
   late final FirebaseApi _firebaseApi;
+  late final StorageService _storageService;
   late List<ResultModel> listResultModel;
   String _imageUrl = '';
   bool isSearching = false;
@@ -27,6 +29,7 @@ class SearchResultViewModel extends ViewModel {
     _dashboardViewModel = ref.read(dashboardViewModelProvider);
     _firebaseApi = ref.read(firebaseApi);
     _dashboardApi = ref.read(dashboardApi);
+    _storageService = ref.read(storageServiceProvider);
     init();
     searchImage();
   }
@@ -75,9 +78,16 @@ class SearchResultViewModel extends ViewModel {
       _dashboardViewModel.searchList.add(searchListModel);
       _firebaseApi.addElementInSearchList(userId, searchListModel);
       //
+      incrementCounterLocalStorage();
     }
     isSearching = false;
     notifyListeners();
+  }
+
+  void incrementCounterLocalStorage() {
+    int counterStorage = _storageService.getCounter();
+    counterStorage++;
+    _storageService.setCounter(counterStorage);
   }
 
   Future<void> _uploadImage(String imagePath) async {

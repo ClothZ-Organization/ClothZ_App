@@ -1,6 +1,6 @@
 import 'package:camera/camera.dart';
+import 'package:finding_clothes/src/features/dashboard/application/camera_view_model.dart';
 import 'package:finding_clothes/src/features/dashboard/application/camera_page_view_model.dart';
-import 'package:finding_clothes/src/features/dashboard/application/result_page_view_model.dart';
 import 'package:finding_clothes/src/shared/presentation/widgets/finding_clothes/fc_card_scan.dart';
 import 'package:finding_clothes/src/shared/presentation/widgets/finding_clothes/fc_dialog_utils.dart';
 import 'package:flutter/material.dart';
@@ -12,58 +12,60 @@ class CameraScanPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final viewModel = ref.watch(resultPageViewModel);
+    final viewModel = ref.watch(cameraPageViewModel);
     return Scaffold(
-      body: Stack(
-        children: [
-          SizedBox(
-            height: double.infinity,
-            child: CameraPreview(cameraController),
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: SvgPicture.asset(
-                  'lib/icons/scanner.svg',
-                  // colorFilter:
-                  //     const ColorFilter.mode(Colors.white, BlendMode.srcATop),
-                  height: MediaQuery.sizeOf(context).width - 40,
-                  width: double.infinity,
+      body: viewModel.isNotOkSearch()
+          ? const Center(child: Text('You need a subscription to scan more.'))
+          : Stack(
+              children: [
+                SizedBox(
+                  height: double.infinity,
+                  child: CameraPreview(cameraController),
                 ),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              FCCardScan(
-                titleText: 'Upload from galery',
-                descriptionText:
-                    'Upload your own photo to find similar products and the best prices.',
-                iconPath: 'lib/icons/album.svg',
-                onTap: () async {
-                  if (await viewModel.getImage(false)) {
-                    // ignore: use_build_context_synchronously
-                    FCDialogUtils.showAlertDialog(context);
-                  }
-                },
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              buttonTakePhoto(
-                onTap: () {
-                  viewModel.getImage(true);
-                  debugPrint('take photo button');
-                },
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-            ],
-          ),
-        ],
-      ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: SvgPicture.asset(
+                        'lib/icons/scanner.svg',
+                        // colorFilter:
+                        //     const ColorFilter.mode(Colors.white, BlendMode.srcATop),
+                        height: MediaQuery.sizeOf(context).width - 40,
+                        width: double.infinity,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    FCCardScan(
+                      titleText: 'Upload from galery',
+                      descriptionText:
+                          'Upload your own photo to find similar products and the best prices.',
+                      iconPath: 'lib/icons/album.svg',
+                      onTap: () async {
+                        if (await viewModel.getImage(false)) {
+                          // ignore: use_build_context_synchronously
+                          FCDialogUtils.showAlertDialog(context);
+                        }
+                      },
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    buttonTakePhoto(
+                      onTap: () {
+                        viewModel.getImage(true);
+                        debugPrint('take photo button');
+                      },
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                  ],
+                ),
+              ],
+            ),
     );
   }
 

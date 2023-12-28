@@ -46,7 +46,7 @@ class DrawerViewModel extends ViewModel {
     _presentationService.showDialog(
       title: 'Delete Account',
       message:
-          'Are you sure you want to delete the account? This action is irreversible.',
+          'Are you sure you want to delete the account? This action is irreversible. \n\nTo be able to delete the account, you must be recently logged in.',
       confirmText: 'Delete',
       onConfirm: () async {
         _presentationService.pop();

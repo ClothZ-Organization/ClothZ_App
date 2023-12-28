@@ -4,4 +4,6 @@ class StorageConstants {
   static const String appWasPreviouslyLaunched = "wasPreviouslyLaunched";
   static const String accessTokenExpirationDateKey =
       "accessTokenExpirationDate";
+
+  static const String counterPhone = 'counterPhone';
 }

@@ -1,53 +1,79 @@
-import 'package:camera/camera.dart';
+import 'package:finding_clothes/src/features/dashboard/application/dashboard_view_model.dart';
+import 'package:finding_clothes/src/features/dashboard/data/firebase_data.dart';
 import 'package:finding_clothes/src/shared/application/view_model.dart';
-import 'package:flutter/material.dart';
+import 'package:finding_clothes/src/shared/services/storage/storage_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-late List<CameraDescription> cameras;
-late CameraController cameraController;
+import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class CameraPageViewModel extends ViewModel {
+  late final DashboardViewModel _dashboardViewModel;
+  late final FirebaseApi _firebaseApi;
+  late final StorageService _storageService;
+  String textMessage = 'No scanned products yet';
+  late XFile? picture;
+
   CameraPageViewModel(Ref ref) {
-    initCamera();
+    _dashboardViewModel = ref.read(dashboardViewModelProvider);
+    _firebaseApi = ref.read(firebaseApi);
+    _storageService = ref.read(storageServiceProvider);
+    picture = _dashboardViewModel.image;
+  }
+  bool isCameraScanPage() {
+    return _dashboardViewModel.pageNumberResult == 1;
   }
 
-  Future<void> initCamera() async {
-    WidgetsFlutterBinding.ensureInitialized();
+  bool isNotOkSearch() {
+    int counterStorage =  _storageService.getCounter();
+    if (counterStorage == -1) {
+      counterStorage = 0;
+      _storageService.setCounter(counterStorage);
+      return false;
+    } else if (counterStorage >= 3 && !_dashboardViewModel.isSubscriptionActive()) {
+      return true;
+    }
+    return false;
+  }
 
-    cameras = await availableCameras();
-    cameraController = CameraController(cameras[0], ResolutionPreset.max);
-    cameraController.initialize().then((_) {
-      notifyListeners();
-    }).catchError((Object e) {
-      if (e is CameraException) {
-        switch (e.code) {
-          case 'CameraAccessDenied':
-            debugPrint('--- CameraAccessDenied');
-            break;
-          default:
-            debugPrint('--- ${e.description}');
-            break;
-        }
+  void setPageNumber(int pageNumber) {
+    _dashboardViewModel.pageNumberResult = pageNumber;
+    notifyListeners();
+  }
+
+  String imagePath() {
+    return _dashboardViewModel.getImagePath();
+  }
+
+  Future<bool> getImage(bool isCamera) async {
+    final ImagePicker picker = ImagePicker();
+    try {
+      if (isCamera) {
+        picture = await _dashboardViewModel.takePhoto();
+        // picture = await picker.pickImage(source: ImageSource.camera);
+      } else {
+        picture = await picker.pickImage(source: ImageSource.gallery);
       }
-    });
-  }
-
-  Future<XFile?> takePhoto() async {
-    late XFile? picture;
-    if (cameraController.value.isInitialized &&
-        !cameraController.value.isTakingPicture) {
-      try {
-        await cameraController.setFlashMode(FlashMode.auto);
-        picture = await cameraController.takePicture();
-      } on CameraException catch (e) {
-        debugPrint('Error ocurred while taking picture: $e');
+    } catch (exception) {
+      var statusGalery = await Permission.photos.status;
+      var statusCamera = await Permission.camera.status;
+      if (statusGalery.isDenied || statusCamera.isDenied) {
+        return true;
       }
     }
-    return picture;
+    if (picture != null) {
+      String userId = FirebaseAuth.instance.currentUser!.uid;
+      _dashboardViewModel.setImage(picture);
+      _firebaseApi.counterIncrement(userId);
+      _dashboardViewModel.counter++;
+      _dashboardViewModel.pageNumberResult = 2;
+      notifyListeners();
+    }
+    return false;
   }
 }
 
-var cameratPageViewModel =
+var cameraPageViewModel =
     ViewModelProvider.autoDispose<CameraPageViewModel>((ref) {
   return CameraPageViewModel(ref);
 });

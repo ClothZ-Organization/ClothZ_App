@@ -9,9 +9,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 
 // ignore: must_be_immutable
-class AllResultPage extends ConsumerWidget {
+class SearchResultPage extends ConsumerWidget {
   TextEditingController searchTextController = TextEditingController(text: '');
-  AllResultPage({super.key});
+  SearchResultPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

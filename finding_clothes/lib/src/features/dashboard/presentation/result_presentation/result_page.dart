@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:finding_clothes/src/features/dashboard/application/result_page_view_model.dart';
-import 'package:finding_clothes/src/features/dashboard/presentation/result_presentation/all_result_page.dart';
+import 'package:finding_clothes/src/features/dashboard/application/camera_page_view_model.dart';
+import 'package:finding_clothes/src/features/dashboard/presentation/result_presentation/search_result_page.dart';
 import 'package:finding_clothes/src/shared/presentation/widgets/finding_clothes/fc_loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -13,7 +13,7 @@ class ResultPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final viewModel = ref.watch(resultPageViewModel);
+    final viewModel = ref.watch(cameraPageViewModel);
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
@@ -66,7 +66,7 @@ class ResultPage extends ConsumerWidget {
               height: 33,
             ),
             Expanded(
-              child: AllResultPage(),
+              child: SearchResultPage(),
             ),
           ],
         ),

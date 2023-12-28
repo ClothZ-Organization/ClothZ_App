@@ -25,6 +25,22 @@ class StorageService {
         .readBool(StorageConstants.appWasPreviouslyLaunched, ifAbsent: false);
   }
 
+  //counter
+  void setCounter(int counter) {
+    _sharedPreferencesStorage.writeInt(StorageConstants.counterPhone, counter);
+  }
+
+  int getCounter() {
+    int counter;
+    try {
+      counter = _sharedPreferencesStorage.readInt(StorageConstants.counterPhone);
+    } catch (e) {
+      counter = -1;
+    }
+    return counter;
+  }
+  //
+
   Future<bool> isUserAuthenticated() async {
     return await _secureStorage
             .getStringOrNullIfAbsent(StorageConstants.accessTokenKey) !=
@@ -59,7 +75,8 @@ class StorageService {
   Future removeUserData() async {
     await _secureStorage.removeKey(StorageConstants.accessTokenKey);
     await _secureStorage.removeKey(StorageConstants.refreshTokenKey);
-    await _secureStorage.removeKey(StorageConstants.accessTokenExpirationDateKey);
+    await _secureStorage
+        .removeKey(StorageConstants.accessTokenExpirationDateKey);
   }
 
   Future cleanAll() async {
