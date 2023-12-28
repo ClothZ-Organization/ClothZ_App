@@ -86,7 +86,7 @@ class DrawerPage extends ConsumerWidget {
                                   'Privacy Policy',
                                   () {}),
                               const SizedBox(
-                                height: 34,
+                                height: 28,
                               ),
                               buttonDrawer(
                                   viewModel,
@@ -95,7 +95,7 @@ class DrawerPage extends ConsumerWidget {
                                   'Terms & Conditions',
                                   () {}),
                               const SizedBox(
-                                height: 34,
+                                height: 28,
                               ),
                               buttonDrawer(
                                   viewModel,
@@ -104,7 +104,7 @@ class DrawerPage extends ConsumerWidget {
                                   'Community',
                                   () {}),
                               const SizedBox(
-                                height: 34,
+                                height: 28,
                               ),
                               buttonDrawer(
                                   viewModel,
@@ -113,18 +113,20 @@ class DrawerPage extends ConsumerWidget {
                                   'Leave a Review',
                                   () {}),
                               const SizedBox(
-                                height: 34,
+                                height: 28,
                               ),
                               buttonDrawer(viewModel, context,
                                   'lib/icons/logout.svg', 'Log Out', () {
                                 viewModel.logOut();
                               }),
                               const SizedBox(
-                                height: 34,
+                                height: 28,
                               ),
-                              buttonDrawer(viewModel, context,
-                                  'lib/icons/logout.svg', 'Delete', () {
-                                viewModel.deleteAccount();
+                              Builder(builder: (context) {
+                                return buttonDrawer(viewModel, context,
+                                    'lib/icons/logout.svg', 'Delete', () async {
+                                  await viewModel.deleteAccount();
+                                });
                               }),
                               const SizedBox(
                                 height: 50,

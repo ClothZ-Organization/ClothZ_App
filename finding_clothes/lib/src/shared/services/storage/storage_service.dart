@@ -59,6 +59,7 @@ class StorageService {
   Future removeUserData() async {
     await _secureStorage.removeKey(StorageConstants.accessTokenKey);
     await _secureStorage.removeKey(StorageConstants.refreshTokenKey);
+    await _secureStorage.removeKey(StorageConstants.accessTokenExpirationDateKey);
   }
 
   Future cleanAll() async {

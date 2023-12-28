@@ -42,7 +42,7 @@ class DrawerViewModel extends ViewModel {
     notifyListeners();
   }
 
-  Future deleteAccount() async {
+  Future<void> deleteAccount() async {
     _presentationService.showDialog(
       title: 'Delete Account',
       message:
@@ -52,10 +52,13 @@ class DrawerViewModel extends ViewModel {
         _presentationService.pop();
         await _presentationService.showLoading(future: () async {
           try {
-            await _removeDataFirebase.removeAllUser(userId);
             await _authenticationService
                 .deleteAccount(FirebaseAuth.instance.currentUser);
+            await _removeDataFirebase.removeAllUser(userId);
             logOut();
+          } on FirebaseAuthException catch (e) {
+            debugPrint('--firebase exception');
+            debugPrint(e.toString());
           } catch (e) {
             debugPrint(e.toString());
           }
@@ -65,6 +68,7 @@ class DrawerViewModel extends ViewModel {
         _presentationService.pop();
       },
     );
+    notifyListeners();
   }
 
   int getCounter() {
