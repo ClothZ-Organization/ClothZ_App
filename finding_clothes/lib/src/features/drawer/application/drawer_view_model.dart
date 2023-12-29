@@ -52,9 +52,9 @@ class DrawerViewModel extends ViewModel {
         _presentationService.pop();
         await _presentationService.showLoading(future: () async {
           try {
+            await _removeDataFirebase.removeAllUser(userId);
             await _authenticationService
                 .deleteAccount(FirebaseAuth.instance.currentUser);
-            await _removeDataFirebase.removeAllUser(userId);
             logOut();
           } on FirebaseAuthException catch (e) {
             debugPrint('--firebase exception');
