@@ -124,7 +124,7 @@ class DrawerPage extends ConsumerWidget {
                               ),
                               Builder(builder: (context) {
                                 return buttonDrawer(viewModel, context,
-                                    'lib/icons/logout.svg', 'Delete', () async {
+                                    'lib/icons/profile-delete.svg', 'Delete data', () async {
                                   await viewModel.deleteAccount();
                                 });
                               }),

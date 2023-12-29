@@ -10,9 +10,14 @@ class Routes {
   static const result = "/result";
 
   static const subscrition = "/subscrition";
+
+  static const emailValidation = "/emailValidation/:${RouteParameters.email}/:${RouteParameters.password}";
 }
 
 class RouteParameters {
   static const loanId = "loanId";
+
+  static const email = "email";
+  static const password = "password";
 
 }

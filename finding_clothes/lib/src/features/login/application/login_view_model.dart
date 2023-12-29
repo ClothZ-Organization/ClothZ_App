@@ -1,4 +1,6 @@
+import 'package:finding_clothes/src/shared/extension/route_parameters.dart';
 import 'package:finding_clothes/src/shared/services/authentication/authentication_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -23,15 +25,33 @@ class LoginViewModel extends ViewModel {
     try {
       await _authenticationService.login(email, password);
 
-      await _presentationService.push(
-        route: Routes.dashboard,
-        clearBackStack: true,
-      );
+      await checkVerifiedEmail(email: email, password: password);
     } catch (error) {
       errorText = 'Wrong credentials!';
       isLoading = false;
       notifyListeners();
       debugPrint("Error: ${error.toString()}");
+    }
+  }
+
+  Future<void> checkVerifiedEmail(
+      {required String email, required String password}) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user?.emailVerified ?? false) {
+      await _presentationService.push(
+        route: Routes.dashboard,
+        clearBackStack: true,
+      );
+    } else {
+      await _presentationService.push(
+        route: Routes.emailValidation.withParams(
+          {
+            RouteParameters.email: email,
+            RouteParameters.password: password,
+          },
+        ),
+        clearBackStack: true,
+      );
     }
   }
 

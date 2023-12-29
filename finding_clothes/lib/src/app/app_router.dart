@@ -22,6 +22,7 @@ class AppRouter extends $AppRouter {
         AutoRoute(page: SubscritionRoute.page, path: Routes.subscrition),
         _modalRoute(page: AlertDialogRoute.page),
         _modalRoute(page: FullScreenLoadingIndicatorRoute.page),
+        AutoRoute(page: EmailValidationRoute.page, path: Routes.emailValidation),
       ];
   AutoRoute _modalRoute({
     required PageInfo<Object?> page,

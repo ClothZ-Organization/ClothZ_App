@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:finding_clothes/src/shared/application/view_model.dart';
+import 'package:finding_clothes/src/shared/extension/route_parameters.dart';
 import 'package:finding_clothes/src/shared/services/authentication/authentication_service.dart';
 import 'package:finding_clothes/src/shared/services/presentation_service.dart';
 import 'package:finding_clothes/src/shared/utils/constants/routes.dart';
@@ -35,11 +38,15 @@ class RegisterViewModel extends ViewModel {
           await _authenticationService.register(email, password);
           debugPrint("Created New Account");
 
-          await _authenticationService.login(email, password);
-          debugPrint("Logged in New Account");
-
           await _presentationService.push(
-              route: Routes.dashboard, clearBackStack: true);
+            route: Routes.emailValidation.withParams(
+              {
+                RouteParameters.email: email,
+                RouteParameters.password: password,
+              },
+            ),
+            clearBackStack: true,
+          );
         } catch (error) {
           if (error is FirebaseAuthException) {
             if (error.code.contains('email')) {
