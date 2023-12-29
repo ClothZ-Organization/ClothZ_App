@@ -108,6 +108,10 @@ class DashboardViewModel extends ViewModel {
     return true;
   }
 
+  bool isOkCounter(){
+    return counter < 3;
+  }
+
   Future<XFile?> takePhoto() {
     return _cameraViewModel.takePhoto();
   }

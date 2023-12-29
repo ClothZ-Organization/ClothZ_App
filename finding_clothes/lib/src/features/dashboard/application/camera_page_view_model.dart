@@ -30,11 +30,11 @@ class CameraPageViewModel extends ViewModel {
 
   bool isNotOkSearch() {
     int counterStorage =  _storageService.getCounter();
-    if (counterStorage == -1) {
+    if (counterStorage == -1 && _dashboardViewModel.isOkCounter()) {
       counterStorage = 0;
       _storageService.setCounter(counterStorage);
       return false;
-    } else if (counterStorage >= 3 && !_dashboardViewModel.isSubscriptionActive()) {
+    } else if ((!_dashboardViewModel.isOkCounter() || counterStorage >= 3) && !_dashboardViewModel.isSubscriptionActive()) {
       return true;
     }
     return false;
