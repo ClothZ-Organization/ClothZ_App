@@ -1,7 +1,9 @@
 import 'package:finding_clothes/src/features/dashboard/application/dashboard_view_model.dart';
 import 'package:finding_clothes/src/features/dashboard/data/firebase_data.dart';
 import 'package:finding_clothes/src/shared/application/view_model.dart';
+import 'package:finding_clothes/src/shared/services/presentation_service.dart';
 import 'package:finding_clothes/src/shared/services/storage/storage_service.dart';
+import 'package:finding_clothes/src/shared/utils/constants/routes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
@@ -11,6 +13,7 @@ class CameraPageViewModel extends ViewModel {
   late final DashboardViewModel _dashboardViewModel;
   late final FirebaseApi _firebaseApi;
   late final StorageService _storageService;
+  late final PresentationService _presentationService;
   String textMessage = 'No scanned products yet';
   late XFile? picture;
 
@@ -18,6 +21,7 @@ class CameraPageViewModel extends ViewModel {
     _dashboardViewModel = ref.read(dashboardViewModelProvider);
     _firebaseApi = ref.read(firebaseApi);
     _storageService = ref.read(storageServiceProvider);
+    _presentationService = ref.read(presentationServiceProvider);
     picture = _dashboardViewModel.image;
   }
   bool isCameraScanPage() {
@@ -70,6 +74,12 @@ class CameraPageViewModel extends ViewModel {
       notifyListeners();
     }
     return false;
+  }
+
+  Future<void> goSubscritionPage() async {
+    await _dashboardViewModel.setTab(0);
+    
+    _presentationService.push(route: Routes.subscrition);
   }
 }
 

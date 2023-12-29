@@ -1,6 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:finding_clothes/src/features/dashboard/application/camera_view_model.dart';
 import 'package:finding_clothes/src/features/dashboard/application/camera_page_view_model.dart';
+import 'package:finding_clothes/src/shared/presentation/widgets/finding_clothes/fc_button.dart';
 import 'package:finding_clothes/src/shared/presentation/widgets/finding_clothes/fc_card_scan.dart';
 import 'package:finding_clothes/src/shared/presentation/widgets/finding_clothes/fc_dialog_utils.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,7 @@ class CameraScanPage extends ConsumerWidget {
     final viewModel = ref.watch(cameraPageViewModel);
     return Scaffold(
       body: viewModel.isNotOkSearch()
-          ? const Center(child: Text('You need a subscription to scan more.'))
+          ? upgradeCameraScreen(viewModel: viewModel)
           : Stack(
               children: [
                 SizedBox(
@@ -101,6 +102,55 @@ class CameraScanPage extends ConsumerWidget {
           ),
         ),
       ),
+    );
+  }
+
+  Widget upgradeCameraScreen({required final viewModel}) {
+    return Stack(
+      children: [
+        SizedBox(
+          height: double.infinity,
+          width: double.infinity,
+          child: ClipRRect(
+            child: Image.asset(
+              'assets/images/backgroundUpgradePlan.png',
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 36),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const Text(
+                'You need a subscription to scan more',
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 5,
+                style: TextStyle(
+                  fontFamily: 'WorkSans',
+                  fontWeight: FontWeight.w600,
+                  fontSize: 20.0,
+                  height: 1.12,
+                  color: Colors.white,
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              FCButton(
+                text: 'Upgrade Plan',
+                onTap: () async {
+                  viewModel.goSubscritionPage();
+                },
+              ),
+            ],
+          ),
+        ),
+        // Center(child: Text('You need a subscription to scan more.')),
+      ],
     );
   }
 }
