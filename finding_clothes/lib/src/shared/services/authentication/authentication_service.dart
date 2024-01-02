@@ -36,7 +36,16 @@ class AuthenticationService {
         email: email,
         password: password,
       );
+      await _saveToken(result);
+    } catch (error) {
+      rethrow;
+    }
 
+    log("Logged in successfuly!");
+  }
+
+  Future _saveToken(UserCredential result) async {
+    try {
       String token = await result.user?.getIdToken() ?? '';
       IdTokenResult? tokenResult = await result.user?.getIdTokenResult();
       DateTime? expirationTime = tokenResult?.expirationTime;
@@ -50,8 +59,17 @@ class AuthenticationService {
     } catch (error) {
       rethrow;
     }
+  }
 
-    log("Logged in successfuly!");
+  Future loginWithGoogle() async {
+    try {
+      GoogleAuthProvider googleAuthProvider = GoogleAuthProvider();
+      UserCredential result =
+          await FirebaseAuth.instance.signInWithProvider(googleAuthProvider);
+      await _saveToken(result);
+    } catch (error) {
+      debugPrint(error.toString());
+    }
   }
 
   Future refreshSession() async {
@@ -72,7 +90,6 @@ class AuthenticationService {
         debugPrint('There is not logged in.');
       }
     } on FirebaseAuthException catch (e) {
-
       log(e.toString());
       debugPrint('--- Exception FirebaseAuthException');
       rethrow;

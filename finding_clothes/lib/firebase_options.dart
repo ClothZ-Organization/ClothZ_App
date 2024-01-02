@@ -67,6 +67,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '620469384350',
     projectId: 'findingclothes-3b19b',
     storageBucket: 'findingclothes-3b19b.appspot.com',
+    iosClientId: '620469384350-512h11n0s7c11u5fvffkpdadhnpub2f8.apps.googleusercontent.com',
     iosBundleId: 'com.example.findingClothes',
   );
 
@@ -76,6 +77,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '620469384350',
     projectId: 'findingclothes-3b19b',
     storageBucket: 'findingclothes-3b19b.appspot.com',
+    iosClientId: '620469384350-867qjmmk0c3k4o597j20s8okv68uik3m.apps.googleusercontent.com',
     iosBundleId: 'com.example.findingClothes.RunnerTests',
   );
 }

@@ -12,7 +12,12 @@
           "package_name": "com.example.finding_clothes"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "620469384350-ar3hev6ht4m59qee3rq63kpc5bd0gokm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBCFOFnmeHO1ZH008tFbYvQJAyd3VJT6AQ"
@@ -20,7 +25,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "620469384350-ar3hev6ht4m59qee3rq63kpc5bd0gokm.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "620469384350-512h11n0s7c11u5fvffkpdadhnpub2f8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.findingClothes"
+              }
+            }
+          ]
         }
       }
     }

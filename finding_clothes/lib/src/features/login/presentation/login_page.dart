@@ -9,6 +9,7 @@ import 'package:finding_clothes/src/shared/presentation/widgets/finding_clothes/
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sign_in_button/sign_in_button.dart';
 
 import '../application/login_view_model.dart';
 
@@ -26,7 +27,9 @@ class LoginPage extends ConsumerWidget {
       backgroundColor: Colors.black,
       body: viewModel.isLoading
           ? const Center(
-            child: FCLoadingIndicator(size: LoadingIndicatorSize.standart,),
+              child: FCLoadingIndicator(
+                size: LoadingIndicatorSize.standart,
+              ),
             )
           : SafeArea(
               child: SingleChildScrollView(
@@ -112,10 +115,24 @@ class LoginPage extends ConsumerWidget {
                                     password: passwordController.text);
                               },
                               text: "Log In",
+                              isWidthMax: true,
                             ),
                           ),
                           const SizedBox(
-                            height: 15,
+                            height: 20,
+                          ),
+                          orLine(),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          _googleSignInButton(
+                            onPressed: () {
+                              debugPrint('---dadad');
+                              viewModel.loginWithGoogle();
+                            },
+                          ),
+                          const SizedBox(
+                            height: 25,
                           ),
                           Center(
                             child: FCTextAction(
@@ -154,6 +171,58 @@ class LoginPage extends ConsumerWidget {
           ),
         ),
       ],
+    );
+  }
+
+  Widget orLine() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Expanded(
+          child: Container(
+            color: Colors.grey,
+            height: 1,
+          ),
+        ),
+        const SizedBox(
+          width: 10,
+        ),
+        const Text(
+          'OR',
+          style: TextStyle(
+            fontWeight: FontWeight.w400,
+            fontSize: 14,
+            height: 1.14,
+            color: Colors.grey,
+          ),
+        ),
+        const SizedBox(
+          width: 10,
+        ),
+        Expanded(
+          child: Container(
+            color: Colors.grey,
+            height: 1,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _googleSignInButton({required VoidCallback onPressed}) {
+    return Center(
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(8.0),
+        child: SizedBox(
+          height: 49,
+          width: double.infinity,
+          child: SignInButton(
+            Buttons.google,
+            text: 'Sign up with Google',
+            onPressed: onPressed,
+          ),
+        ),
+      ),
     );
   }
 }

@@ -34,6 +34,18 @@ class LoginViewModel extends ViewModel {
     }
   }
 
+  void loginWithGoogle() async {
+    try {
+      await _authenticationService.loginWithGoogle();
+      await _presentationService.push(
+        route: Routes.dashboard,
+        clearBackStack: true,
+      );
+    } catch (error) {
+      rethrow;
+    }
+  }
+
   Future<void> checkVerifiedEmail(
       {required String email, required String password}) async {
     final user = FirebaseAuth.instance.currentUser;
