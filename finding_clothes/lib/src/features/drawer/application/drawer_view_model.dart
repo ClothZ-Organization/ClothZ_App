@@ -92,15 +92,18 @@ class DrawerViewModel extends ViewModel {
         return true;
       }
     }
-    await _presentationService.showLoading(future: () async {
-      if (imageSelected != null) {
-        String pathImage = await _storageDrawerApi.saveData(
-            file: File(imageSelected.path), userId: userId);
-        if (pathImage != '') {
-          imageProfilePath = pathImage;
-        }
-      }
-    });
+    if (imageSelected != null) {
+      XFile imageSelected0 = imageSelected;
+      await _presentationService.showLoading(
+        future: () async {
+          String pathImage = await _storageDrawerApi.saveData(
+              file: File(imageSelected0.path), userId: userId);
+          if (pathImage != '') {
+            imageProfilePath = pathImage;
+          }
+        },
+      );
+    }
 
     notifyListeners();
     return false;

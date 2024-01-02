@@ -35,15 +35,19 @@ class LoginViewModel extends ViewModel {
   }
 
   void loginWithGoogle() async {
-    try {
-      await _authenticationService.loginWithGoogle();
-      await _presentationService.push(
-        route: Routes.dashboard,
-        clearBackStack: true,
-      );
-    } catch (error) {
-      rethrow;
-    }
+   await _presentationService.showLoading(
+      future: () async {
+        try {
+          await _authenticationService.loginWithGoogle();
+          await _presentationService.push(
+            route: Routes.dashboard,
+            clearBackStack: true,
+          );
+        } catch (error) {
+          rethrow;
+        }
+      },
+    );
   }
 
   Future<void> checkVerifiedEmail(

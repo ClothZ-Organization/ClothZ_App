@@ -51,10 +51,10 @@ class AuthenticationService {
       DateTime? expirationTime = tokenResult?.expirationTime;
       String? refreshToken = result.user?.refreshToken;
 
-      if (token != '' && expirationTime != null && refreshToken != null) {
+      if (token != '' && expirationTime != null) {
         await _storageService.setUserAccessToken(token);
         await _storageService.setTokenExpirationDate(expirationTime);
-        await _storageService.setUserRefreshToken(refreshToken);
+        await _storageService.setUserRefreshToken(refreshToken ?? '');
       }
     } catch (error) {
       rethrow;
