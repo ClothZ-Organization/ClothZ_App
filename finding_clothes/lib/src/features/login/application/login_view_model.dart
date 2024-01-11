@@ -35,7 +35,7 @@ class LoginViewModel extends ViewModel {
   }
 
   void loginWithGoogle() async {
-   await _presentationService.showLoading(
+    await _presentationService.showLoading(
       future: () async {
         try {
           await _authenticationService.loginWithGoogle();
@@ -44,7 +44,8 @@ class LoginViewModel extends ViewModel {
             clearBackStack: true,
           );
         } catch (error) {
-          rethrow;
+          debugPrint(error.toString());
+          // rethrow;
         }
       },
     );

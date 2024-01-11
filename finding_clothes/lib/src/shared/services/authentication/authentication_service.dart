@@ -69,6 +69,7 @@ class AuthenticationService {
       await _saveToken(result);
     } catch (error) {
       debugPrint(error.toString());
+      rethrow;
     }
   }
 
