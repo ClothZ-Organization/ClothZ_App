@@ -47,7 +47,7 @@ class SearchResultViewModel extends ViewModel {
     if (path != 'assets/images/register_img.png' &&
         _dashboardViewModel.isSearch) {
       _dashboardViewModel.isSearch = false;
-      // await search(path);
+      await search(path);
       notifyListeners();
     }
   }
