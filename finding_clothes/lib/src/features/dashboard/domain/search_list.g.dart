@@ -17,6 +17,5 @@ SearchListModel _$SearchListModelFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$SearchListModelToJson(SearchListModel instance) =>
     <String, dynamic>{
       'imageUrl': instance.imageUrl,
-      'visual_matches':
-          instance.visual_matches?.map((result) => result.toJson()).toList(),
+      'visual_matches': instance.visual_matches,
     };

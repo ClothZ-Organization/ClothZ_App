@@ -8,7 +8,7 @@ import '../shared/utils/constants/routes.dart';
 import 'app_router.gr.dart';
 
 @AutoRouterConfig()
-class AppRouter extends $AppRouter {
+class AppRouter extends RootStackRouter {
   late final String homeRoute;
   AppRouter(bool isAuthenticated) {
     homeRoute = isAuthenticated ? Routes.dashboard : Routes.login;
@@ -25,7 +25,7 @@ class AppRouter extends $AppRouter {
         AutoRoute(page: EmailValidationRoute.page, path: Routes.emailValidation),
       ];
   AutoRoute _modalRoute({
-    required PageInfo<Object?> page,
+    required PageInfo page,
     String? path,
     bool barrierDismissible = true,
   }) {

@@ -5,13 +5,14 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 
-
 class NetworkAvailabilityService {
-  late final StreamSubscription<ConnectivityResult> subscription;
+  late final StreamSubscription<List<ConnectivityResult>> subscriptions;
   late bool isDeviceConnected;
 
   NetworkAvailabilityService() {
-    subscription = Connectivity().onConnectivityChanged.listen((ConnectivityResult result) async {
+    subscriptions = Connectivity()
+        .onConnectivityChanged
+        .listen((List<ConnectivityResult> result) async {
       isDeviceConnected = await InternetConnectionChecker().hasConnection;
       log("[NetworkAvailabilityService] - Connectivity changed to $result. Has internet access: $isDeviceConnected.");
     });
@@ -22,4 +23,5 @@ class NetworkAvailabilityService {
   }
 }
 
-final networkAvailabilityServiceProvider = Provider((ref) => NetworkAvailabilityService());
+final networkAvailabilityServiceProvider =
+    Provider((ref) => NetworkAvailabilityService());

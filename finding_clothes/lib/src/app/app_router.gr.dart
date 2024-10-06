@@ -26,74 +26,6 @@ import 'package:finding_clothes/src/shared/presentation/widgets/full_screen_load
     as _i4;
 import 'package:flutter/material.dart' as _i9;
 
-abstract class $AppRouter extends _i8.RootStackRouter {
-  $AppRouter({super.navigatorKey});
-
-  @override
-  final Map<String, _i8.PageFactory> pagesMap = {
-    AlertDialogRoute.name: (routeData) {
-      final args = routeData.argsAs<AlertDialogRouteArgs>();
-      return _i8.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i1.AlertDialogPage(
-          key: args.key,
-          model: args.model,
-        ),
-      );
-    },
-    DashboardRoute.name: (routeData) {
-      return _i8.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i2.DashboardPage(),
-      );
-    },
-    EmailValidationRoute.name: (routeData) {
-      final pathParams = routeData.inheritedPathParams;
-      final args = routeData.argsAs<EmailValidationRouteArgs>(
-          orElse: () => EmailValidationRouteArgs(
-                email: pathParams.getString('email'),
-                password: pathParams.getString('password'),
-              ));
-      return _i8.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i3.EmailValidationPage(
-          key: args.key,
-          email: args.email,
-          password: args.password,
-        ),
-      );
-    },
-    FullScreenLoadingIndicatorRoute.name: (routeData) {
-      return _i8.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i4.FullScreenLoadingIndicator(),
-      );
-    },
-    LoginRoute.name: (routeData) {
-      final args = routeData.argsAs<LoginRouteArgs>(
-          orElse: () => const LoginRouteArgs());
-      return _i8.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i5.LoginPage(key: args.key),
-      );
-    },
-    RegisterRoute.name: (routeData) {
-      final args = routeData.argsAs<RegisterRouteArgs>(
-          orElse: () => const RegisterRouteArgs());
-      return _i8.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i6.RegisterPage(key: args.key),
-      );
-    },
-    SubscritionRoute.name: (routeData) {
-      return _i8.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i7.SubscritionPage(),
-      );
-    },
-  };
-}
-
 /// generated route for
 /// [_i1.AlertDialogPage]
 class AlertDialogRoute extends _i8.PageRouteInfo<AlertDialogRouteArgs> {
@@ -112,8 +44,16 @@ class AlertDialogRoute extends _i8.PageRouteInfo<AlertDialogRouteArgs> {
 
   static const String name = 'AlertDialogRoute';
 
-  static const _i8.PageInfo<AlertDialogRouteArgs> page =
-      _i8.PageInfo<AlertDialogRouteArgs>(name);
+  static _i8.PageInfo page = _i8.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<AlertDialogRouteArgs>();
+      return _i1.AlertDialogPage(
+        key: args.key,
+        model: args.model,
+      );
+    },
+  );
 }
 
 class AlertDialogRouteArgs {
@@ -143,7 +83,12 @@ class DashboardRoute extends _i8.PageRouteInfo<void> {
 
   static const String name = 'DashboardRoute';
 
-  static const _i8.PageInfo<void> page = _i8.PageInfo<void>(name);
+  static _i8.PageInfo page = _i8.PageInfo(
+    name,
+    builder: (data) {
+      return const _i2.DashboardPage();
+    },
+  );
 }
 
 /// generated route for
@@ -170,8 +115,22 @@ class EmailValidationRoute extends _i8.PageRouteInfo<EmailValidationRouteArgs> {
 
   static const String name = 'EmailValidationRoute';
 
-  static const _i8.PageInfo<EmailValidationRouteArgs> page =
-      _i8.PageInfo<EmailValidationRouteArgs>(name);
+  static _i8.PageInfo page = _i8.PageInfo(
+    name,
+    builder: (data) {
+      final pathParams = data.inheritedPathParams;
+      final args = data.argsAs<EmailValidationRouteArgs>(
+          orElse: () => EmailValidationRouteArgs(
+                email: pathParams.getString('email'),
+                password: pathParams.getString('password'),
+              ));
+      return _i3.EmailValidationPage(
+        key: args.key,
+        email: args.email,
+        password: args.password,
+      );
+    },
+  );
 }
 
 class EmailValidationRouteArgs {
@@ -204,7 +163,12 @@ class FullScreenLoadingIndicatorRoute extends _i8.PageRouteInfo<void> {
 
   static const String name = 'FullScreenLoadingIndicatorRoute';
 
-  static const _i8.PageInfo<void> page = _i8.PageInfo<void>(name);
+  static _i8.PageInfo page = _i8.PageInfo(
+    name,
+    builder: (data) {
+      return const _i4.FullScreenLoadingIndicator();
+    },
+  );
 }
 
 /// generated route for
@@ -221,8 +185,14 @@ class LoginRoute extends _i8.PageRouteInfo<LoginRouteArgs> {
 
   static const String name = 'LoginRoute';
 
-  static const _i8.PageInfo<LoginRouteArgs> page =
-      _i8.PageInfo<LoginRouteArgs>(name);
+  static _i8.PageInfo page = _i8.PageInfo(
+    name,
+    builder: (data) {
+      final args =
+          data.argsAs<LoginRouteArgs>(orElse: () => const LoginRouteArgs());
+      return _i5.LoginPage(key: args.key);
+    },
+  );
 }
 
 class LoginRouteArgs {
@@ -250,8 +220,14 @@ class RegisterRoute extends _i8.PageRouteInfo<RegisterRouteArgs> {
 
   static const String name = 'RegisterRoute';
 
-  static const _i8.PageInfo<RegisterRouteArgs> page =
-      _i8.PageInfo<RegisterRouteArgs>(name);
+  static _i8.PageInfo page = _i8.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<RegisterRouteArgs>(
+          orElse: () => const RegisterRouteArgs());
+      return _i6.RegisterPage(key: args.key);
+    },
+  );
 }
 
 class RegisterRouteArgs {
@@ -276,5 +252,10 @@ class SubscritionRoute extends _i8.PageRouteInfo<void> {
 
   static const String name = 'SubscritionRoute';
 
-  static const _i8.PageInfo<void> page = _i8.PageInfo<void>(name);
+  static _i8.PageInfo page = _i8.PageInfo(
+    name,
+    builder: (data) {
+      return const _i7.SubscritionPage();
+    },
+  );
 }

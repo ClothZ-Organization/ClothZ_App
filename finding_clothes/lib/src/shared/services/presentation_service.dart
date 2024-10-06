@@ -25,7 +25,7 @@ class PresentationService {
   Future<void> showLoading({required Future Function() future}) async {
     router.push(const FullScreenLoadingIndicatorRoute());
     await future();
-    router.pop();
+    router.maybePop();
   }
 
   void showDialog({
@@ -93,7 +93,7 @@ class PresentationService {
 
   @optionalTypeArgs
   Future<bool> pop<T extends Object?>([T? result]) async {
-    return router.pop(result);
+    return router.maybePop(result);
   }
 
   Future<T?> push<T extends Object?>(
