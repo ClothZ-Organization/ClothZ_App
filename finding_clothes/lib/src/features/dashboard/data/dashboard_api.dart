@@ -3,6 +3,7 @@ import 'package:finding_clothes/src/features/dashboard/domain/list_result.dart';
 import 'package:finding_clothes/src/shared/providers/dio_providers.dart';
 import 'package:finding_clothes/src/shared/utils/constants/api_constants.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
 
 part 'dashboard_api.g.dart';

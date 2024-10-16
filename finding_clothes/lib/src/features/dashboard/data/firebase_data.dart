@@ -37,7 +37,7 @@ class FirebaseApi {
   Future<void> addInitialWishList(
       String userId, List<ResultModel> wishList) async {
     await FirebaseFirestore.instance.collection('bookMarks').doc(userId).set({
-      'wishList': wishList,
+      'wishList': wishList.map((item) => item.toJson()).toList(),
     });
   }
 
@@ -96,18 +96,22 @@ class FirebaseApi {
   Future<void> addInitialSearchList(
       String userId, List<SearchListModel> searchList) async {
     await FirebaseFirestore.instance.collection('searchFor').doc(userId).set({
-      'searchList': searchList,
+      'searchList': searchList.map((item) => item.toJson()).toList(),
     });
   }
 
   Future<void> addElementInSearchList(String userId, SearchListModel item) async {
     debugPrint('Element to be added: ${item.toJson()}');
-    await FirebaseFirestore.instance
-        .collection('searchFor')
-        .doc(userId)
-        .update({
-      'searchList': FieldValue.arrayUnion([item.toJson()]),
-    });
+    try {
+      await FirebaseFirestore.instance
+          .collection('searchFor')
+          .doc(userId)
+          .update({
+        'searchList': FieldValue.arrayUnion([item.toJson()]),
+      });
+    } catch (e) {
+      debugPrint('Failed to add element to search list: $e');
+    }
   }
 
   Future<List<SearchListModel>> getSearchList(String userId) async {

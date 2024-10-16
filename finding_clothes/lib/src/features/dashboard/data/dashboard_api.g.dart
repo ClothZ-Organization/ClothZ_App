@@ -6,48 +6,57 @@ part of 'dashboard_api.dart';
 // RetrofitGenerator
 // **************************************************************************
 
-// ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
+// ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element
 
 class _DashboardApi implements DashboardApi {
   _DashboardApi(
     this._dio, {
     this.baseUrl,
+    this.errorLogger,
   }) {
-    baseUrl ??= 'https://';
+    baseUrl ??= 'https://serpapi.com/';
   }
 
   final Dio _dio;
 
   String? baseUrl;
 
+  final ParseErrorLogger? errorLogger;
+
   @override
   Future<ListResultModel> searchClothes({
     required String urlImg,
     required String apiKey,
   }) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
-    final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<ListResultModel>(Options(
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<ListResultModel>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
-            .compose(
-              _dio.options,
-              'serpapi.com/search.json?engine=google_lens&url=${urlImg}&api_key=${apiKey}',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(
-                baseUrl: _combineBaseUrls(
-              _dio.options.baseUrl,
-              baseUrl,
-            ))));
-    final value = ListResultModel.fromJson(_result.data!);
-    return value;
+        .compose(
+          _dio.options,
+          'search.json?engine=google_lens&url=${urlImg}&api_key=${apiKey}',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late ListResultModel _value;
+    try {
+      _value = ListResultModel.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
   }
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {

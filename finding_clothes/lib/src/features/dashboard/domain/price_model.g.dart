@@ -8,7 +8,7 @@ part of 'price_model.dart';
 
 PriceModel _$PriceModelFromJson(Map<String, dynamic> json) => PriceModel(
       value: json['value'] as String,
-      extracted_value: (json['extracted_value'] as num).toDouble(),
+      extracted_value: (json['extracted_value'] as num?)?.toDouble(),
       currency: json['currency'] as String,
     );
 

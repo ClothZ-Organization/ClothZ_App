@@ -5,7 +5,7 @@ part 'price_model.g.dart';
 @JsonSerializable()
 class PriceModel {
   String value;
-  double extracted_value;
+  double? extracted_value;
   String currency;
   PriceModel({
     required this.value,
